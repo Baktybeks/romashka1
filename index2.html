@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание роли воспитателя</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #D91C5D;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Form Layout */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+        }
+
+        .form-main {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .form-sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        /* Tabs */
+        .form-tabs {
+            display: flex;
+            border-bottom: 2px solid #f1f3f4;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #D91C5D;
+            border-bottom-color: #D91C5D;
+        }
+
+        .tab-content {
+            padding: 32px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Form Elements */
+        .form-section {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .form-label.required::after {
+            content: ' *';
+            color: #dc2626;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #D91C5D;
+            box-shadow: 0 0 0 3px rgba(217,28,93,0.1);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        /* Photo Upload */
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .photo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            border: 2px dashed #e2e8f0;
+        }
+
+        .photo-preview.has-image {
+            border: none;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .photo-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .photo-btn {
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        /* Checkbox Groups */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #e2e8f0;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #D91C5D;
+        }
+
+        /* Permissions */
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .permission-card {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .permission-title {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .permission-desc {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 12px;
+        }
+
+        .permission-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #D91C5D;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        /* Sidebar */
+        .sidebar-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .progress-steps {
+            list-style: none;
+        }
+
+        .progress-steps li {
+            padding: 8px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .step-icon.completed {
+            background: #22c55e;
+            color: white;
+        }
+
+        .step-icon.current {
+            background: #D91C5D;
+            color: white;
+        }
+
+        .step-icon.pending {
+            background: #f1f3f4;
+            color: #718096;
+        }
+
+        /* Quick Templates */
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .template-card {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .template-card:hover {
+            border-color: #D91C5D;
+        }
+
+        .template-name {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .template-desc {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row,
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .form-tabs {
+                overflow-x: auto;
+            }
+
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>👩‍🏫 Создание роли воспитателя</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary">❌ Отмена</button>
+                <button class="btn btn-primary">💾 Сохранить</button>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <!-- Main Form -->
+            <div class="form-main">
+                <!-- Tabs -->
+                <div class="form-tabs">
+                    <button class="tab-btn " onclick="switchTab(0)">👤 Личные данные</button>
+                    <button class="tab-btn active" onclick="switchTab(1)">🎓 Образование</button>
+                    <button class="tab-btn" onclick="switchTab(2)">💼 Должность</button>
+                    <button class="tab-btn" onclick="switchTab(3)">🔐 Доступы</button>
+                    <button class="tab-btn" onclick="switchTab(4)">📄 Документы</button>
+                </div>
+
+                <!-- Tab 1: Personal Info -->
+                <div class="tab-content ">
+                    <div class="form-section">
+                        <div class="section-title">👤 Основная информация</div>
+                        
+                        <div class="form-group">
+                            <div class="photo-upload">
+                                <div class="photo-preview">📷</div>
+                                <div class="photo-actions">
+                                    <button class="btn btn-secondary photo-btn">📁 Загрузить фото</button>
+                                    <button class="btn btn-secondary photo-btn">❌ Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label class="form-label required">Фамилия</label>
+                                <input type="text" class="form-input" placeholder="Иванова" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Имя</label>
+                                <input type="text" class="form-input" placeholder="Анна" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Отчество</label>
+                                <input type="text" class="form-input" placeholder="Петровна">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Дата рождения</label>
+                                <input type="date" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Пол</label>
+                                <select class="form-select">
+                                    <option value="">Выберите</option>
+                                    <option value="female">Женский</option>
+                                    <option value="male">Мужской</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">📞 Контактная информация</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Телефон</label>
+                                <input type="tel" class="form-input" placeholder="+996 555 123 456" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Email</label>
+                                <input type="email" class="form-input" placeholder="anna.ivanova@kindergarten.kg" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Адрес проживания</label>
+                            <textarea class="form-textarea" placeholder="г. Бишкек, ул. Советская 123, кв. 45"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Экстренный контакт</label>
+                                <input type="text" class="form-input" placeholder="Супруг: +996 777 888 999">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Семейное положение</label>
+                                <select class="form-select">
+                                    <option value="">Выберите</option>
+                                    <option value="single">Не замужем/не женат</option>
+                                    <option value="married">Замужем/женат</option>
+                                    <option value="divorced">В разводе</option>
+                                    <option value="widowed">Вдова/вдовец</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Education -->
+                <div class="tab-content active">
+                    <div class="form-section">
+                        <div class="section-title">🎓 Образование</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Уровень образования</label>
+                                <select class="form-select" required>
+                                    <option value="">Выберите</option>
+                                    <option value="secondary">Среднее</option>
+                                    <option value="secondary_special">Среднее специальное</option>
+                                    <option value="higher">Высшее</option>
+                                    <option value="postgraduate">Послевузовское</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Специальность</label>
+                                <input type="text" class="form-input" placeholder="Дошкольное образование" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Учебное заведение</label>
+                                <input type="text" class="form-input" placeholder="КГУ им. И. Арабаева" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Год окончания</label>
+                                <input type="number" class="form-input" placeholder="2015" min="1950" max="2025" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Дополнительное образование</label>
+                            <textarea class="form-textarea" placeholder="Курсы повышения квалификации, семинары, тренинги"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">🏆 Опыт работы</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Общий стаж работы</label>
+                                <input type="number" class="form-input" placeholder="5" min="0" required>
+                                <small style="color: #718096;">В годах</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Стаж в дошкольном образовании</label>
+                                <input type="number" class="form-input" placeholder="3" min="0">
+                                <small style="color: #718096;">В годах</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Предыдущие места работы</label>
+                            <textarea class="form-textarea" placeholder="Детский сад №15 (2020-2023), воспитатель средней группы"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Специализация и навыки</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Работа с детьми раннего возраста (1-3 года)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Работа с дошкольниками (3-7 лет)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Логопедическая работа</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Музыкальное развитие</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Физическое воспитание</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Работа с детьми с ОВЗ</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Position -->
+                <div class="tab-content">
+                    <div class="form-section">
+                        <div class="section-title">💼 Информация о должности</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Должность</label>
+                                <select class="form-select" required>
+                                    <option value="">Выберите должность</option>
+                                    <option value="teacher">Воспитатель</option>
+                                    <option value="senior_teacher">Старший воспитатель</option>
+                                    <option value="teacher_assistant">Помощник воспитателя</option>
+                                    <option value="specialist">Специалист</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Категория</label>
+                                <select class="form-select">
+                                    <option value="">Без категории</option>
+                                    <option value="second">Вторая категория</option>
+                                    <option value="first">Первая категория</option>
+                                    <option value="highest">Высшая категория</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Дата начала работы</label>
+                                <input type="date" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Испытательный срок</label>
+                                <select class="form-select">
+                                    <option value="">Без испытательного срока</option>
+                                    <option value="1">1 месяц</option>
+                                    <option value="2">2 месяца</option>
+                                    <option value="3">3 месяца</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Оклад</label>
+                                <input type="number" class="form-input" placeholder="25000" min="0">
+                                <small style="color: #718096;">В сомах</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Тип занятости</label>
+                                <select class="form-select">
+                                    <option value="full">Полная ставка</option>
+                                    <option value="part">Частичная занятость</option>
+                                    <option value="hourly">Почасовая оплата</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">📅 График работы</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Рабочие дни</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>Понедельник</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>Вторник</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>Среда</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>Четверг</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>Пятница</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox">
+                                        <span>Суббота</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Время начала работы</label>
+                                <input type="time" class="form-input" value="08:00">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Время окончания работы</label>
+                                <input type="time" class="form-input" value="17:00">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Особенности графика</label>
+                            <textarea class="form-textarea" placeholder="Сменный график, работа в выходные, гибкий график"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Access -->
+                <div class="tab-content">
+                    <div class="form-section">
+                        <div class="section-title">🔐 Доступ к системе</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Логин</label>
+                                <input type="text" class="form-input" placeholder="a.ivanova" required>
+                                <small style="color: #718096;">Уникальный логин для входа в систему</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Временный пароль</label>
+                                <input type="password" class="form-input" placeholder="********" required>
+                                <small style="color: #718096;">Будет отправлен на email</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Статус аккаунта</label>
+                            <select class="form-select">
+                                <option value="active">Активен</option>
+                                <option value="inactive">Неактивен</option>
+                                <option value="blocked">Заблокирован</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">🔑 Права доступа</div>
+                        
+                        <div class="permissions-grid">
+                            <div class="permission-card">
+                                <div class="permission-title">👶 Дети и группы</div>
+                                <div class="permission-desc">Просмотр и редактирование информации о детях в своих группах</div>
+                                <div class="permission-toggle">
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                                    <span>Разрешено</span>
+                                </div>
+                            </div>
+
+                            <div class="permission-card">
+                                <div class="permission-title">📅 Расписание</div>
+                                <div class="permission-desc">Просмотр и изменение расписания своих групп</div>
+                                <div class="permission-toggle">
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                                    <span>Разрешено</span>
+                                </div>
+                            </div>
+
+                            <div class="permission-card">
+                                <div class="permission-title">💰 Оплаты</div>
+                                <div class="permission-desc">Просмотр информации об оплатах детей</div>
+                                <div class="permission-toggle">
+                                    <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                                    <span>Запрещено</span>
+                                </div>
+                            </div>
+
+                            <div class="permission-card">
+                                <div class="permission-title">📊 Отчеты</div>
+                                <div class="permission-desc">Создание отчетов по своим группам</div>
+                                <div class="permission-toggle">
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                                    <span>Разрешено</span>
+                                </div>
+                            </div>
+
+                            <div class="permission-card">
+                                <div class="permission-title">📱 Связь с родителями</div>
+                                <div class="permission-desc">Отправка сообщений и уведомлений родителям</div>
+                                <div class="permission-toggle">
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                                    <span>Разрешено</span>
+                                </div>
+                            </div>
+
+                            <div class="permission-card">
+                                <div class="permission-title">🌐 Управление сайтом</div>
+                                <div class="permission-desc">Редактирование контента на сайте детского сада</div>
+                                <div class="permission-toggle">
+                                    <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                                    <span>Запрещено</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 5: Documents -->
+                <div class="tab-content">
+                    <div class="form-section">
+                        <div class="section-title">📄 Документы</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Паспорт (серия и номер)</label>
+                                <input type="text" class="form-input" placeholder="ID 1234567">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ИНН</label>
+                                <input type="text" class="form-input" placeholder="12345678901234">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Медицинская книжка</label>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="file" class="form-input" accept=".pdf,.jpg,.png">
+                                <span style="font-size: 12px; color: #718096;">PDF, JPG, PNG</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Диплом об образовании</label>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="file" class="form-input" accept=".pdf,.jpg,.png">
+                                <span style="font-size: 12px; color: #718096;">PDF, JPG, PNG</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Справка о несудимости</label>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="file" class="form-input" accept=".pdf,.jpg,.png">
+                                <span style="font-size: 12px; color: #718096;">PDF, JPG, PNG</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Дополнительные документы</label>
+                            <textarea class="form-textarea" placeholder="Список других документов или примечания"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">📝 Заметки</div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Внутренние заметки</label>
+                            <textarea class="form-textarea" placeholder="Дополнительная информация о сотруднике, особенности, рекомендации"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="form-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📋 Прогресс заполнения</div>
+                    <ul class="progress-steps">
+                        <li>
+                            <div class="step-icon completed">✓</div>
+                            <span>Личные данные</span>
+                        </li>
+                        <li>
+                            <div class="step-icon current">2</div>
+                            <span>Образование</span>
+                        </li>
+                        <li>
+                            <div class="step-icon pending">3</div>
+                            <span>Должность</span>
+                        </li>
+                        <li>
+                            <div class="step-icon pending">4</div>
+                            <span>Доступы</span>
+                        </li>
+                        <li>
+                            <div class="step-icon pending">5</div>
+                            <span>Документы</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">⚡ Быстрые шаблоны</div>
+                    <div class="template-grid">
+                        <div class="template-card">
+                            <div class="template-name">Младший воспитатель</div>
+                            <div class="template-desc">Базовые права для работы с детьми</div>
+                        </div>
+                        <div class="template-card">
+                            <div class="template-name">Старший воспитатель</div>
+                            <div class="template-desc">Расширенные права + координация</div>
+                        </div>
+                        <div class="template-card">
+                            <div class="template-name">Специалист</div>
+                            <div class="template-desc">Профильные занятия</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">💡 Рекомендации</div>
+                    <div class="help-text">
+                        <strong>Обязательные поля:</strong> ФИО, телефон, email, должность, дата начала работы.<br><br>
+                        <strong>Логин:</strong> Рекомендуется использовать первую букву имени + фамилию (например: a.ivanova).<br><br>
+                        <strong>Права:</strong> Давайте минимально необходимые права, их можно расширить позже.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 0;
+        const tabs = document.querySelectorAll('.tab-content');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        function switchTab(tabIndex) {
+            // Hide all tabs
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            tabs[tabIndex].classList.add('active');
+            tabButtons[tabIndex].classList.add('active');
+            
+            currentTab = tabIndex;
+        }
+
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+            const span = element.nextElementSibling;
+            span.textContent = element.classList.contains('active') ? 'Разрешено' : 'Запрещено';
+        }
+
+        // Auto-generate login from name
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstNameInput = document.querySelector('input[placeholder="Анна"]');
+            const lastNameInput = document.querySelector('input[placeholder="Иванова"]');
+            const loginInput = document.querySelector('input[placeholder="a.ivanova"]');
+
+            function generateLogin() {
+                const firstName = firstNameInput.value.toLowerCase();
+                const lastName = lastNameInput.value.toLowerCase();
+                
+                if (firstName && lastName) {
+                    const login = firstName.charAt(0) + '.' + lastName;
+                    loginInput.value = login;
+                }
+            }
+
+            firstNameInput.addEventListener('input', generateLogin);
+            lastNameInput.addEventListener('input', generateLogin);
+        });
+
+        // Form validation
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.style.borderColor = '#dc2626';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e2e8f0';
+                }
+            });
+
+            if (isValid) {
+                alert('✅ Роль воспитателя успешно создана!\n\nДанные для входа отправлены на email.');
+            } else {
+                alert('❌ Пожалуйста, заполните все обязательные поля');
+            }
+        });
+    </script>
+</body>
+</html>
