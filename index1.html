@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создание роли воспитателя</title>
+    <title>Редактор расписания группы</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -38,13 +38,16 @@
             align-items: center;
         }
 
-        .header h1 {
+        .header-left h1 {
             font-size: 24px;
             font-weight: 700;
             color: #1a202c;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            color: #718096;
+            font-size: 14px;
         }
 
         .header-actions {
@@ -53,7 +56,7 @@
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
@@ -76,25 +79,25 @@
             border: 1px solid #e2e8f0;
         }
 
+        .btn-success {
+            background: #22c55e;
+            color: white;
+        }
+
         .btn:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* Form Layout */
-        .form-container {
+        /* Layout */
+        .schedule-container {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 300px 1fr 280px;
             gap: 24px;
         }
 
-        .form-main {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .form-sidebar {
+        .schedule-sidebar,
+        .schedule-tools {
             background: white;
             border-radius: 16px;
             padding: 24px;
@@ -102,15 +105,21 @@
             height: fit-content;
         }
 
-        /* Tabs */
-        .form-tabs {
-            display: flex;
-            border-bottom: 2px solid #f1f3f4;
-            margin-bottom: 0;
+        .schedule-main {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .tab-btn {
-            padding: 16px 24px;
+        /* Week Tabs */
+        .week-tabs {
+            display: flex;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .week-tab {
+            flex: 1;
+            padding: 16px 12px;
             background: none;
             border: none;
             font-size: 14px;
@@ -119,227 +128,193 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border-bottom: 3px solid transparent;
+            text-align: center;
         }
 
-        .tab-btn.active {
+        .week-tab.active {
             color: #D91C5D;
             border-bottom-color: #D91C5D;
+            background: rgba(217,28,93,0.02);
         }
 
-        .tab-content {
-            padding: 32px;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Form Elements */
-        .form-section {
-            margin-bottom: 32px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1a202c;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-row-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 8px;
-        }
-
-        .form-label.required::after {
-            content: ' *';
-            color: #dc2626;
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: #D91C5D;
-            box-shadow: 0 0 0 3px rgba(217,28,93,0.1);
-        }
-
-        .form-textarea {
-            min-height: 80px;
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        /* Photo Upload */
-        .photo-upload {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .photo-preview {
-            width: 80px;
-            height: 80px;
-            border-radius: 12px;
+        .week-tab:hover:not(.active) {
             background: #f8f9fa;
+        }
+
+        .day-label {
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .day-date {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        /* Schedule Grid */
+        .schedule-content {
+            padding: 32px;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .time-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time-slot {
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            border: 2px dashed #e2e8f0;
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            border-right: 2px solid #f1f3f4;
         }
 
-        .photo-preview.has-image {
-            border: none;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .photo-actions {
+        .activities-column {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 2px;
         }
 
-        .photo-btn {
-            padding: 8px 16px;
-            font-size: 12px;
-            border-radius: 6px;
+        .activity-slot {
+            min-height: 60px;
+            background: #f8f9fa;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
-        /* Checkbox Groups */
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .activity-slot:hover {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.02);
+        }
+
+        .activity-slot.has-activity {
+            background: white;
+            border: 2px solid #e2e8f0;
+            cursor: grab;
+        }
+
+        .activity-slot.has-activity:hover {
+            border-color: #D91C5D;
+            box-shadow: 0 2px 8px rgba(217,28,93,0.15);
+        }
+
+        .activity-slot.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .activity-content {
+            display: flex;
+            align-items: center;
             gap: 12px;
         }
 
-        .checkbox-item {
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.meal { background: #22c55e; }
+        .activity-icon.lesson { background: #f59e0b; }
+        .activity-icon.rest { background: #3b82f6; }
+        .activity-icon.play { background: #8b5cf6; }
+        .activity-icon.special { background: #ef4444; }
+
+        .activity-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .activity-teacher {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .activity-actions {
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .activity-slot:hover .activity-actions {
+            opacity: 1;
+        }
+
+        .activity-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: none;
             cursor: pointer;
+            font-size: 12px;
             transition: all 0.2s ease;
         }
 
-        .checkbox-item:hover {
-            background: #e2e8f0;
+        .edit-btn {
+            background: #f59e0b;
+            color: white;
         }
 
-        .checkbox-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: #D91C5D;
+        .delete-btn {
+            background: #ef4444;
+            color: white;
         }
 
-        /* Permissions */
-        .permissions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-        }
-
-        .permission-card {
-            background: #f8f9fa;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 16px;
-        }
-
-        .permission-title {
-            font-weight: 600;
-            color: #1a202c;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .permission-desc {
-            font-size: 12px;
+        .empty-slot-text {
             color: #718096;
-            margin-bottom: 12px;
+            font-size: 12px;
+            text-align: center;
+            font-style: italic;
         }
 
-        .permission-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 44px;
-            height: 24px;
-            background: #e2e8f0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-switch.active {
+        /* Add Activity Button */
+        .add-activity {
             background: #D91C5D;
-        }
-
-        .toggle-switch::after {
-            content: '';
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: white;
-            top: 2px;
-            left: 2px;
-            transition: 0.3s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            top: 8px;
+            right: 8px;
+            opacity: 0;
         }
 
-        .toggle-switch.active::after {
-            transform: translateX(20px);
+        .activity-slot:hover .add-activity {
+            opacity: 1;
         }
 
         /* Sidebar */
@@ -361,68 +336,52 @@
             margin-bottom: 12px;
         }
 
-        .help-text {
-            font-size: 13px;
-            color: #718096;
-            line-height: 1.4;
+        .group-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
-        .progress-steps {
-            list-style: none;
-        }
-
-        .progress-steps li {
-            padding: 8px 0;
-            font-size: 14px;
+        .info-item {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: #718096;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        /* Templates */
+        .template-list {
+            display: flex;
+            flex-direction: column;
             gap: 8px;
         }
 
-        .step-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .step-icon.completed {
-            background: #22c55e;
-            color: white;
-        }
-
-        .step-icon.current {
-            background: #D91C5D;
-            color: white;
-        }
-
-        .step-icon.pending {
-            background: #f1f3f4;
-            color: #718096;
-        }
-
-        /* Quick Templates */
-        .template-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .template-card {
+        .template-item {
+            padding: 12px;
             background: #f8f9fa;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
-            padding: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .template-card:hover {
+        .template-item:hover {
             border-color: #D91C5D;
+            background: rgba(217,28,93,0.02);
         }
 
         .template-name {
@@ -437,15 +396,251 @@
             color: #718096;
         }
 
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            background: #f8f9fa;
+            color: #4a5568;
+            text-align: center;
+        }
+
+        .quick-btn:hover {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.02);
+            color: #D91C5D;
+        }
+
+        /* Tools Panel */
+        .tool-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tool-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .tool-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+
+        /* Activity Library */
+        .activity-library {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .library-item {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+
+        .library-item:hover {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.02);
+        }
+
+        .library-item:active {
+            cursor: grabbing;
+        }
+
+        .library-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .library-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        .library-name {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 12px;
+        }
+
+        /* Teachers List */
+        .teachers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .teacher-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .teacher-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #D91C5D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        .teacher-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .teacher-status {
+            margin-left: auto;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+
+        .teacher-status.busy {
+            background: #ef4444;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 24px 24px 0;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            padding: 0 24px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #D91C5D;
+            box-shadow: 0 0 0 3px rgba(217,28,93,0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
         /* Responsive */
-        @media (max-width: 1024px) {
-            .form-container {
+        @media (max-width: 1200px) {
+            .schedule-container {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
 
-            .form-row,
-            .form-row-3 {
-                grid-template-columns: 1fr;
+            .schedule-sidebar,
+            .schedule-tools {
+                display: none;
             }
         }
 
@@ -460,12 +655,28 @@
                 text-align: center;
             }
 
-            .form-tabs {
+            .week-tabs {
                 overflow-x: auto;
             }
 
-            .tab-content {
+            .week-tab {
+                min-width: 100px;
+                flex-shrink: 0;
+            }
+
+            .schedule-content {
                 padding: 20px;
+            }
+
+            .time-grid {
+                grid-template-columns: 60px 1fr;
+                gap: 8px;
+            }
+
+            .activity-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
         }
     </style>
@@ -474,580 +685,527 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>👩‍🏫 Создание роли воспитателя</h1>
+            <div class="header-left">
+                <h1>📅 Расписание группы "Солнышко"</h1>
+                <div class="header-subtitle">3-4 года • 18 детей • Комната №3</div>
+            </div>
             <div class="header-actions">
-                <button class="btn btn-secondary">❌ Отмена</button>
-                <button class="btn btn-primary">💾 Сохранить</button>
+                <button class="btn btn-secondary">↩️ Вернуться к группам</button>
+                <button class="btn btn-secondary">📋 Применить шаблон</button>
+                <button class="btn btn-success">💾 Сохранить изменения</button>
             </div>
         </div>
 
-        <!-- Form Container -->
-        <div class="form-container">
-            <!-- Main Form -->
-            <div class="form-main">
-                <!-- Tabs -->
-                <div class="form-tabs">
-                    <button class="tab-btn active" onclick="switchTab(0)">👤 Личные данные</button>
-                    <button class="tab-btn" onclick="switchTab(1)">🎓 Образование</button>
-                    <button class="tab-btn" onclick="switchTab(2)">💼 Должность</button>
-                    <button class="tab-btn" onclick="switchTab(3)">🔐 Доступы</button>
-                    <button class="tab-btn" onclick="switchTab(4)">📄 Документы</button>
-                </div>
-
-                <!-- Tab 1: Personal Info -->
-                <div class="tab-content active">
-                    <div class="form-section">
-                        <div class="section-title">👤 Основная информация</div>
-                        
-                        <div class="form-group">
-                            <div class="photo-upload">
-                                <div class="photo-preview">📷</div>
-                                <div class="photo-actions">
-                                    <button class="btn btn-secondary photo-btn">📁 Загрузить фото</button>
-                                    <button class="btn btn-secondary photo-btn">❌ Удалить</button>
-                                </div>
-                            </div>
+        <!-- Schedule Container -->
+        <div class="schedule-container">
+            <!-- Sidebar -->
+            <div class="schedule-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📊 Информация о группе</div>
+                    <div class="group-info">
+                        <div class="info-item">
+                            <span class="info-label">Возраст:</span>
+                            <span class="info-value">3-4 года</span>
                         </div>
-
-                        <div class="form-row-3">
-                            <div class="form-group">
-                                <label class="form-label required">Фамилия</label>
-                                <input type="text" class="form-input" placeholder="Иванова" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label required">Имя</label>
-                                <input type="text" class="form-input" placeholder="Анна" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Отчество</label>
-                                <input type="text" class="form-input" placeholder="Петровна">
-                            </div>
+                        <div class="info-item">
+                            <span class="info-label">Детей:</span>
+                            <span class="info-value">18 / 20</span>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Дата рождения</label>
-                                <input type="date" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Пол</label>
-                                <select class="form-select">
-                                    <option value="">Выберите</option>
-                                    <option value="female">Женский</option>
-                                    <option value="male">Мужской</option>
-                                </select>
-                            </div>
+                        <div class="info-item">
+                            <span class="info-label">Воспитатель:</span>
+                            <span class="info-value">Анна Петровна</span>
                         </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="section-title">📞 Контактная информация</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Телефон</label>
-                                <input type="tel" class="form-input" placeholder="+996 555 123 456" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label required">Email</label>
-                                <input type="email" class="form-input" placeholder="anna.ivanova@kindergarten.kg" required>
-                            </div>
+                        <div class="info-item">
+                            <span class="info-label">Помощник:</span>
+                            <span class="info-value">Ольга Викторовна</span>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Адрес проживания</label>
-                            <textarea class="form-textarea" placeholder="г. Бишкек, ул. Советская 123, кв. 45"></textarea>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Экстренный контакт</label>
-                                <input type="text" class="form-input" placeholder="Супруг: +996 777 888 999">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Семейное положение</label>
-                                <select class="form-select">
-                                    <option value="">Выберите</option>
-                                    <option value="single">Не замужем/не женат</option>
-                                    <option value="married">Замужем/женат</option>
-                                    <option value="divorced">В разводе</option>
-                                    <option value="widowed">Вдова/вдовец</option>
-                                </select>
-                            </div>
+                        <div class="info-item">
+                            <span class="info-label">Помещение:</span>
+                            <span class="info-value">Комната №3</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab 2: Education -->
-                <div class="tab-content">
-                    <div class="form-section">
-                        <div class="section-title">🎓 Образование</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Уровень образования</label>
-                                <select class="form-select" required>
-                                    <option value="">Выберите</option>
-                                    <option value="secondary">Среднее</option>
-                                    <option value="secondary_special">Среднее специальное</option>
-                                    <option value="higher">Высшее</option>
-                                    <option value="postgraduate">Послевузовское</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label required">Специальность</label>
-                                <input type="text" class="form-input" placeholder="Дошкольное образование" required>
-                            </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📋 Готовые шаблоны</div>
+                    <div class="template-list">
+                        <div class="template-item" onclick="applyTemplate('standard')">
+                            <div class="template-name">Стандартный режим</div>
+                            <div class="template-desc">Базовое расписание для 3-4 лет</div>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Учебное заведение</label>
-                                <input type="text" class="form-input" placeholder="КГУ им. И. Арабаева" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label required">Год окончания</label>
-                                <input type="number" class="form-input" placeholder="2015" min="1950" max="2025" required>
-                            </div>
+                        <div class="template-item" onclick="applyTemplate('extended')">
+                            <div class="template-name">Расширенная программа</div>
+                            <div class="template-desc">С дополнительными занятиями</div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Дополнительное образование</label>
-                            <textarea class="form-textarea" placeholder="Курсы повышения квалификации, семинары, тренинги"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="section-title">🏆 Опыт работы</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Общий стаж работы</label>
-                                <input type="number" class="form-input" placeholder="5" min="0" required>
-                                <small style="color: #718096;">В годах</small>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Стаж в дошкольном образовании</label>
-                                <input type="number" class="form-input" placeholder="3" min="0">
-                                <small style="color: #718096;">В годах</small>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Предыдущие места работы</label>
-                            <textarea class="form-textarea" placeholder="Детский сад №15 (2020-2023), воспитатель средней группы"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Специализация и навыки</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span>Работа с детьми раннего возраста (1-3 года)</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" checked>
-                                    <span>Работа с дошкольниками (3-7 лет)</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span>Логопедическая работа</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span>Музыкальное развитие</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span>Физическое воспитание</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span>Работа с детьми с ОВЗ</span>
-                                </label>
-                            </div>
+                        <div class="template-item" onclick="applyTemplate('short')">
+                            <div class="template-name">Краткий день</div>
+                            <div class="template-desc">До 16:00</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab 3: Position -->
-                <div class="tab-content">
-                    <div class="form-section">
-                        <div class="section-title">💼 Информация о должности</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Должность</label>
-                                <select class="form-select" required>
-                                    <option value="">Выберите должность</option>
-                                    <option value="teacher">Воспитатель</option>
-                                    <option value="senior_teacher">Старший воспитатель</option>
-                                    <option value="teacher_assistant">Помощник воспитателя</option>
-                                    <option value="specialist">Специалист</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Категория</label>
-                                <select class="form-select">
-                                    <option value="">Без категории</option>
-                                    <option value="second">Вторая категория</option>
-                                    <option value="first">Первая категория</option>
-                                    <option value="highest">Высшая категория</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Дата начала работы</label>
-                                <input type="date" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Испытательный срок</label>
-                                <select class="form-select">
-                                    <option value="">Без испытательного срока</option>
-                                    <option value="1">1 месяц</option>
-                                    <option value="2">2 месяца</option>
-                                    <option value="3">3 месяца</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Оклад</label>
-                                <input type="number" class="form-input" placeholder="25000" min="0">
-                                <small style="color: #718096;">В сомах</small>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Тип занятости</label>
-                                <select class="form-select">
-                                    <option value="full">Полная ставка</option>
-                                    <option value="part">Частичная занятость</option>
-                                    <option value="hourly">Почасовая оплата</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="section-title">📅 График работы</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Рабочие дни</label>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked>
-                                        <span>Понедельник</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked>
-                                        <span>Вторник</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked>
-                                        <span>Среда</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked>
-                                        <span>Четверг</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked>
-                                        <span>Пятница</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox">
-                                        <span>Суббота</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Время начала работы</label>
-                                <input type="time" class="form-input" value="08:00">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Время окончания работы</label>
-                                <input type="time" class="form-input" value="17:00">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Особенности графика</label>
-                            <textarea class="form-textarea" placeholder="Сменный график, работа в выходные, гибкий график"></textarea>
-                        </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-title">⚡ Быстрые действия</div>
+                    <div class="quick-actions">
+                        <button class="quick-btn" onclick="copyDay()">📄 Скопировать день</button>
+                        <button class="quick-btn" onclick="copyWeek()">📅 Скопировать всю неделю</button>
+                        <button class="quick-btn" onclick="clearDay()">🗑️ Очистить день</button>
+                        <button class="quick-btn" onclick="resetToTemplate()">🔄 Сбросить к шаблону</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Tab 4: Access -->
-                <div class="tab-content">
-                    <div class="form-section">
-                        <div class="section-title">🔐 Доступ к системе</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Логин</label>
-                                <input type="text" class="form-input" placeholder="a.ivanova" required>
-                                <small style="color: #718096;">Уникальный логин для входа в систему</small>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label required">Временный пароль</label>
-                                <input type="password" class="form-input" placeholder="********" required>
-                                <small style="color: #718096;">Будет отправлен на email</small>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Статус аккаунта</label>
-                            <select class="form-select">
-                                <option value="active">Активен</option>
-                                <option value="inactive">Неактивен</option>
-                                <option value="blocked">Заблокирован</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="section-title">🔑 Права доступа</div>
-                        
-                        <div class="permissions-grid">
-                            <div class="permission-card">
-                                <div class="permission-title">👶 Дети и группы</div>
-                                <div class="permission-desc">Просмотр и редактирование информации о детях в своих группах</div>
-                                <div class="permission-toggle">
-                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
-                                    <span>Разрешено</span>
-                                </div>
-                            </div>
-
-                            <div class="permission-card">
-                                <div class="permission-title">📅 Расписание</div>
-                                <div class="permission-desc">Просмотр и изменение расписания своих групп</div>
-                                <div class="permission-toggle">
-                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
-                                    <span>Разрешено</span>
-                                </div>
-                            </div>
-
-                            <div class="permission-card">
-                                <div class="permission-title">💰 Оплаты</div>
-                                <div class="permission-desc">Просмотр информации об оплатах детей</div>
-                                <div class="permission-toggle">
-                                    <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-                                    <span>Запрещено</span>
-                                </div>
-                            </div>
-
-                            <div class="permission-card">
-                                <div class="permission-title">📊 Отчеты</div>
-                                <div class="permission-desc">Создание отчетов по своим группам</div>
-                                <div class="permission-toggle">
-                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
-                                    <span>Разрешено</span>
-                                </div>
-                            </div>
-
-                            <div class="permission-card">
-                                <div class="permission-title">📱 Связь с родителями</div>
-                                <div class="permission-desc">Отправка сообщений и уведомлений родителям</div>
-                                <div class="permission-toggle">
-                                    <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
-                                    <span>Разрешено</span>
-                                </div>
-                            </div>
-
-                            <div class="permission-card">
-                                <div class="permission-title">🌐 Управление сайтом</div>
-                                <div class="permission-desc">Редактирование контента на сайте детского сада</div>
-                                <div class="permission-toggle">
-                                    <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-                                    <span>Запрещено</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Main Schedule -->
+            <div class="schedule-main">
+                <!-- Week Navigation -->
+                <div class="week-tabs">
+                    <button class="week-tab active" onclick="switchDay(0)">
+                        <div class="day-label">Понедельник</div>
+                        <div class="day-date">25 мар</div>
+                    </button>
+                    <button class="week-tab" onclick="switchDay(1)">
+                        <div class="day-label">Вторник</div>
+                        <div class="day-date">26 мар</div>
+                    </button>
+                    <button class="week-tab" onclick="switchDay(2)">
+                        <div class="day-label">Среда</div>
+                        <div class="day-date">27 мар</div>
+                    </button>
+                    <button class="week-tab" onclick="switchDay(3)">
+                        <div class="day-label">Четверг</div>
+                        <div class="day-date">28 мар</div>
+                    </button>
+                    <button class="week-tab" onclick="switchDay(4)">
+                        <div class="day-label">Пятница</div>
+                        <div class="day-date">29 мар</div>
+                    </button>
                 </div>
 
-                <!-- Tab 5: Documents -->
-                <div class="tab-content">
-                    <div class="form-section">
-                        <div class="section-title">📄 Документы</div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Паспорт (серия и номер)</label>
-                                <input type="text" class="form-input" placeholder="ID 1234567">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">ИНН</label>
-                                <input type="text" class="form-input" placeholder="12345678901234">
-                            </div>
+                <!-- Schedule Content -->
+                <div class="schedule-content">
+                    <div class="time-grid">
+                        <!-- Time Column -->
+                        <div class="time-column">
+                            <div class="time-slot">08:00</div>
+                            <div class="time-slot">09:00</div>
+                            <div class="time-slot">10:00</div>
+                            <div class="time-slot">11:00</div>
+                            <div class="time-slot">12:00</div>
+                            <div class="time-slot">13:00</div>
+                            <div class="time-slot">14:00</div>
+                            <div class="time-slot">15:00</div>
+                            <div class="time-slot">16:00</div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Медицинская книжка</label>
-                            <div style="display: flex; gap: 12px; align-items: center;">
-                                <input type="file" class="form-input" accept=".pdf,.jpg,.png">
-                                <span style="font-size: 12px; color: #718096;">PDF, JPG, PNG</span>
+                        <!-- Activities Column -->
+                        <div class="activities-column">
+                            <!-- 08:00 - Завтрак -->
+                            <div class="activity-slot has-activity" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)">
+                                <div class="activity-content">
+                                    <div class="activity-icon meal">🍽️</div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Завтрак</div>
+                                        <div class="activity-teacher">Анна Петровна</div>
+                                    </div>
+                                    <div class="activity-actions">
+                                        <button class="activity-btn edit-btn" onclick="editActivity(this)">✏️</button>
+                                        <button class="activity-btn delete-btn" onclick="deleteActivity(this)">🗑️</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Диплом об образовании</label>
-                            <div style="display: flex; gap: 12px; align-items: center;">
-                                <input type="file" class="form-input" accept=".pdf,.jpg,.png">
-                                <span style="font-size: 12px; color: #718096;">PDF, JPG, PNG</span>
+                            <!-- 09:00 - Развитие речи -->
+                            <div class="activity-slot has-activity" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)">
+                                <div class="activity-content">
+                                    <div class="activity-icon lesson">📚</div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Развитие речи</div>
+                                        <div class="activity-teacher">Анна Петровна</div>
+                                    </div>
+                                    <div class="activity-actions">
+                                        <button class="activity-btn edit-btn" onclick="editActivity(this)">✏️</button>
+                                        <button class="activity-btn delete-btn" onclick="deleteActivity(this)">🗑️</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Справка о несудимости</label>
-                            <div style="display: flex; gap: 12px; align-items: center;">
-                                <input type="file" class="form-input" accept=".pdf,.jpg,.png">
-                                <span style="font-size: 12px; color: #718096;">PDF, JPG, PNG</span>
+                            <!-- 10:00 - Музыка -->
+                            <div class="activity-slot has-activity" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)">
+                                <div class="activity-content">
+                                    <div class="activity-icon special">🎵</div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Музыка</div>
+                                        <div class="activity-teacher">Ольга Викторовна</div>
+                                    </div>
+                                    <div class="activity-actions">
+                                        <button class="activity-btn edit-btn" onclick="editActivity(this)">✏️</button>
+                                        <button class="activity-btn delete-btn" onclick="deleteActivity(this)">🗑️</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Дополнительные документы</label>
-                            <textarea class="form-textarea" placeholder="Список других документов или примечания"></textarea>
-                        </div>
-                    </div>
+                            <!-- 11:00 - Прогулка -->
+                            <div class="activity-slot has-activity" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)">
+                                <div class="activity-content">
+                                    <div class="activity-icon play">🏃</div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Прогулка</div>
+                                        <div class="activity-teacher">Мария Ивановна</div>
+                                    </div>
+                                    <div class="activity-actions">
+                                        <button class="activity-btn edit-btn" onclick="editActivity(this)">✏️</button>
+                                        <button class="activity-btn delete-btn" onclick="deleteActivity(this)">🗑️</button>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="form-section">
-                        <div class="section-title">📝 Заметки</div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Внутренние заметки</label>
-                            <textarea class="form-textarea" placeholder="Дополнительная информация о сотруднике, особенности, рекомендации"></textarea>
+                            <!-- 12:00 - Пустой слот -->
+                            <div class="activity-slot" ondragover="allowDrop(event)" ondrop="drop(event)" onclick="addActivity(this)">
+                                <div class="empty-slot-text">Нажмите, чтобы добавить занятие</div>
+                                <button class="add-activity">+ Добавить</button>
+                            </div>
+
+                            <!-- 13:00 - Тихий час -->
+                            <div class="activity-slot has-activity" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)">
+                                <div class="activity-content">
+                                    <div class="activity-icon rest">😴</div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Тихий час</div>
+                                        <div class="activity-teacher">Анна Петровна</div>
+                                    </div>
+                                    <div class="activity-actions">
+                                        <button class="activity-btn edit-btn" onclick="editActivity(this)">✏️</button>
+                                        <button class="activity-btn delete-btn" onclick="deleteActivity(this)">🗑️</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Остальные пустые слоты -->
+                            <div class="activity-slot" ondragover="allowDrop(event)" ondrop="drop(event)" onclick="addActivity(this)">
+                                <div class="empty-slot-text">Нажмите, чтобы добавить занятие</div>
+                                <button class="add-activity">+ Добавить</button>
+                            </div>
+
+                            <div class="activity-slot" ondragover="allowDrop(event)" ondrop="drop(event)" onclick="addActivity(this)">
+                                <div class="empty-slot-text">Нажмите, чтобы добавить занятие</div>
+                                <button class="add-activity">+ Добавить</button>
+                            </div>
+
+                            <div class="activity-slot" ondragover="allowDrop(event)" ondrop="drop(event)" onclick="addActivity(this)">
+                                <div class="empty-slot-text">Нажмите, чтобы добавить занятие</div>
+                                <button class="add-activity">+ Добавить</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sidebar -->
-            <div class="form-sidebar">
-                <div class="sidebar-section">
-                    <div class="sidebar-title">📋 Прогресс заполнения</div>
-                    <ul class="progress-steps">
-                        <li>
-                            <div class="step-icon completed">✓</div>
-                            <span>Личные данные</span>
-                        </li>
-                        <li>
-                            <div class="step-icon current">2</div>
-                            <span>Образование</span>
-                        </li>
-                        <li>
-                            <div class="step-icon pending">3</div>
-                            <span>Должность</span>
-                        </li>
-                        <li>
-                            <div class="step-icon pending">4</div>
-                            <span>Доступы</span>
-                        </li>
-                        <li>
-                            <div class="step-icon pending">5</div>
-                            <span>Документы</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="sidebar-section">
-                    <div class="sidebar-title">⚡ Быстрые шаблоны</div>
-                    <div class="template-grid">
-                        <div class="template-card">
-                            <div class="template-name">Младший воспитатель</div>
-                            <div class="template-desc">Базовые права для работы с детьми</div>
+            <!-- Tools Panel -->
+            <div class="schedule-tools">
+                <div class="tool-section">
+                    <div class="tool-title">📚 Библиотека занятий</div>
+                    <div class="activity-library">
+                        <div class="library-item" draggable="true" data-activity="breakfast">
+                            <div class="library-content">
+                                <div class="library-icon meal">🍽️</div>
+                                <span class="library-name">Завтрак</span>
+                            </div>
                         </div>
-                        <div class="template-card">
-                            <div class="template-name">Старший воспитатель</div>
-                            <div class="template-desc">Расширенные права + координация</div>
+                        <div class="library-item" draggable="true" data-activity="lesson">
+                            <div class="library-content">
+                                <div class="library-icon lesson">📚</div>
+                                <span class="library-name">Занятие</span>
+                            </div>
                         </div>
-                        <div class="template-card">
-                            <div class="template-name">Специалист</div>
-                            <div class="template-desc">Профильные занятия</div>
+                        <div class="library-item" draggable="true" data-activity="music">
+                            <div class="library-content">
+                                <div class="library-icon special">🎵</div>
+                                <span class="library-name">Музыка</span>
+                            </div>
+                        </div>
+                        <div class="library-item" draggable="true" data-activity="walk">
+                            <div class="library-content">
+                                <div class="library-icon play">🏃</div>
+                                <span class="library-name">Прогулка</span>
+                            </div>
+                        </div>
+                        <div class="library-item" draggable="true" data-activity="lunch">
+                            <div class="library-content">
+                                <div class="library-icon meal">🍽️</div>
+                                <span class="library-name">Обед</span>
+                            </div>
+                        </div>
+                        <div class="library-item" draggable="true" data-activity="sleep">
+                            <div class="library-content">
+                                <div class="library-icon rest">😴</div>
+                                <span class="library-name">Тихий час</span>
+                            </div>
+                        </div>
+                        <div class="library-item" draggable="true" data-activity="snack">
+                            <div class="library-content">
+                                <div class="library-icon meal">🥐</div>
+                                <span class="library-name">Полдник</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="sidebar-section">
-                    <div class="sidebar-title">💡 Рекомендации</div>
-                    <div class="help-text">
-                        <strong>Обязательные поля:</strong> ФИО, телефон, email, должность, дата начала работы.<br><br>
-                        <strong>Логин:</strong> Рекомендуется использовать первую букву имени + фамилию (например: a.ivanova).<br><br>
-                        <strong>Права:</strong> Давайте минимально необходимые права, их можно расширить позже.
+                <div class="tool-section">
+                    <div class="tool-title">👩‍🏫 Воспитатели</div>
+                    <div class="teachers-list">
+                        <div class="teacher-item">
+                            <div class="teacher-avatar">АП</div>
+                            <span class="teacher-name">Анна Петровна</span>
+                            <div class="teacher-status"></div>
+                        </div>
+                        <div class="teacher-item">
+                            <div class="teacher-avatar">ОВ</div>
+                            <span class="teacher-name">Ольга Викторовна</span>
+                            <div class="teacher-status"></div>
+                        </div>
+                        <div class="teacher-item">
+                            <div class="teacher-avatar">МИ</div>
+                            <span class="teacher-name">Мария Ивановна</span>
+                            <div class="teacher-status busy"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-section">
+                    <div class="tool-title">💡 Подсказки</div>
+                    <div style="font-size: 12px; color: #718096; line-height: 1.4;">
+                        <strong>Перетаскивание:</strong> Зажмите занятие и перетащите в нужное время.<br><br>
+                        <strong>Копирование:</strong> Используйте быстрые действия для копирования дня или недели.<br><br>
+                        <strong>Шаблоны:</strong> Применяйте готовые шаблоны для быстрого заполнения.
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Add/Edit Activity Modal -->
+    <div id="activityModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">➕ Добавить занятие</div>
+                <div class="modal-subtitle">12:00 - 13:00, Понедельник</div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Тип занятия</label>
+                    <select class="form-select" id="activityType">
+                        <option value="">Выберите тип</option>
+                        <option value="meal">🍽️ Питание</option>
+                        <option value="lesson">📚 Развивающее занятие</option>
+                        <option value="special">🎵 Занятие со специалистом</option>
+                        <option value="play">🏃 Активная деятельность</option>
+                        <option value="rest">😴 Отдых</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Название занятия</label>
+                    <input type="text" class="form-input" id="activityName" placeholder="Например: Развитие речи">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ответственный</label>
+                    <select class="form-select" id="activityTeacher">
+                        <option value="">Выберите воспитателя</option>
+                        <option value="anna">Анна Петровна (основной)</option>
+                        <option value="olga">Ольга Викторовна (помощник)</option>
+                        <option value="maria">Мария Ивановна (специалист)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Продолжительность</label>
+                    <select class="form-select" id="activityDuration">
+                        <option value="30">30 минут</option>
+                        <option value="60" selected>1 час</option>
+                        <option value="90">1.5 часа</option>
+                        <option value="120">2 часа</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+                    <button class="btn btn-primary" onclick="saveActivity()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let currentTab = 0;
-        const tabs = document.querySelectorAll('.tab-content');
-        const tabButtons = document.querySelectorAll('.tab-btn');
+        let currentDay = 0;
+        let draggedElement = null;
 
-        function switchTab(tabIndex) {
-            // Hide all tabs
-            tabs.forEach(tab => tab.classList.remove('active'));
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-
-            // Show selected tab
-            tabs[tabIndex].classList.add('active');
-            tabButtons[tabIndex].classList.add('active');
+        // Day switching
+        function switchDay(dayIndex) {
+            document.querySelectorAll('.week-tab').forEach((tab, index) => {
+                tab.classList.toggle('active', index === dayIndex);
+            });
+            currentDay = dayIndex;
             
-            currentTab = tabIndex;
+            // Here you would load the schedule for the selected day
+            console.log('Switched to day:', dayIndex);
         }
 
-        function toggleSwitch(element) {
-            element.classList.toggle('active');
-            const span = element.nextElementSibling;
-            span.textContent = element.classList.contains('active') ? 'Разрешено' : 'Запрещено';
+        // Drag and drop functionality
+        function dragStart(e) {
+            draggedElement = e.target.closest('.activity-slot');
+            draggedElement.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
         }
 
-        // Auto-generate login from name
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstNameInput = document.querySelector('input[placeholder="Анна"]');
-            const lastNameInput = document.querySelector('input[placeholder="Иванова"]');
-            const loginInput = document.querySelector('input[placeholder="a.ivanova"]');
+        function allowDrop(e) {
+            e.preventDefault();
+        }
 
-            function generateLogin() {
-                const firstName = firstNameInput.value.toLowerCase();
-                const lastName = lastNameInput.value.toLowerCase();
+        function drop(e) {
+            e.preventDefault();
+            const targetSlot = e.target.closest('.activity-slot');
+            
+            if (draggedElement && targetSlot && draggedElement !== targetSlot) {
+                // Swap activities or move to empty slot
+                const draggedContent = draggedElement.innerHTML;
+                const targetContent = targetSlot.innerHTML;
                 
-                if (firstName && lastName) {
-                    const login = firstName.charAt(0) + '.' + lastName;
-                    loginInput.value = login;
+                draggedElement.innerHTML = targetContent;
+                targetSlot.innerHTML = draggedContent;
+                
+                // Update classes
+                draggedElement.classList.toggle('has-activity', !targetContent.includes('empty-slot-text'));
+                targetSlot.classList.add('has-activity');
+                
+                console.log('Activity moved');
+            }
+            
+            if (draggedElement) {
+                draggedElement.classList.remove('dragging');
+                draggedElement = null;
+            }
+        }
+
+        // Add activity
+        function addActivity(slot) {
+            document.getElementById('activityModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Edit activity
+        function editActivity(button) {
+            const slot = button.closest('.activity-slot');
+            const title = slot.querySelector('.activity-title').textContent;
+            const teacher = slot.querySelector('.activity-teacher').textContent;
+            
+            document.getElementById('activityName').value = title;
+            document.getElementById('activityModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Delete activity
+        function deleteActivity(button) {
+            if (confirm('Удалить это занятие?')) {
+                const slot = button.closest('.activity-slot');
+                slot.innerHTML = `
+                    <div class="empty-slot-text">Нажмите, чтобы добавить занятие</div>
+                    <button class="add-activity" onclick="addActivity(this.parentElement)">+ Добавить</button>
+                `;
+                slot.classList.remove('has-activity');
+                slot.onclick = () => addActivity(slot);
+            }
+        }
+
+        // Modal functions
+        function closeModal() {
+            document.getElementById('activityModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveActivity() {
+            const type = document.getElementById('activityType').value;
+            const name = document.getElementById('activityName').value;
+            const teacher = document.getElementById('activityTeacher').value;
+            
+            if (!type || !name || !teacher) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            // Save activity logic here
+            alert('Занятие сохранено!');
+            closeModal();
+        }
+
+        // Template actions
+        function applyTemplate(templateName) {
+            if (confirm(`Применить шаблон "${templateName}"? Текущее расписание будет заменено.`)) {
+                alert(`Шаблон "${templateName}" применен!`);
+                // Apply template logic here
+            }
+        }
+
+        // Quick actions
+        function copyDay() {
+            alert('День скопирован в буфер обмена');
+        }
+
+        function copyWeek() {
+            alert('Неделя скопирована в буфер обмена');
+        }
+
+        function clearDay() {
+            if (confirm('Очистить расписание на текущий день?')) {
+                alert('День очищен');
+                // Clear day logic here
+            }
+        }
+
+        function resetToTemplate() {
+            if (confirm('Сбросить к базовому шаблону? Все изменения будут потеряны.')) {
+                alert('Расписание сброшено к шаблону');
+                // Reset logic here
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        alert('Расписание сохранено!');
+                        break;
+                    case 'c':
+                        e.preventDefault();
+                        copyDay();
+                        break;
                 }
             }
-
-            firstNameInput.addEventListener('input', generateLogin);
-            lastNameInput.addEventListener('input', generateLogin);
         });
 
-        // Form validation
-        document.querySelector('.btn-primary').addEventListener('click', function() {
-            const requiredFields = document.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value) {
-                    field.style.borderColor = '#dc2626';
-                    isValid = false;
-                } else {
-                    field.style.borderColor = '#e2e8f0';
-                }
-            });
+        // Close modal on outside click
+        document.getElementById('activityModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
 
-            if (isValid) {
-                alert('✅ Роль воспитателя успешно создана!\n\nДанные для входа отправлены на email.');
-            } else {
-                alert('❌ Пожалуйста, заполните все обязательные поля');
+        // Auto-save indication
+        let changes = false;
+        function markChanged() {
+            if (!changes) {
+                changes = true;
+                document.querySelector('.btn-success').innerHTML = '💾 Сохранить изменения*';
+            }
+        }
+
+        // Mark changes on activity modifications
+        document.addEventListener('dragend', markChanged);
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-btn') || e.target.classList.contains('edit-btn')) {
+                markChanged();
             }
         });
     </script>
