@@ -1,1029 +1,1895 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Онбординг и регистрация</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание группы</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap");
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Nunito", sans-serif;
-        background: #ffffff;
-        padding: 20px;
-        min-height: 100vh;
-      }
-
-      .phone-container {
-        max-width: 375px;
-        margin: 0 auto 30px;
-        background: white;
-        border-radius: 30px;
-        overflow: hidden;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
-        position: relative;
-        border: 1px solid #f5f5f5;
-      }
-
-      .screen {
-        padding: 30px 25px;
-        min-height: 700px;
-        background: #ffffff;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .onboarding-header {
-        text-align: center;
-        margin-bottom: 40px;
-      }
-
-      .skip-btn {
-        position: absolute;
-        top: 25px;
-        right: 25px;
-        background: none;
-        border: none;
-        color: #8b9dc3;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      .onboarding-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-
-      .onboarding-icon {
-        font-size: 120px;
-        margin-bottom: 30px;
-        animation: float 3s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px);
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        50% {
-          transform: translateY(-10px);
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #2d3748;
+            line-height: 1.5;
         }
-      }
 
-      .onboarding-title {
-        font-size: 28px;
-        font-weight: 800;
-        color: #2d3748;
-        margin-bottom: 15px;
-        line-height: 1.3;
-      }
-
-      .onboarding-subtitle {
-        font-size: 16px;
-        color: #8b9dc3;
-        line-height: 1.5;
-        margin-bottom: 40px;
-      }
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin: 30px 0;
-      }
-
-      .feature-item {
-        background: #f8f9fa;
-        padding: 25px 15px;
-        border-radius: 20px;
-        text-align: center;
-      }
-
-      .feature-icon {
-        font-size: 35px;
-        margin-bottom: 12px;
-      }
-
-      .feature-text {
-        font-size: 14px;
-        font-weight: 600;
-        color: #2d3748;
-      }
-
-      .dots-indicator {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin: 30px 0 20px;
-      }
-
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #e2e8f0;
-        transition: all 0.3s ease;
-      }
-
-      .dot.active {
-        background: #667eea;
-        width: 25px;
-        border-radius: 5px;
-      }
-
-      .primary-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 18px 30px;
-        border-radius: 25px;
-        font-weight: 700;
-        cursor: pointer;
-        font-size: 16px;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        transition: all 0.3s ease;
-        width: 100%;
-        margin: 10px 0;
-      }
-
-      .primary-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-      }
-
-      .secondary-btn {
-        background: white;
-        color: #667eea;
-        border: 2px solid #667eea;
-        padding: 16px 30px;
-        border-radius: 25px;
-        font-weight: 700;
-        cursor: pointer;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        width: 100%;
-        margin: 10px 0;
-      }
-
-      .auth-header {
-        text-align: center;
-        margin-bottom: 40px;
-      }
-
-      .auth-title {
-        font-size: 24px;
-        font-weight: 800;
-        color: #2d3748;
-        margin-bottom: 8px;
-      }
-
-      .auth-subtitle {
-        font-size: 16px;
-        color: #8b9dc3;
-      }
-
-      .role-selection {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin: 30px 0;
-      }
-
-      .role-card {
-        background: white;
-        border: 2px solid #f5f5f5;
-        border-radius: 20px;
-        padding: 25px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .role-card:hover,
-      .role-card.selected {
-        border-color: #667eea;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.1);
-      }
-
-      .role-icon {
-        font-size: 40px;
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .role-info h3 {
-        font-size: 18px;
-        font-weight: 700;
-        color: #2d3748;
-        margin-bottom: 5px;
-      }
-
-      .role-info p {
-        font-size: 14px;
-        color: #8b9dc3;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-label {
-        font-size: 14px;
-        font-weight: 600;
-        color: #2d3748;
-        margin-bottom: 8px;
-        display: block;
-      }
-
-      .form-input {
-        width: 100%;
-        padding: 15px 20px;
-        border: 2px solid #f5f5f5;
-        border-radius: 15px;
-        font-size: 16px;
-        font-family: "Nunito", sans-serif;
-        background: #f8f9fa;
-        transition: all 0.3s ease;
-      }
-
-      .form-input:focus {
-        outline: none;
-        border-color: #667eea;
-        background: white;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-      }
-
-      .verification-container {
-        text-align: center;
-      }
-
-      .verification-icon {
-        font-size: 80px;
-        margin-bottom: 25px;
-      }
-
-      .verification-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: #2d3748;
-        margin-bottom: 10px;
-      }
-
-      .verification-text {
-        font-size: 16px;
-        color: #8b9dc3;
-        margin-bottom: 30px;
-        line-height: 1.5;
-      }
-
-      .code-inputs {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin: 30px 0;
-      }
-
-      .code-input {
-        width: 50px;
-        height: 50px;
-        border: 2px solid #f5f5f5;
-        border-radius: 12px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        background: #f8f9fa;
-      }
-
-      .code-input:focus {
-        outline: none;
-        border-color: #667eea;
-        background: white;
-      }
-
-      .resend-text {
-        font-size: 14px;
-        color: #8b9dc3;
-        margin-top: 20px;
-      }
-
-      .resend-link {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .child-form {
-        margin-top: 20px;
-      }
-
-      .photo-upload {
-        text-align: center;
-        margin-bottom: 25px;
-      }
-
-      .photo-placeholder {
-        width: 100px;
-        height: 100px;
-        background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 40px;
-        margin: 0 auto 15px;
-        cursor: pointer;
-        border: 2px dashed #667eea;
-      }
-
-      .upload-text {
-        font-size: 14px;
-        color: #8b9dc3;
-        margin-bottom: 5px;
-      }
-
-      .success-container {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
-
-      .success-icon {
-        font-size: 100px;
-        margin-bottom: 30px;
-        animation: bounce 1s ease-in-out;
-      }
-
-      @keyframes bounce {
-        0%,
-        20%,
-        60%,
-        100% {
-          transform: translateY(0);
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        40% {
-          transform: translateY(-10px);
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        80% {
-          transform: translateY(-5px);
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-      }
 
-      .success-title {
-        font-size: 24px;
-        font-weight: 800;
-        color: #2d3748;
-        margin-bottom: 15px;
-      }
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
 
-      .success-text {
-        font-size: 16px;
-        color: #8b9dc3;
-        line-height: 1.5;
-        margin-bottom: 40px;
-      }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-      .checkbox-group {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        margin: 20px 0;
-      }
+        .btn-primary {
+            background: #D91C5D;
+            color: white;
+        }
 
-      .checkbox {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #667eea;
-        border-radius: 4px;
-        flex-shrink: 0;
-        margin-top: 2px;
-      }
+        .btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+        }
 
-      .checkbox-label {
-        font-size: 14px;
-        color: #2d3748;
-        line-height: 1.4;
-      }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
 
-      .screen-label {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 20px;
-        font-weight: 700;
-        color: #2d3748;
-      }
+        /* Form Layout */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
 
-      .screens-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 40px;
-        justify-content: center;
-      }
+        .form-main {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
-      .back-btn {
-        position: absolute;
-        top: 25px;
-        left: 25px;
-        background: none;
-        border: none;
-        color: #8b9dc3;
-        font-size: 20px;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="screens-container">
-      <!-- Онбординг 1 - Приветствие -->
-      <div>
-        <div class="screen-label">Онбординг - Приветствие</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="skip-btn">Пропустить</button>
+        .form-sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
 
-            <div class="onboarding-content">
-              <div class="onboarding-icon">🦊</div>
-              <h1 class="onboarding-title">
-                Добро пожаловать в наш детский сад!
-              </h1>
-              <p class="onboarding-subtitle">
-                Управляйте посещениями, оплатой и следите за развитием вашего
-                малыша
-              </p>
-            </div>
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
 
-            <div class="dots-indicator">
-              <div class="dot active"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-            </div>
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
 
-            <button class="primary-btn">Продолжить 🐰</button>
-          </div>
-        </div>
-      </div>
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-      <!-- Онбординг 2 - Функции -->
-      <div>
-        <div class="screen-label">Онбординг - Функции</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="skip-btn">Пропустить</button>
+        .section-desc {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 20px;
+        }
 
-            <div class="onboarding-content">
-              <div class="onboarding-icon">🐼</div>
-              <h1 class="onboarding-title">
-                Все необходимое в одном приложении
-              </h1>
-              <p class="onboarding-subtitle">
-                QR-коды, оплаты, комментарии воспитателей и многое другое
-              </p>
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-              <div class="features-grid">
-                <div class="feature-item">
-                  <div class="feature-icon">🦊</div>
-                  <div class="feature-text">Быстрая отметка через QR</div>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🐸</div>
-                  <div class="feature-text">Удобная оплата</div>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🐨</div>
-                  <div class="feature-text">Комментарии воспитателей</div>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🦁</div>
-                  <div class="feature-text">Push уведомления</div>
-                </div>
-              </div>
-            </div>
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
 
-            <div class="dots-indicator">
-              <div class="dot"></div>
-              <div class="dot active"></div>
-              <div class="dot"></div>
-            </div>
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
 
-            <button class="primary-btn">Продолжить 🐨</button>
-          </div>
-        </div>
-      </div>
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
 
-      <!-- Онбординг 3 - Безопасность -->
-      <div>
-        <div class="screen-label">Онбординг - Безопасность</div>
-        <div class="phone-container">
-          <div class="screen">
-            <div class="onboarding-content">
-              <div class="onboarding-icon">🛡️</div>
-              <h1 class="onboarding-title">Безопасность и удобство</h1>
-              <p class="onboarding-subtitle">
-                Ваши данные защищены, а интерфейс интуитивно понятен для всей
-                семьи
-              </p>
-            </div>
+        .form-label.required::after {
+            content: ' *';
+            color: #dc2626;
+        }
 
-            <div class="dots-indicator">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot active"></div>
-            </div>
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
 
-            <button class="primary-btn">Начать 🚀</button>
-            <button class="secondary-btn">У меня уже есть аккаунт</button>
-          </div>
-        </div>
-      </div>
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #D91C5D;
+            box-shadow: 0 0 0 3px rgba(217,28,93,0.1);
+        }
 
-      <!-- Выбор роли -->
-      <div>
-        <div class="screen-label">Выбор роли</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="back-btn">←</button>
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+        }
 
-            <div class="auth-header">
-              <h1 class="auth-title">Кто вы? 🤔</h1>
-              <p class="auth-subtitle">
-                Выберите свою роль для настройки приложения
-              </p>
-            </div>
+        /* Age Group Cards */
+        .age-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
 
-            <div class="role-selection">
-              <div class="role-card selected">
-                <div class="role-icon">🐰</div>
-                <div class="role-info">
-                  <h3>Родитель</h3>
-                  <p>Отметка посещений, оплата, просмотр комментариев</p>
-                </div>
-              </div>
+        .age-group {
+            padding: 16px 12px;
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-              <div class="role-card">
-                <div class="role-icon">🦁</div>
-                <div class="role-info">
-                  <h3>Воспитатель</h3>
-                  <p>Учет посещаемости, комментарии, работа с группой</p>
-                </div>
-              </div>
-            </div>
+        .age-group:hover {
+            border-color: #D91C5D;
+            transform: translateY(-2px);
+        }
 
-            <button class="primary-btn">Продолжить как родитель 🐰</button>
-          </div>
-        </div>
-      </div>
+        .age-group.selected {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.05);
+        }
 
-      <!-- Регистрация - данные родителя -->
-      <div>
-        <div class="screen-label">Регистрация родителя</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="back-btn">←</button>
+        .age-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
 
-            <div class="auth-header">
-              <h1 class="auth-title">Создание аккаунта 🐰</h1>
-              <p class="auth-subtitle">Заполните свои данные для регистрации</p>
-            </div>
+        .age-label {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
 
-            <div class="form-group">
-              <label class="form-label">Ваше имя</label>
-              <input
-                type="text"
-                class="form-input"
-                placeholder="Введите ваше полное имя"
-              />
-            </div>
+        .age-range {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 14px;
+        }
 
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-input"
-                placeholder="example@email.com"
-              />
-            </div>
+        /* Teachers Selection */
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
 
-            <div class="form-group">
-              <label class="form-label">Телефон (WhatsApp)</label>
-              <input
-                type="tel"
-                class="form-input"
-                placeholder="+996 700 123 456"
-              />
-            </div>
+        .teacher-card {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
 
-            <div class="form-group">
-              <label class="form-label">Пароль</label>
-              <input
-                type="password"
-                class="form-input"
-                placeholder="Создайте надежный пароль"
-              />
-            </div>
+        .teacher-card:hover {
+            border-color: #D91C5D;
+            transform: translateY(-2px);
+        }
 
-            <div class="checkbox-group">
-              <div class="checkbox"></div>
-              <label class="checkbox-label"
-                >Я согласен с условиями использования и политикой
-                конфиденциальности</label
-              >
-            </div>
+        .teacher-card.selected {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.05);
+        }
 
-            <button class="primary-btn">Продолжить 🚀</button>
-          </div>
-        </div>
-      </div>
+        .teacher-role {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #D91C5D;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
 
-      <!-- Подтверждение номера -->
-      <div>
-        <div class="screen-label">Подтверждение</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="back-btn">←</button>
+        .teacher-role.assistant {
+            background: #7192BD;
+        }
 
-            <div class="verification-container">
-              <div class="verification-icon">📱</div>
-              <h2 class="verification-title">Подтвердите номер</h2>
-              <p class="verification-text">
-                Мы отправили код подтверждения на номер<br /><strong
-                  >+996 700 123 456</strong
-                >
-              </p>
+        .teacher-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin: 0 auto 12px;
+        }
 
-              <div class="code-inputs">
-                <input type="text" class="code-input" maxlength="1" />
-                <input type="text" class="code-input" maxlength="1" />
-                <input type="text" class="code-input" maxlength="1" />
-                <input type="text" class="code-input" maxlength="1" />
-              </div>
+        .teacher-name {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 4px;
+        }
 
-              <button class="primary-btn">Подтвердить 🐸</button>
+        .teacher-info {
+            font-size: 12px;
+            color: #718096;
+            text-align: center;
+        }
 
-              <p class="resend-text">
-                Не получили код?
-                <a href="#" class="resend-link">Отправить повторно</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+        /* Room Selection */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
 
-      <!-- Данные о ребенке -->
-      <div>
-        <div class="screen-label">Данные ребенка</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="back-btn">←</button>
+        .room-card {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
 
-            <div class="auth-header">
-              <h1 class="auth-title">Расскажите о ребенке 👶</h1>
-              <p class="auth-subtitle">
-                Эта информация поможет нам лучше заботиться о малыше
-              </p>
-            </div>
+        .room-card:hover {
+            border-color: #D91C5D;
+            transform: translateY(-2px);
+        }
 
-            <div class="photo-upload">
-              <div class="photo-placeholder">📷</div>
-              <div class="upload-text">Добавить фото</div>
-              <div style="font-size: 12px; color: #8b9dc3">Необязательно</div>
-            </div>
+        .room-card.selected {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.05);
+        }
 
-            <div class="form-group">
-              <label class="form-label">Имя ребенка</label>
-              <input
-                type="text"
-                class="form-input"
-                placeholder="Введите имя и фамилию"
-              />
-            </div>
+        .room-card.occupied {
+            border-color: #dc2626;
+            background: #fef2f2;
+            cursor: not-allowed;
+        }
 
-            <div class="form-group">
-              <label class="form-label">Дата рождения</label>
-              <input type="date" class="form-input" />
-            </div>
+        .room-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
 
-            <div class="form-group">
-              <label class="form-label">Пол</label>
-              <div style="display: flex; gap: 15px">
-                <button
-                  style="
-                    flex: 1;
-                    padding: 15px;
-                    border: 2px solid #f5f5f5;
-                    border-radius: 15px;
-                    background: white;
-                    cursor: pointer;
-                  "
-                >
-                  👦 Мальчик
-                </button>
-                <button
-                  style="
-                    flex: 1;
-                    padding: 15px;
-                    border: 2px solid #667eea;
-                    border-radius: 15px;
-                    background: #f8f9ff;
-                    cursor: pointer;
-                    color: #667eea;
-                    font-weight: 600;
-                  "
-                >
-                  👧 Девочка
-                </button>
-              </div>
-            </div>
+        .room-info {
+            font-size: 12px;
+            color: #718096;
+        }
 
-            <div class="form-group">
-              <label class="form-label"
-                >Особые потребности (необязательно)</label
-              >
-              <input
-                type="text"
-                class="form-input"
-                placeholder="Аллергии, медицинские особенности"
-              />
-            </div>
+        .room-status {
+            margin-top: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
 
-            <button class="primary-btn">Отправить заявку 🌟</button>
-          </div>
-        </div>
-      </div>
+        .room-status.free {
+            background: #dcfce7;
+            color: #166534;
+        }
 
-      <!-- Заявка отправлена -->
-      <div>
-        <div class="screen-label">Заявка отправлена</div>
-        <div class="phone-container">
-          <div class="screen">
-            <div class="success-container">
-              <div class="success-icon">🎉</div>
-              <h2 class="success-title">Заявка отправлена!</h2>
-              <p class="success-text">
-                Ваша заявка передана администрации детского сада. Мы свяжемся с
-                вами в течение 24 часов для подтверждения записи.
-              </p>
+        .room-status.occupied {
+            background: #fee2e2;
+            color: #dc2626;
+        }
 
-              <div
-                style="
-                  background: #f8f9fa;
-                  padding: 20px;
-                  border-radius: 15px;
-                  margin: 20px 0;
-                  width: 100%;
-                "
-              >
-                <h3
-                  style="
-                    font-size: 16px;
-                    font-weight: 700;
-                    color: #2d3748;
-                    margin-bottom: 10px;
-                  "
-                >
-                  Что дальше? 🤔
-                </h3>
-                <ul
-                  style="
-                    font-size: 14px;
-                    color: #8b9dc3;
-                    line-height: 1.6;
-                    padding-left: 20px;
-                  "
-                >
-                  <li>Проверка документов администрацией</li>
-                  <li>Звонок для подтверждения</li>
-                  <li>Получение доступа к приложению</li>
-                  <li>Оплата первого месяца</li>
-                </ul>
-              </div>
+        /* Capacity Slider */
+        .capacity-slider {
+            margin: 16px 0;
+        }
 
-              <button class="primary-btn">Понятно! 🐰</button>
-              <button class="secondary-btn">Статус заявки 📋</button>
-            </div>
-          </div>
-        </div>
-      </div>
+        .slider-container {
+            position: relative;
+            margin: 20px 0;
+        }
 
-      <!-- Статус заявки -->
-      <div>
-        <div class="screen-label">Статус заявки</div>
-        <div class="phone-container">
-          <div class="screen">
-            <button class="back-btn">←</button>
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+            appearance: none;
+        }
 
-            <div class="auth-header">
-              <h1 class="auth-title">Статус заявки 📋</h1>
-              <p class="auth-subtitle">Отслеживайте прогресс рассмотрения</p>
-            </div>
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #D91C5D;
+            cursor: pointer;
+        }
 
-            <div
-              style="
-                background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-                color: white;
-                padding: 25px;
-                border-radius: 20px;
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #D91C5D;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        .capacity-display {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #D91C5D;
+            margin-top: 8px;
+        }
+
+        /* Schedule Template */
+        .template-preview {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .template-day {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .template-schedule {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            padding: 2px 0;
+        }
+
+        .schedule-time {
+            color: #718096;
+        }
+
+        .schedule-activity {
+            color: #4a5568;
+        }
+
+        /* Sidebar */
+        .sidebar-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #D91C5D;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        /* Add Child Section */
+        .add-child-section {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .add-child-header {
+            margin-bottom: 16px;
+        }
+
+        .add-child-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        /* Search Child */
+        .search-child-container {
+            position: relative;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f3f4;
+            transition: all 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .search-result-details {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        /* Quick Add Child */
+        .quick-add-child {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .quick-add-header {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 12px;
+        }
+
+        .quick-add-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 100px 120px;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* Children in Group */
+        .children-in-group {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .children-header {
+            background: #f1f3f4;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .capacity-indicator {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .capacity-indicator.available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .capacity-indicator.full {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .capacity-indicator.warning {
+            background: #fef3e2;
+            color: #d97706;
+        }
+
+        .empty-children-state {
+            padding: 40px 20px;
+            text-align: center;
+            color: #718096;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .empty-hint {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .child-in-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .child-in-group:last-child {
+            border-bottom: none;
+        }
+
+        .child-in-group:hover {
+            background: #f8f9fa;
+        }
+
+        .child-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .child-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .child-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .child-details {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .child-medical {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .child-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .child-status.new {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .child-status.existing {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .remove-child {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #ef4444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .remove-child:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        .children-in-group {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #fafafa;
+            overflow: hidden;
+        }
+
+        .children-header {
+            background: #f1f3f4;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .capacity-indicator {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .capacity-indicator.available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .capacity-indicator.full {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .child-in-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .child-in-group:last-of-type {
+            border-bottom: none;
+        }
+
+        .child-in-group:hover {
+            background: #f8f9fa;
+        }
+
+        .child-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .child-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .child-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .child-details {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .child-medical {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .child-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .child-status.new {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .child-status.transfer {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .child-status.waiting {
+            background: #fef3e2;
+            color: #d97706;
+        }
+
+        .remove-child {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #ef4444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .remove-child:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .add-child-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 24px;
+            background: #f8f9fa;
+            border: 2px dashed #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #718096;
+        }
+
+        .add-child-placeholder:hover {
+            border-color: #D91C5D;
+            color: #D91C5D;
+            background: rgba(217,28,93,0.02);
+        }
+
+        .add-icon {
+            font-size: 20px;
+        }
+
+        .add-text {
+            font-weight: 600;
+        }
+
+        /* Child Selection Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .modal-tab {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-tab.active {
+            background: #D91C5D;
+            color: white;
+            border-color: #D91C5D;
+        }
+
+        .available-children {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .available-child {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .available-child:hover {
+            border-color: #D91C5D;
+            transform: translateY(-2px);
+        }
+
+        .available-child.selected {
+            border-color: #D91C5D;
+            background: rgba(217,28,93,0.05);
+        }
+
+        .available-child-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .available-child-info {
+            flex: 1;
+        }
+
+        .available-child-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 2px;
+        }
+
+        .available-child-details {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .child-status-badge {
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-waiting {
+            background: #fef3e2;
+            color: #d97706;
+        }
+
+        .status-transfer {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* New Child Form */
+        .new-child-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row,
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .age-groups,
+            .teachers-grid,
+            .rooms-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
                 text-align: center;
-                margin-bottom: 30px;
-              "
-            >
-              <div style="font-size: 40px; margin-bottom: 15px">⏳</div>
-              <div
-                style="font-size: 18px; font-weight: 700; margin-bottom: 5px"
-              >
-                В обработке
-              </div>
-              <div style="font-size: 14px; opacity: 0.9">
-                Заявка от 15.10.2025
-              </div>
+            }
+
+            .age-groups,
+            .teachers-grid,
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>👶 Создание новой группы</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary">❌ Отмена</button>
+                <button class="btn btn-primary">💾 Создать группу</button>
             </div>
-
-            <div style="display: flex; flex-direction: column; gap: 15px">
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  padding: 15px;
-                  background: #f8f9fa;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  style="
-                    width: 30px;
-                    height: 30px;
-                    background: #4ecdc4;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    font-size: 14px;
-                  "
-                >
-                  ✓
-                </div>
-                <div>
-                  <div style="font-weight: 600; color: #2d3748">
-                    Заявка получена
-                  </div>
-                  <div style="font-size: 12px; color: #8b9dc3">
-                    15.10.2025, 14:30
-                  </div>
-                </div>
-              </div>
-
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  padding: 15px;
-                  background: #fff5e6;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  style="
-                    width: 30px;
-                    height: 30px;
-                    background: #f39c12;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    font-size: 14px;
-                  "
-                >
-                  ⏳
-                </div>
-                <div>
-                  <div style="font-weight: 600; color: #2d3748">
-                    Проверка документов
-                  </div>
-                  <div style="font-size: 12px; color: #8b9dc3">
-                    В процессе...
-                  </div>
-                </div>
-              </div>
-
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  padding: 15px;
-                  background: #f5f5f5;
-                  border-radius: 15px;
-                  opacity: 0.6;
-                "
-              >
-                <div
-                  style="
-                    width: 30px;
-                    height: 30px;
-                    background: #e2e8f0;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #8b9dc3;
-                    font-size: 14px;
-                  "
-                >
-                  ○
-                </div>
-                <div>
-                  <div style="font-weight: 600; color: #8b9dc3">Одобрение</div>
-                  <div style="font-size: 12px; color: #8b9dc3">Ожидание</div>
-                </div>
-              </div>
-
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  padding: 15px;
-                  background: #f5f5f5;
-                  border-radius: 15px;
-                  opacity: 0.6;
-                "
-              >
-                <div
-                  style="
-                    width: 30px;
-                    height: 30px;
-                    background: #e2e8f0;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #8b9dc3;
-                    font-size: 14px;
-                  "
-                >
-                  ○
-                </div>
-                <div>
-                  <div style="font-weight: 600; color: #8b9dc3">
-                    Доступ к приложению
-                  </div>
-                  <div style="font-size: 12px; color: #8b9dc3">Ожидание</div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              style="
-                background: #e3f2fd;
-                padding: 20px;
-                border-radius: 15px;
-                margin-top: 30px;
-              "
-            >
-              <h3
-                style="
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #2d3748;
-                  margin-bottom: 10px;
-                "
-              >
-                📞 Контакты
-              </h3>
-              <p style="font-size: 14px; color: #8b9dc3; margin-bottom: 8px">
-                Вопросы? Звоните нам:
-              </p>
-              <p style="font-size: 16px; font-weight: 600; color: #667eea">
-                +996 700 123 456
-              </p>
-            </div>
-          </div>
         </div>
-      </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <!-- Main Form -->
+            <div class="form-main">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <div class="section-title">📝 Основная информация</div>
+                    <div class="section-desc">
+                        Укажите название группы, возрастную категорию и основные параметры
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required">Название группы</label>
+                            <input type="text" class="form-input" placeholder="Солнышко" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Краткое описание</label>
+                            <input type="text" class="form-input" placeholder="Младшая группа для активных детей">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Возрастная категория</label>
+                        <div class="age-groups">
+                            <div class="age-group" onclick="selectAge(this)">
+                                <div class="age-icon">🍼</div>
+                                <div class="age-label">Ясельная</div>
+                                <div class="age-range">1-2 года</div>
+                            </div>
+                            <div class="age-group" onclick="selectAge(this)">
+                                <div class="age-icon">🧸</div>
+                                <div class="age-label">Младшая</div>
+                                <div class="age-range">2-3 года</div>
+                            </div>
+                            <div class="age-group selected" onclick="selectAge(this)">
+                                <div class="age-icon">🌞</div>
+                                <div class="age-label">Младшая</div>
+                                <div class="age-range">3-4 года</div>
+                            </div>
+                            <div class="age-group" onclick="selectAge(this)">
+                                <div class="age-icon">🌈</div>
+                                <div class="age-label">Средняя</div>
+                                <div class="age-range">4-5 лет</div>
+                            </div>
+                            <div class="age-group" onclick="selectAge(this)">
+                                <div class="age-icon">⭐</div>
+                                <div class="age-label">Старшая</div>
+                                <div class="age-range">5-6 лет</div>
+                            </div>
+                            <div class="age-group" onclick="selectAge(this)">
+                                <div class="age-icon">🎓</div>
+                                <div class="age-label">Подготовительная</div>
+                                <div class="age-range">6-7 лет</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required">Тип программы</label>
+                            <select class="form-select" required>
+                                <option value="">Выберите программу</option>
+                                <option value="standard">Стандартная программа</option>
+                                <option value="extended">Расширенная программа</option>
+                                <option value="short">Краткий день (до 16:00)</option>
+                                <option value="specialized">Специализированная</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Язык обучения</label>
+                            <select class="form-select">
+                                <option value="kg">Кыргызский</option>
+                                <option value="ru" selected>Русский</option>
+                                <option value="mixed">Смешанный</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capacity -->
+                <div class="form-section">
+                    <div class="section-title">👥 Вместимость группы</div>
+                    <div class="section-desc">
+                        Установите максимальное количество детей в группе
+                    </div>
+
+                    <div class="capacity-slider">
+                        <input type="range" class="slider" id="capacitySlider" min="5" max="30" value="18" oninput="updateCapacity(this.value)">
+                        <div class="slider-labels">
+                            <span>5 детей</span>
+                            <span>30 детей</span>
+                        </div>
+                        <div class="capacity-display" id="capacityDisplay">18 детей</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Особые требования к наполняемости</label>
+                        <textarea class="form-textarea" placeholder="Например: дети с особыми потребностями, индивидуальный подход"></textarea>
+                    </div>
+                </div>
+
+                <!-- Teacher Assignment -->
+                <div class="form-section">
+                    <div class="section-title">👩‍🏫 Воспитатель группы</div>
+                    <div class="section-desc">
+                        Выберите воспитателя, который будет ответственным за группу
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Воспитатель</label>
+                        <select class="form-select" required>
+                            <option value="">Выберите воспитателя</option>
+                            <option value="anna" selected>Анна Петровна (стаж: 5 лет, категория: 1)</option>
+                            <option value="maria">Мария Ивановна (стаж: 8 лет, категория: высшая)</option>
+                            <option value="elena">Елена Сергеевна (стаж: 3 года, категория: 2)</option>
+                            <option value="olga">Ольга Викторовна (стаж: 6 лет, категория: 1)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Children Assignment -->
+                <div class="form-section">
+                    <div class="section-title">👶 Дети в группе</div>
+                    <div class="section-desc">
+                        Добавьте детей в группу. Вместимость: <strong id="capacityDisplay">18 детей</strong>
+                    </div>
+
+                    <!-- Add Child Section -->
+                    <div class="add-child-section">
+                        <div class="add-child-header">
+                            <h4>➕ Добавить ребенка</h4>
+                        </div>
+                        
+                        <!-- Search existing child -->
+                        <div class="form-group">
+                            <label class="form-label">Поиск существующего ребенка</label>
+                            <div class="search-child-container">
+                                <input type="text" class="form-input" id="childSearch" placeholder="Начните вводить имя или фамилию..." onkeyup="searchChildren(this.value)">
+                                <div class="search-results" id="searchResults"></div>
+                            </div>
+                        </div>
+
+                        <!-- Quick add new child -->
+                        <div class="quick-add-child">
+                            <div class="quick-add-header">
+                                <span>Или быстро добавить нового:</span>
+                            </div>
+                            <div class="quick-add-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" class="form-input" placeholder="Имя ребенка" id="quickChildName">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-input" placeholder="Фамилия" id="quickChildSurname">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" class="form-input" id="quickChildBirth">
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-select" id="quickChildGender">
+                                            <option value="">Пол</option>
+                                            <option value="male">Мальчик</option>
+                                            <option value="female">Девочка</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="quickAddChild()">
+                                        ➕ Добавить
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-input" placeholder="ФИО родителя" id="quickParentName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Children List -->
+                    <div class="children-in-group" id="childrenInGroup">
+                        <div class="children-header">
+                            <span>Добавлено детей: <strong id="childrenCount">0</strong> из <span id="maxCapacity">18</span></span>
+                            <span class="capacity-indicator available" id="capacityIndicator">✅ Есть места</span>
+                        </div>
+                        
+                        <div class="empty-children-state" id="emptyState">
+                            <div class="empty-icon">👶</div>
+                            <div class="empty-text">Дети пока не добавлены</div>
+                            <div class="empty-hint">Используйте поиск выше или создайте нового ребенка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule Template -->
+                <div class="form-section">
+                    <div class="section-title">📅 Шаблон расписания</div>
+                    <div class="section-desc">
+                        Выберите базовый шаблон расписания для группы
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Шаблон расписания</label>
+                        <select class="form-select" onchange="updateSchedulePreview(this.value)">
+                            <option value="">Выберите шаблон</option>
+                            <option value="standard" selected>Стандартный режим 3-4 года</option>
+                            <option value="extended">Расширенная программа 3-4 года</option>
+                            <option value="short">Краткий день 3-4 года</option>
+                        </select>
+                    </div>
+
+                    <div class="template-preview" id="schedulePreview">
+                        <div class="template-day">📅 Понедельник (предварительный просмотр)</div>
+                        <div class="template-schedule">
+                            <div class="schedule-item">
+                                <span class="schedule-time">08:00 - 08:30</span>
+                                <span class="schedule-activity">Завтрак</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-time">09:00 - 09:30</span>
+                                <span class="schedule-activity">Развитие речи</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-time">10:00 - 10:30</span>
+                                <span class="schedule-activity">Музыка</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-time">11:00 - 12:00</span>
+                                <span class="schedule-activity">Прогулка</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-time">12:00 - 12:30</span>
+                                <span class="schedule-activity">Обед</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-time">13:00 - 15:00</span>
+                                <span class="schedule-activity">Тихий час</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Settings -->
+                <div class="form-section">
+                    <div class="section-title">⚙️ Дополнительные настройки</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Статус группы</label>
+                            <select class="form-select">
+                                <option value="active">Активна</option>
+                                <option value="forming">Формируется</option>
+                                <option value="suspended">Приостановлена</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Дата открытия</label>
+                            <input type="date" class="form-input" value="2025-09-01">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Особенности группы</label>
+                        <textarea class="form-textarea" placeholder="Особые программы, методики, оборудование"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="form-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📊 Статистика сада</div>
+                    <div class="quick-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Активных групп</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">142</div>
+                            <div class="stat-label">Детей всего</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">18</div>
+                            <div class="stat-label">Воспитателей</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">В листе ожидания</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">💡 Рекомендации</div>
+                    <div class="help-text">
+                        <strong>Название:</strong> Используйте яркие, запоминающиеся названия (Солнышко, Радуга, Звездочки).<br><br>
+                        <strong>Возраст:</strong> Соблюдайте возрастные нормы наполняемости групп.<br><br>
+                        <strong>Воспитатель:</strong> Должен иметь соответствующее образование и опыт работы с данным возрастом.<br><br>
+                        <strong>Дети:</strong> Можно создать группу без детей и добавить их позже.
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">✅ Проверка готовности</div>
+                    <div class="help-text">
+                        <div style="color: #059669; margin-bottom: 8px;">✓ Название задано</div>
+                        <div style="color: #059669; margin-bottom: 8px;">✓ Возраст выбран</div>
+                        <div style="color: #059669; margin-bottom: 8px;">✓ Воспитатель назначен</div>
+                        <div style="color: #718096; margin-bottom: 8px;" id="childrenStatus">○ Дети: не добавлены</div>
+                        <div style="color: #d97706;">⚠ Выберите шаблон расписания</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📋 Что будет создано</div>
+                    <div class="help-text">
+                        • Группа с базовым расписанием<br>
+                        • Доступы для воспитателя<br>
+                        • Страница группы на сайте<br>
+                        • Система учета посещаемости<br>
+                        • Чат для родителей группы<br><br>
+                        
+                        <strong>Если дети добавлены:</strong><br>
+                        • Аккаунты для родителей<br>
+                        • Личные дела детей<br>
+                        • Уведомления о зачислении
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
+
+    <script>
+        // Age group selection
+        function selectAge(element) {
+            document.querySelectorAll('.age-group').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // Teacher selection
+        function selectTeacher(element, type) {
+            const container = element.closest('.teachers-grid');
+            container.querySelectorAll('.teacher-card').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // Room selection
+        function selectRoom(element) {
+            if (element.classList.contains('occupied')) return;
+            
+            document.querySelectorAll('.room-card').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // Capacity slider
+        function updateCapacity(value) {
+            document.getElementById('capacityDisplay').textContent = value + ' детей';
+        }
+
+        // Schedule preview
+        function updateSchedulePreview(template) {
+            const preview = document.getElementById('schedulePreview');
+            const schedules = {
+                standard: {
+                    title: '📅 Понедельник (Стандартный режим)',
+                    items: [
+                        { time: '08:00 - 08:30', activity: 'Завтрак' },
+                        { time: '09:00 - 09:30', activity: 'Развитие речи' },
+                        { time: '10:00 - 10:30', activity: 'Музыка' },
+                        { time: '11:00 - 12:00', activity: 'Прогулка' },
+                        { time: '12:00 - 12:30', activity: 'Обед' },
+                        { time: '13:00 - 15:00', activity: 'Тихий час' },
+                        { time: '15:30 - 16:00', activity: 'Полдник' }
+                    ]
+                },
+                extended: {
+                    title: '📅 Понедельник (Расширенная программа)',
+                    items: [
+                        { time: '08:00 - 08:30', activity: 'Завтрак' },
+                        { time: '09:00 - 09:30', activity: 'Развитие речи' },
+                        { time: '10:00 - 10:30', activity: 'Музыка' },
+                        { time: '11:00 - 11:30', activity: 'Английский язык' },
+                        { time: '12:00 - 13:00', activity: 'Прогулка' },
+                        { time: '13:00 - 13:30', activity: 'Обед' },
+                        { time: '14:00 - 15:30', activity: 'Тихий час' },
+                        { time: '16:00 - 16:30', activity: 'ИЗО' }
+                    ]
+                },
+                short: {
+                    title: '📅 Понедельник (Краткий день)',
+                    items: [
+                        { time: '08:00 - 08:30', activity: 'Завтрак' },
+                        { time: '09:00 - 09:30', activity: 'Занятие' },
+                        { time: '10:00 - 11:00', activity: 'Прогулка' },
+                        { time: '11:30 - 12:00', activity: 'Обед' },
+                        { time: '12:30 - 14:00', activity: 'Тихий час' },
+                        { time: '14:30 - 15:00', activity: 'Полдник' },
+                        { time: '15:00 - 16:00', activity: 'Игры и уход домой' }
+                    ]
+                }
+            };
+
+            if (schedules[template]) {
+                const schedule = schedules[template];
+                preview.innerHTML = `
+                    <div class="template-day">${schedule.title}</div>
+                    <div class="template-schedule">
+                        ${schedule.items.map(item => 
+                            `<div class="schedule-item">
+                                <span class="schedule-time">${item.time}</span>
+                                <span class="schedule-activity">${item.activity}</span>
+                            </div>`
+                        ).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        // Children management
+        let childrenInGroup = 3;
+        let maxCapacity = 18;
+
+        function updateChildrenCount() {
+            document.getElementById('childrenCount').textContent = childrenInGroup;
+            document.getElementById('maxCapacity').textContent = maxCapacity;
+            
+            const indicator = document.getElementById('capacityIndicator');
+            if (childrenInGroup >= maxCapacity) {
+                indicator.textContent = '⚠️ Группа полная';
+                indicator.className = 'capacity-indicator full';
+            } else {
+                indicator.textContent = '✅ Есть места';
+                indicator.className = 'capacity-indicator available';
+            }
+        }
+
+        function removeChild(button) {
+            const childElement = button.closest('.child-in-group');
+            const childName = childElement.querySelector('.child-name').textContent;
+            
+            if (confirm(`Удалить ${childName} из группы?`)) {
+                childElement.remove();
+                childrenInGroup--;
+                updateChildrenCount();
+            }
+        }
+
+        function showChildOptions() {
+            const modal = document.getElementById('childSelectionModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Create modal if it doesn't exist
+                createChildSelectionModal();
+            }
+        }
+
+        function showExistingChildren() {
+            createChildSelectionModal();
+        }
+
+        function addNewChild() {
+            createNewChildModal();
+        }
+
+        function importChildren() {
+            alert('📤 Функция импорта из Excel будет доступна в следующей версии');
+        }
+
+        function createChildSelectionModal() {
+            const modalHTML = `
+                <div id="childSelectionModal" class="modal-overlay active">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <div class="modal-title">👶 Выбор детей для группы</div>
+                            <div class="modal-subtitle">Выберите детей из доступных или создайте новых</div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-tabs">
+                                <div class="modal-tab active" onclick="switchChildTab(0)">📋 Доступные дети (5)</div>
+                                <div class="modal-tab" onclick="switchChildTab(1)">⏳ Лист ожидания (3)</div>
+                                <div class="modal-tab" onclick="switchChildTab(2)">🔄 Переводы (2)</div>
+                            </div>
+                            
+                            <div class="available-children">
+                                <div class="available-child" onclick="toggleChildSelection(this)">
+                                    <div class="available-child-header">
+                                        <div class="child-avatar">👧</div>
+                                        <div class="available-child-info">
+                                            <div class="available-child-name">Диана Кузнецова</div>
+                                            <div class="available-child-details">4 года 1 месяц • На рассмотрении</div>
+                                        </div>
+                                        <div class="child-status-badge status-waiting">Ожидание</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="available-child" onclick="toggleChildSelection(this)">
+                                    <div class="available-child-header">
+                                        <div class="child-avatar">👦</div>
+                                        <div class="available-child-info">
+                                            <div class="available-child-name">Никита Волков</div>
+                                            <div class="available-child-details">3 года 7 месяцев • Документы готовы</div>
+                                        </div>
+                                        <div class="child-status-badge status-waiting">Ожидание</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="available-child" onclick="toggleChildSelection(this)">
+                                    <div class="available-child-header">
+                                        <div class="child-avatar">👧</div>
+                                        <div class="available-child-info">
+                                            <div class="available-child-name">Алина Федорова</div>
+                                            <div class="available-child-details">4 года 3 месяца • Из группы "Радуга"</div>
+                                        </div>
+                                        <div class="child-status-badge status-transfer">Перевод</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-secondary" onclick="closeChildModal()">Отмена</button>
+                            <button class="btn btn-primary" onclick="addSelectedChildren()">➕ Добавить выбранных</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function createNewChildModal() {
+            const modalHTML = `
+                <div id="newChildModal" class="modal-overlay active">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <div class="modal-title">➕ Добавить нового ребенка</div>
+                            <div class="modal-subtitle">Быстрое добавление ребенка в группу</div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="new-child-form">
+                                <div class="form-group">
+                                    <label class="form-label">Фамилия *</label>
+                                    <input type="text" class="form-input" placeholder="Иванов" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Имя *</label>
+                                    <input type="text" class="form-input" placeholder="Максим" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Дата рождения *</label>
+                                    <input type="date" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Пол *</label>
+                                    <select class="form-select" required>
+                                        <option value="">Выберите</option>
+                                        <option value="male">Мальчик</option>
+                                        <option value="female">Девочка</option>
+                                    </select>
+                                </div>
+                                <div class="form-group-full">
+                                    <label class="form-label">Родитель/опекун *</label>
+                                    <input type="text" class="form-input" placeholder="ФИО родителя" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Телефон родителя *</label>
+                                    <input type="tel" class="form-input" placeholder="+996 555 123 456" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email родителя</label>
+                                    <input type="email" class="form-input" placeholder="parent@email.com">
+                                </div>
+                            </div>
+                            <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; margin-top: 20px;">
+                                <strong>ℹ️ Обратите внимание:</strong> Для полного оформления ребенка потребуется заполнить дополнительную информацию после создания группы.
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-secondary" onclick="closeNewChildModal()">Отмена</button>
+                            <button class="btn btn-primary" onclick="addNewChildToGroup()">➕ Добавить в группу</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function toggleChildSelection(element) {
+            element.classList.toggle('selected');
+        }
+
+        function switchChildTab(tabIndex) {
+            // Switch tabs logic
+            const tabs = document.querySelectorAll('.modal-tab');
+            tabs.forEach((tab, index) => {
+                tab.classList.toggle('active', index === tabIndex);
+            });
+        }
+
+        function addSelectedChildren() {
+            const selected = document.querySelectorAll('.available-child.selected');
+            const childrenList = document.getElementById('childrenList');
+            const placeholder = childrenList.querySelector('.add-child-placeholder');
+            
+            selected.forEach(child => {
+                const name = child.querySelector('.available-child-name').textContent;
+                const details = child.querySelector('.available-child-details').textContent;
+                const status = child.querySelector('.child-status-badge').textContent.toLowerCase();
+                
+                const childHTML = `
+                    <div class="child-in-group">
+                        <div class="child-avatar">${child.querySelector('.child-avatar').textContent}</div>
+                        <div class="child-info">
+                            <div class="child-name">${name}</div>
+                            <div class="child-details">${details}</div>
+                            <div class="child-medical">✅ Медицинских ограничений нет</div>
+                        </div>
+                        <div class="child-status ${status}">${status.toUpperCase()}</div>
+                        <button class="remove-child" onclick="removeChild(this)">×</button>
+                    </div>
+                `;
+                
+                placeholder.insertAdjacentHTML('beforebegin', childHTML);
+                childrenInGroup++;
+            });
+            
+            updateChildrenCount();
+            closeChildModal();
+        }
+
+        function addNewChildToGroup() {
+            const form = document.querySelector('.new-child-form');
+            const inputs = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    input.style.borderColor = '#dc2626';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#e2e8f0';
+                }
+            });
+            
+            if (isValid) {
+                const lastName = form.querySelector('input[placeholder="Иванов"]').value;
+                const firstName = form.querySelector('input[placeholder="Максим"]').value;
+                const gender = form.querySelector('select').value;
+                const parentName = form.querySelector('input[placeholder="ФИО родителя"]').value;
+                
+                const childHTML = `
+                    <div class="child-in-group">
+                        <div class="child-avatar">${gender === 'male' ? '👦' : '👧'}</div>
+                        <div class="child-info">
+                            <div class="child-name">${firstName} ${lastName}</div>
+                            <div class="child-details">Возраст будет рассчитан • Родители: ${parentName}</div>
+                            <div class="child-medical">⚠️ Требуется медицинское обследование</div>
+                        </div>
+                        <div class="child-status new">НОВЫЙ</div>
+                        <button class="remove-child" onclick="removeChild(this)">×</button>
+                    </div>
+                `;
+                
+                const childrenList = document.getElementById('childrenList');
+                const placeholder = childrenList.querySelector('.add-child-placeholder');
+                placeholder.insertAdjacentHTML('beforebegin', childHTML);
+                
+                childrenInGroup++;
+                updateChildrenCount();
+                closeNewChildModal();
+                
+                alert(`✅ ${firstName} ${lastName} добавлен в группу!\n\nНе забудьте заполнить полную информацию после создания группы.`);
+            } else {
+                alert('❌ Пожалуйста, заполните все обязательные поля');
+            }
+        }
+
+        function closeChildModal() {
+            const modal = document.getElementById('childSelectionModal');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeNewChildModal() {
+            const modal = document.getElementById('newChildModal');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Update capacity when slider changes
+        function updateCapacity(value) {
+            document.getElementById('capacityDisplay').textContent = value + ' детей';
+            maxCapacity = parseInt(value);
+            updateChildrenCount();
+        }
+
+        // Form validation
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.style.borderColor = '#dc2626';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e2e8f0';
+                }
+            });
+
+            // Check if age group is selected
+            const selectedAge = document.querySelector('.age-group.selected');
+            if (!selectedAge) {
+                alert('❌ Пожалуйста, выберите возрастную категорию');
+                return;
+            }
+
+            // Check if teacher is selected
+            const teacherSelect = document.querySelector('select[required]');
+            if (!teacherSelect.value) {
+                alert('❌ Пожалуйста, выберите воспитателя');
+                teacherSelect.style.borderColor = '#dc2626';
+                return;
+            }
+
+            if (isValid) {
+                const groupName = document.querySelector('input[placeholder="Солнышко"]').value || 'Солнышко';
+                const teacherName = teacherSelect.options[teacherSelect.selectedIndex].text.split(' (')[0];
+                
+                let message = `✅ Группа "${groupName}" успешно создана!\n\n`;
+                message += `• Воспитатель: ${teacherName}\n`;
+                message += `• Добавлено детей: ${childrenInGroup}\n`;
+                message += `• Применен шаблон расписания\n`;
+                
+                if (childrenInGroup > 0) {
+                    message += `• Созданы аккаунты для родителей\n`;
+                    message += `• Отправлены уведомления\n`;
+                }
+                
+                message += `• Группа появится в списке`;
+                
+                alert(message);
+            } else {
+                alert('❌ Пожалуйста, заполните все обязательные поля');
+            }
+        });
+
+        // Auto-update group name based on age
+        document.querySelectorAll('.age-group').forEach(group => {
+            group.addEventListener('click', function() {
+                const nameInput = document.querySelector('input[placeholder="Солнышко"]');
+                const ageLabel = this.querySelector('.age-label').textContent;
+                const suggestions = {
+                    'Ясельная': ['Малышки', 'Пупсики', 'Крошки'],
+                    'Младшая': ['Солнышко', 'Колобок', 'Теремок'],
+                    'Средняя': ['Радуга', 'Звездочки', 'Непоседы'],
+                    'Старшая': ['Знайки', 'Почемучки', 'Умницы'],
+                    'Подготовительная': ['Школьники', 'Выпускники', 'Будущие первоклассники']
+                };
+                
+                if (!nameInput.value && suggestions[ageLabel]) {
+                    const randomName = suggestions[ageLabel][Math.floor(Math.random() * suggestions[ageLabel].length)];
+                    nameInput.value = randomName;
+                }
+            });
+        });
+    </script>
+</body>
 </html>
