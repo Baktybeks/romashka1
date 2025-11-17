@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Главная страница</title>
+        <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 800px;
@@ -121,42 +121,46 @@
             }
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Добро пожаловать!</h1>
-        
-        <div class="description">
-            Выберите нужную страницу из списка ниже для перехода к соответствующему разделу.
+    </head>
+    <body>
+        <div class="container">
+            <h1>Добро пожаловать!</h1>
+
+            <div class="description">
+                Выберите нужную страницу из списка ниже для перехода к
+                соответствующему разделу.
+            </div>
+
+            <div class="nav-grid">
+                <a href="index1.html" class="nav-link">
+                    Страница 1
+                </a>
+                <a href="index2.html" class="nav-link">
+                    Страница 2
+                </a>
+
+                <a href="index3.html" class="nav-link">
+                    Страница 3
+                </a>
+
+                <a href="index4.html" class="nav-link">
+                    Страница 4
+                </a>
+
+                <a href="index5.html" class="nav-link">
+                    Страница 5
+                </a>
+                <a href="index6.html" class="nav-link">
+                    Страница 6
+                </a>
+            </div>
+
+            <div class="footer">
+                <p>Навигационная страница сайта</p>
+            </div>
         </div>
 
-        <div class="nav-grid">
-            <a href="index1.html" class="nav-link">
-                Страница 1
-            </a>
-            <a href="index2.html" class="nav-link">
-                Страница 2
-            </a>
-            
-            <a href="index3.html" class="nav-link">
-                Страница 3
-            </a>
-            
-            <a href="index4.html" class="nav-link">
-                Страница 4
-            </a>
-            
-            <a href="index5.html" class="nav-link">
-                Страница 5
-            </a>
-        </div>
-
-        <div class="footer">
-            <p>Навигационная страница сайта</p>
-        </div>
-    </div>
-
-    <script>
+        <script>
         // Добавляем небольшую анимацию при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             const links = document.querySelectorAll('.nav-link');
@@ -183,5 +187,5 @@
             });
         });
     </script>
-</body>
+    </body>
 </html>
