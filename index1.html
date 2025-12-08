@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Супер-Админ Панель - Управление Садами</title>
+        <title>ЭЦП.КГ - Мобильное приложение</title>
         <style>
         * {
             margin: 0;
@@ -13,1348 +13,1482 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f7fa;
-            color: #2c3e50;
-        }
-
-        .container {
+            background: #f5f5f5;
             display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background: #2c3e50;
-            color: white;
-            padding: 20px 0;
-            position: fixed;
+        .phone-container {
+            max-width: 428px;
+            width: 100%;
             height: 100vh;
+            max-height: 926px;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            height: 100%;
             overflow-y: auto;
         }
 
-        .logo {
-            padding: 0 20px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 20px;
-        }
-
-        .logo h2 {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .logo p {
-            font-size: 12px;
-            color: #95a5a6;
-            margin-top: 5px;
-        }
-
-        .nav-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .screen.active {
             display: flex;
+            flex-direction: column;
+        }
+
+        /* Навигационная панель для отладки */
+        .debug-nav {
+            position: fixed;
+            top: 8px;
+            left: 8px;
+            z-index: 1000;
+            display: flex;
+            gap: 4px;
+        }
+
+        .debug-nav button {
+            background: #1f2937;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            justify-content: center;
             align-items: center;
-            gap: 12px;
-            border-left: 3px solid transparent;
+            padding: 24px;
+            text-align: center;
         }
 
-        .nav-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .nav-item.active {
-            background: rgba(52, 152, 219, 0.2);
-            border-left-color: #3498db;
-        }
-
-        .nav-item-icon {
-            width: 20px;
-            height: 20px;
+        .splash-icon {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            width: 120px;
+            height: 120px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto 32px;
         }
 
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
-            flex: 1;
-            padding: 30px;
+        .splash-icon svg {
+            width: 64px;
+            height: 64px;
+            stroke: white;
         }
 
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .page-header {
-            margin-bottom: 30px;
-        }
-
-        .page-header h1 {
-            font-size: 28px;
-            font-weight: 600;
+        .splash-screen h1 {
+            font-size: 36px;
+            color: white;
             margin-bottom: 8px;
         }
 
-        .page-header p {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .card-header h3 {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .splash-screen p {
+            color: #bfdbfe;
+            margin-bottom: 48px;
         }
 
         .btn-primary {
-            background: #3498db;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2980b9;
-        }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #229954;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #7f8c8d;
-        }
-
-        .btn-outline {
             background: white;
-            border: 1px solid #dcdde1;
-            color: #2c3e50;
-        }
-
-        .btn-outline:hover {
-            background: #f5f7fa;
-        }
-
-        /* Table */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        th {
-            background: #f8f9fa;
+            color: #2563eb;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 50px;
+            font-size: 18px;
             font-weight: 600;
-            font-size: 13px;
-            color: #7f8c8d;
-            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        tr:hover {
-            background: #f8f9fa;
+        /* Login Screen */
+        .login-screen {
+            background: white;
+            padding: 24px;
         }
 
-        .badge {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-            display: inline-block;
+        .login-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .badge-active {
-            background: #d4edda;
-            color: #155724;
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
         }
 
-        .badge-inactive {
-            background: #f8d7da;
-            color: #721c24;
+        .login-icon {
+            background: #dbeafe;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
         }
 
-        .badge-pending {
-            background: #fff3cd;
-            color: #856404;
+        .login-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: #2563eb;
         }
 
-        .badge-overdue {
-            background: #f8d7da;
-            color: #721c24;
+        .login-header h2 {
+            font-size: 24px;
+            color: #1f2937;
+            margin-bottom: 8px;
         }
 
-        .badge-paid {
-            background: #d4edda;
-            color: #155724;
+        .login-header p {
+            color: #6b7280;
         }
 
-        /* Form */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 14px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #dcdde1;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-left: 4px solid;
-        }
-
-        .stat-card.blue {
-            border-left-color: #3498db;
-        }
-
-        .stat-card.green {
-            border-left-color: #27ae60;
-        }
-
-        .stat-card.orange {
-            border-left-color: #f39c12;
-        }
-
-        .stat-card.red {
-            border-left-color: #e74c3c;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: #7f8c8d;
+            color: #374151;
             margin-bottom: 8px;
         }
 
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .stat-change {
-            font-size: 12px;
-            color: #27ae60;
-        }
-
-        /* Filters */
-        .filters {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .filter-item {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .form-group input {
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 16px;
         }
 
-        .modal.active {
-            display: flex;
+        .btn-login {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+            margin-top: 8px;
         }
 
-        .modal-content {
+        .btn-forgot {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #2563eb;
+            padding: 12px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .login-footer {
+            text-align: center;
+            padding: 16px 0;
+        }
+
+        .login-footer p {
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .btn-register {
+            color: #2563eb;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Register Screen */
+        .register-screen {
             background: white;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
+            padding: 24px;
             overflow-y: auto;
         }
 
-        .modal-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid #ecf0f1;
+        .back-button {
+            color: #2563eb;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 16px 0;
+        }
+
+        .register-screen h2 {
+            font-size: 24px;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+
+        /* Dashboard Screen */
+        .dashboard-header {
+            background: white;
+            padding: 16px 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .user-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 16px;
         }
 
-        .modal-header h3 {
+        .user-info h1 {
             font-size: 20px;
-            font-weight: 600;
+            color: #1f2937;
         }
 
-        .modal-body {
-            padding: 25px;
+        .user-info p {
+            font-size: 14px;
+            color: #6b7280;
         }
 
-        .modal-footer {
-            padding: 20px 25px;
-            border-top: 1px solid #ecf0f1;
+        .header-actions {
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .close-btn {
+        .icon-button {
             background: none;
             border: none;
-            font-size: 24px;
             cursor: pointer;
-            color: #7f8c8d;
-            width: 30px;
-            height: 30px;
+            position: relative;
+        }
+
+        .icon-button svg {
+            width: 24px;
+            height: 24px;
+            stroke: #4b5563;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
         }
 
-        .close-btn:hover {
-            background: #ecf0f1;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
         }
 
-        .action-buttons {
+        .stat-card {
+            background: #fef3c7;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-card.green {
+            background: #d1fae5;
+        }
+
+        .stat-card.blue {
+            background: #dbeafe;
+        }
+
+        .stat-card svg {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 4px;
+        }
+
+        .stat-card.yellow svg { stroke: #d97706; }
+        .stat-card.green svg { stroke: #059669; }
+        .stat-card.blue svg { stroke: #2563eb; }
+
+        .stat-card p.number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .stat-card p.label {
+            font-size: 12px;
+            color: #4b5563;
+        }
+
+        .section {
+            padding: 16px 24px;
+        }
+
+        .section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .action-button {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .action-button svg {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 8px;
+        }
+
+        .action-button.upload svg { stroke: #2563eb; }
+        .action-button.sign svg { stroke: #059669; }
+        .action-button.send svg { stroke: #9333ea; }
+
+        .action-button p {
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .documents-section {
+            flex: 1;
+            padding: 0 24px 80px;
+            overflow-y: auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .view-all-button {
+            color: #2563eb;
+            font-size: 14px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .document-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .document-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .document-info {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .document-icon {
+            background: #fef3c7;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .document-icon.green {
+            background: #d1fae5;
+        }
+
+        .document-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .document-icon.yellow svg { stroke: #d97706; }
+        .document-icon.green svg { stroke: #059669; }
+
+        .document-details h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .document-details p {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .chevron-icon {
+            width: 20px;
+            height: 20px;
+            stroke: #9ca3af;
+        }
+
+        .document-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 50px;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.signed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .document-date {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            max-width: 428px;
+            margin: 0 auto;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+
+        .nav-button.active {
+            color: #2563eb;
+        }
+
+        .nav-button svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            margin-bottom: 4px;
+        }
+
+        .nav-button span {
+            font-size: 12px;
+        }
+
+        /* Documents Screen */
+        .documents-header {
+            background: white;
+            padding: 16px 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .documents-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .documents-title h1 {
+            font-size: 20px;
+            color: #1f2937;
+        }
+
+        .btn-upload {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: #9ca3af;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 8px 8px 8px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .documents-list {
+            flex: 1;
+            padding: 16px 24px 80px;
+            overflow-y: auto;
+        }
+
+        .document-actions {
             display: flex;
             gap: 8px;
         }
 
-        /* Integration Card */
-        .integration-card {
+        .action-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .action-icon.view svg { stroke: #2563eb; }
+        .action-icon.download svg { stroke: #059669; }
+        .action-icon.delete svg { stroke: #ef4444; }
+
+        /* Profile Screen */
+        .profile-header {
             background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid #ecf0f1;
+            padding: 16px 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-header h1 {
+            font-size: 20px;
+            color: #1f2937;
+        }
+
+        .profile-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+
+        .profile-info {
+            background: white;
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .profile-user {
+            display: flex;
+            gap: 16px;
+        }
+
+        .profile-avatar {
+            background: #dbeafe;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar svg {
+            width: 32px;
+            height: 32px;
+            stroke: #2563eb;
+        }
+
+        .profile-user-details {
+            flex: 1;
+        }
+
+        .profile-user-details h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .profile-user-details p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .profile-user-details p.pin {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .certificate-section {
+            background: white;
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            margin-top: 16px;
+        }
+
+        .certificate-title {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .certificate-title svg {
+            width: 20px;
+            height: 20px;
+            stroke: #2563eb;
+            margin-right: 8px;
+        }
+
+        .certificate-card {
+            background: #d1fae5;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .certificate-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .certificate-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .certificate-row span:first-child {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .certificate-row span:last-child {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .certificate-status {
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 50px;
+        }
+
+        .btn-certificate {
+            width: 100%;
+            margin-top: 12px;
+            background: #dbeafe;
+            color: #2563eb;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .profile-menu {
+            margin-top: 16px;
+            padding: 0 24px;
+        }
+
+        .menu-item {
+            width: 100%;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .integration-info h4 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .integration-info p {
-            font-size: 13px;
-            color: #7f8c8d;
-        }
-
-        .integration-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 26px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
+        .menu-item-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-item svg {
             width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+            height: 20px;
+            stroke: #4b5563;
         }
 
-        input:checked + .slider {
-            background-color: #27ae60;
+        .menu-item span {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #7f8c8d;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .empty-state h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-            margin-bottom: 20px;
+        .btn-logout {
+            width: 100%;
+            margin-top: 24px;
+            background: #fef2f2;
+            color: #dc2626;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
         }
     </style>
     </head>
     <body>
-        <div class="container">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <div class="logo">
-                    <h2>🏫 Супер-Админ</h2>
-                    <p>Управление садами</p>
+        <div class="phone-container">
+            <!-- Debug Navigation -->
+            <div class="debug-nav">
+                <button onclick="showScreen('splash')">Start</button>
+                <button onclick="showScreen('login')">Login</button>
+                <button onclick="showScreen('dashboard')">Home</button>
+            </div>
+
+            <!-- Splash Screen -->
+            <div id="splash" class="screen splash-screen active">
+                <div class="splash-icon">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
                 </div>
-                <nav>
-                    <div class="nav-item active" onclick="showPage('gardens')">
-                        <span class="nav-item-icon">🏢</span>
-                        <span>Организации (Сады)</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('branches')">
-                        <span class="nav-item-icon">📍</span>
-                        <span>Филиалы</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('access')">
-                        <span class="nav-item-icon">👥</span>
-                        <span>Доступы</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('payments')">
-                        <span class="nav-item-icon">💳</span>
-                        <span>Платёжные интеграции</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('monitoring')">
-                        <span class="nav-item-icon">📊</span>
-                        <span>Мониторинг оплат</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('settings')">
-                        <span class="nav-item-icon">⚙️</span>
-                        <span>Системные настройки</span>
-                    </div>
-                </nav>
-            </aside>
+                <h1>ЭЦП.КГ</h1>
+                <p>Электронная подпись документов</p>
+                <button class="btn-primary"
+                    onclick="showScreen('login')">Начать</button>
+            </div>
 
-            <!-- Main Content -->
-            <main class="main-content">
-                <!-- Page 1: Список садов -->
-                <div class="page active" id="gardens">
-                    <div class="page-header">
-                        <h1>Организации (Сады)</h1>
-                        <p>Управление детскими садами в системе</p>
+            <!-- Login Screen -->
+            <div id="login" class="screen login-screen">
+                <div class="login-content">
+                    <div class="login-header">
+                        <div class="login-icon">
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                            </svg>
+                        </div>
+                        <h2>Добро пожаловать</h2>
+                        <p>Войдите в свой аккаунт</p>
                     </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Список садов</h3>
-                            <button class="btn btn-primary"
-                                onclick="openModal('createGardenModal')">
-                                ➕ Создать сад
+                    <div class="form-group">
+                        <label>Номер телефона</label>
+                        <input type="tel" placeholder="+996 (___) __ __ __">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+
+                    <button class="btn-login"
+                        onclick="showScreen('dashboard')">Войти</button>
+                    <button class="btn-forgot">Забыли пароль?</button>
+                </div>
+
+                <div class="login-footer">
+                    <p>Нет аккаунта?</p>
+                    <button class="btn-register"
+                        onclick="showScreen('register')">Зарегистрироваться</button>
+                </div>
+            </div>
+
+            <!-- Register Screen -->
+            <div id="register" class="screen register-screen">
+                <button class="back-button" onclick="showScreen('login')">←
+                    Назад</button>
+                <h2>Регистрация</h2>
+
+                <div class="form-group">
+                    <label>Номер телефона</label>
+                    <input type="tel" placeholder="+996 (___) __ __ __">
+                </div>
+
+                <div class="form-group">
+                    <label>ПИН (14 цифр)</label>
+                    <input type="text" placeholder="12345678901234"
+                        maxlength="14">
+                </div>
+
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" placeholder="Минимум 8 символов">
+                </div>
+
+                <div class="form-group">
+                    <label>Подтвердите пароль</label>
+                    <input type="password" placeholder="Повторите пароль">
+                </div>
+
+                <button class="btn-login">Зарегистрироваться</button>
+            </div>
+
+            <!-- Dashboard Screen -->
+            <div id="dashboard" class="screen">
+                <div class="dashboard-header">
+                    <div class="user-info">
+                        <div>
+                            <h1>Иван Иванов</h1>
+                            <p>+996 555 123 456</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="icon-button">
+                                <svg fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                                </svg>
+                                <span class="notification-badge">3</span>
+                            </button>
+                            <button class="icon-button"
+                                onclick="showScreen('profile')">
+                                <svg fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
                             </button>
                         </div>
-
-                        <div class="filters">
-                            <div class="filter-item">
-                                <input type="text" class="form-control"
-                                    placeholder="🔍 Поиск по названию или городу">
-                            </div>
-                            <div class="filter-item">
-                                <select class="form-control">
-                                    <option>Все статусы</option>
-                                    <option>Активные</option>
-                                    <option>Неактивные</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Название</th>
-                                        <th>Юр. адрес</th>
-                                        <th>Город</th>
-                                        <th>Статус</th>
-                                        <th>Действия</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#001</td>
-                                        <td>Детский сад "Солнышко"</td>
-                                        <td>ул. Пушкина, д. 15</td>
-                                        <td>Москва</td>
-                                        <td><span
-                                                class="badge badge-active">Активен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn btn-outline"
-                                                    onclick="openModal('editGardenModal')">Редактировать</button>
-                                                <button class="btn btn-outline"
-                                                    onclick="viewBranches()">Филиалы</button>
-                                                <button
-                                                    class="btn btn-danger">Деактивировать</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#002</td>
-                                        <td>Детский сад "Радуга"</td>
-                                        <td>пр. Ленина, д. 42</td>
-                                        <td>Санкт-Петербург</td>
-                                        <td><span
-                                                class="badge badge-active">Активен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button
-                                                    class="btn btn-outline">Редактировать</button>
-                                                <button class="btn btn-outline"
-                                                    onclick="viewBranches()">Филиалы</button>
-                                                <button
-                                                    class="btn btn-danger">Деактивировать</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#003</td>
-                                        <td>Детский сад "Звёздочка"</td>
-                                        <td>ул. Гагарина, д. 8</td>
-                                        <td>Казань</td>
-                                        <td><span
-                                                class="badge badge-inactive">Неактивен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button
-                                                    class="btn btn-outline">Редактировать</button>
-                                                <button class="btn btn-outline"
-                                                    onclick="viewBranches()">Филиалы</button>
-                                                <button
-                                                    class="btn btn-success">Активировать</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Page 2: Филиалы -->
-                <div class="page" id="branches">
-                    <div class="page-header">
-                        <h1>Филиалы садов</h1>
-                        <p>Управление филиалами детских садов</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Детский сад "Солнышко" - Филиалы</h3>
-                            <button class="btn btn-primary"
-                                onclick="openModal('createBranchModal')">
-                                ➕ Добавить филиал
-                            </button>
-                        </div>
-
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Адрес</th>
-                                        <th>Статус</th>
-                                        <th>Действия</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#001-01</td>
-                                        <td>ул. Пушкина, д. 15 (Главный
-                                            корпус)</td>
-                                        <td><span
-                                                class="badge badge-active">Активен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button
-                                                    class="btn btn-outline">Редактировать</button>
-                                                <button
-                                                    class="btn btn-danger">Деактивировать</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#001-02</td>
-                                        <td>ул. Лермонтова, д. 23 (Филиал
-                                            №2)</td>
-                                        <td><span
-                                                class="badge badge-active">Активен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button
-                                                    class="btn btn-outline">Редактировать</button>
-                                                <button
-                                                    class="btn btn-danger">Деактивировать</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Page 3: Доступы -->
-                <div class="page" id="access">
-                    <div class="page-header">
-                        <h1>Управление доступами</h1>
-                        <p>Создание и управление директорами садов</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Директора садов</h3>
-                            <button class="btn btn-primary"
-                                onclick="openModal('createDirectorModal')">
-                                ➕ Создать директора
-                            </button>
-                        </div>
-
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>ФИО</th>
-                                        <th>Логин (Email/Телефон)</th>
-                                        <th>Сад</th>
-                                        <th>Роль</th>
-                                        <th>Статус</th>
-                                        <th>Действия</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#D001</td>
-                                        <td>Иванова Елена Петровна</td>
-                                        <td>ivanova@email.com</td>
-                                        <td>Детский сад "Солнышко"</td>
-                                        <td><span
-                                                class="badge badge-active">Director</span></td>
-                                        <td><span
-                                                class="badge badge-active">Активен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button
-                                                    class="btn btn-outline">Редактировать</button>
-                                                <button
-                                                    class="btn btn-secondary">Сбросить
-                                                    пароль</button>
-                                                <button
-                                                    class="btn btn-danger">Снять
-                                                    роль</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#D002</td>
-                                        <td>Петров Иван Сергеевич</td>
-                                        <td>+7 (999) 123-45-67</td>
-                                        <td>Детский сад "Радуга"</td>
-                                        <td><span
-                                                class="badge badge-active">Director</span></td>
-                                        <td><span
-                                                class="badge badge-active">Активен</span></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button
-                                                    class="btn btn-outline">Редактировать</button>
-                                                <button
-                                                    class="btn btn-secondary">Сбросить
-                                                    пароль</button>
-                                                <button
-                                                    class="btn btn-danger">Снять
-                                                    роль</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Page 4: Платёжные интеграции -->
-                <div class="page" id="payments">
-                    <div class="page-header">
-                        <h1>Платёжные интеграции</h1>
-                        <p>Подключение и управление провайдерами оплаты</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Сад: Детский сад "Солнышко"</h3>
-                            <button class="btn btn-primary"
-                                onclick="openModal('addProviderModal')">
-                                ➕ Добавить провайдера
-                            </button>
-                        </div>
-
-                        <div class="integration-card">
-                            <div class="integration-info">
-                                <h4>💳 Stripe</h4>
-                                <p>Лицензионный ключ:
-                                    sk_live_***************</p>
-                            </div>
-                            <div class="integration-actions">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                                <button class="btn btn-outline"
-                                    onclick="testConnection('Stripe')">🔍
-                                    Проверить</button>
-                                <button class="btn btn-outline">⚙️
-                                    Настроить</button>
-                            </div>
-                        </div>
-
-                        <div class="integration-card">
-                            <div class="integration-info">
-                                <h4>💰 ЮKassa</h4>
-                                <p>Идентификатор магазина: 123456</p>
-                            </div>
-                            <div class="integration-actions">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                                <button class="btn btn-outline"
-                                    onclick="testConnection('ЮKassa')">🔍
-                                    Проверить</button>
-                                <button class="btn btn-outline">⚙️
-                                    Настроить</button>
-                            </div>
-                        </div>
-
-                        <div class="integration-card">
-                            <div class="integration-info">
-                                <h4>🏦 CloudPayments</h4>
-                                <p>Статус: Не подключен</p>
-                            </div>
-                            <div class="integration-actions">
-                                <label class="toggle-switch">
-                                    <input type="checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                                <button class="btn btn-outline" disabled>🔍
-                                    Проверить</button>
-                                <button class="btn btn-primary">⚙️
-                                    Настроить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Page 5: Мониторинг оплат -->
-                <div class="page" id="monitoring">
-                    <div class="page-header">
-                        <h1>Мониторинг оплат</h1>
-                        <p>Статистика оплат по всем садам</p>
                     </div>
 
                     <div class="stats-grid">
+                        <div class="stat-card yellow">
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p class="number">3</p>
+                            <p class="label">Ожидают</p>
+                        </div>
                         <div class="stat-card green">
-                            <div class="stat-label">Оплачено за месяц</div>
-                            <div class="stat-value">2 450 000 ₽</div>
-                            <div class="stat-change">↑ +12% к прошлому
-                                месяцу</div>
-                        </div>
-                        <div class="stat-card orange">
-                            <div class="stat-label">Ожидает оплаты</div>
-                            <div class="stat-value">680 000 ₽</div>
-                            <div class="stat-change">42 платежа</div>
-                        </div>
-                        <div class="stat-card red">
-                            <div class="stat-label">Просрочено</div>
-                            <div class="stat-value">125 000 ₽</div>
-                            <div class="stat-change">8 платежей</div>
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p class="number">12</p>
+                            <p class="label">Подписано</p>
                         </div>
                         <div class="stat-card blue">
-                            <div class="stat-label">Всего садов</div>
-                            <div class="stat-value">12</div>
-                            <div class="stat-change">10 активных</div>
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                            <p class="number">15</p>
+                            <p class="label">Всего</p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Детализация по садам</h3>
-                            <button class="btn btn-outline">📥 Экспорт в
-                                Excel</button>
-                        </div>
+                <div class="section">
+                    <h3>Быстрые действия</h3>
+                    <div class="quick-actions">
+                        <button class="action-button upload">
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                            <p>Загрузить</p>
+                        </button>
+                        <button class="action-button sign">
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                            <p>Подписать</p>
+                        </button>
+                        <button class="action-button send">
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                            </svg>
+                            <p>Отправить</p>
+                        </button>
+                    </div>
+                </div>
 
-                        <div class="filters">
-                            <div class="filter-item">
-                                <select class="form-control">
-                                    <option>Все сады</option>
-                                    <option>Детский сад "Солнышко"</option>
-                                    <option>Детский сад "Радуга"</option>
-                                    <option>Детский сад "Звёздочка"</option>
-                                </select>
+                <div class="documents-section">
+                    <div class="section-header">
+                        <h3>Последние документы</h3>
+                        <button class="view-all-button"
+                            onclick="showScreen('documents')">Все</button>
+                    </div>
+
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div class="document-info">
+                                <div class="document-icon yellow">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
+                                </div>
+                                <div class="document-details">
+                                    <h4>Договор аренды</h4>
+                                    <p>client@example.com</p>
+                                </div>
                             </div>
-                            <div class="filter-item">
-                                <input type="month" class="form-control"
-                                    value="2025-11">
+                            <svg class="chevron-icon" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </div>
+                        <div class="document-footer">
+                            <span class="status-badge pending">Ожидает</span>
+                            <span class="document-date">05.12.2025</span>
+                        </div>
+                    </div>
+
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div class="document-info">
+                                <div class="document-icon green">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
+                                </div>
+                                <div class="document-details">
+                                    <h4>Соглашение NDA</h4>
+                                    <p>Подписан</p>
+                                </div>
                             </div>
-                            <div class="filter-item">
-                                <select class="form-control">
-                                    <option>Все статусы</option>
-                                    <option>Оплачено</option>
-                                    <option>Ожидает</option>
-                                    <option>Просрочено</option>
-                                </select>
+                            <svg class="chevron-icon" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </div>
+                        <div class="document-footer">
+                            <span class="status-badge signed">Подписан</span>
+                            <span class="document-date">03.12.2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <button class="nav-button active"
+                        onclick="showScreen('dashboard')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                        <span>Главная</span>
+                    </button>
+                    <button class="nav-button"
+                        onclick="showScreen('documents')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                        </svg>
+                        <span>Документы</span>
+                    </button>
+                    <button class="nav-button" onclick="showScreen('profile')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>Профиль</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Documents Screen -->
+            <div id="documents" class="screen">
+                <div class="documents-header">
+                    <div class="documents-title">
+                        <h1>Документы</h1>
+                        <button class="btn-upload">Загрузить</button>
+                    </div>
+                    <div class="search-box">
+                        <svg class="search-icon" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                        <input type="text" placeholder="Поиск...">
+                    </div>
+                </div>
+
+                <div class="documents-list">
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div class="document-info">
+                                <div class="document-icon yellow">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
+                                </div>
+                                <div class="document-details">
+                                    <h4>Договор №1</h4>
+                                    <p>PDF • 2.3 МБ</p>
+                                </div>
                             </div>
                         </div>
+                        <div class="document-footer">
+                            <span class="status-badge pending">Ожидает</span>
+                            <div class="document-actions">
+                                <button class="action-icon view">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon download">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon delete">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Сад</th>
-                                        <th>Оплачено</th>
-                                        <th>Ожидает</th>
-                                        <th>Просрочено</th>
-                                        <th>Всего</th>
-                                        <th>Статус</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Детский сад "Солнышко"</td>
-                                        <td>850 000 ₽</td>
-                                        <td>120 000 ₽</td>
-                                        <td>0 ₽</td>
-                                        <td>970 000 ₽</td>
-                                        <td><span
-                                                class="badge badge-paid">Отлично</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Детский сад "Радуга"</td>
-                                        <td>1 200 000 ₽</td>
-                                        <td>350 000 ₽</td>
-                                        <td>45 000 ₽</td>
-                                        <td>1 595 000 ₽</td>
-                                        <td><span
-                                                class="badge badge-pending">Внимание</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Детский сад "Звёздочка"</td>
-                                        <td>400 000 ₽</td>
-                                        <td>210 000 ₽</td>
-                                        <td>80 000 ₽</td>
-                                        <td>690 000 ₽</td>
-                                        <td><span
-                                                class="badge badge-overdue">Проблема</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div class="document-info">
+                                <div class="document-icon yellow">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
+                                </div>
+                                <div class="document-details">
+                                    <h4>Договор №2</h4>
+                                    <p>PDF • 2.3 МБ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-footer">
+                            <span class="status-badge pending">Ожидает</span>
+                            <div class="document-actions">
+                                <button class="action-icon view">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon download">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon delete">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div class="document-info">
+                                <div class="document-icon yellow">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
+                                </div>
+                                <div class="document-details">
+                                    <h4>Договор №3</h4>
+                                    <p>PDF • 2.3 МБ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-footer">
+                            <span class="status-badge pending">Ожидает</span>
+                            <div class="document-actions">
+                                <button class="action-icon view">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon download">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon delete">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div class="document-info">
+                                <div class="document-icon yellow">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
+                                </div>
+                                <div class="document-details">
+                                    <h4>Договор №4</h4>
+                                    <p>PDF • 2.3 МБ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-footer">
+                            <span class="status-badge pending">Ожидает</span>
+                            <div class="document-actions">
+                                <button class="action-icon view">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon download">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                </button>
+                                <button class="action-icon delete">
+                                    <svg fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Page 6: Системные настройки -->
-                <div class="page" id="settings">
-                    <div class="page-header">
-                        <h1>Системные настройки</h1>
-                        <p>Глобальные параметры платформы</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Общие настройки</h3>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Название платформы</label>
-                            <input type="text" class="form-control"
-                                value="Система управления детскими садами">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Язык по умолчанию</label>
-                            <select class="form-control">
-                                <option selected>Русский</option>
-                                <option>English</option>
-                                <option>Қазақша</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Часовой пояс</label>
-                            <select class="form-control">
-                                <option>UTC+3 (Москва)</option>
-                                <option>UTC+5 (Екатеринбург)</option>
-                                <option>UTC+6 (Алматы)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Валюта</label>
-                            <select class="form-control">
-                                <option selected>₽ Российский рубль</option>
-                                <option>₸ Казахстанский тенге</option>
-                                <option>$ Доллар США</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Брендинг</h3>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Логотип платформы</label>
-                            <input type="file" class="form-control"
-                                accept="image/*">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Основной цвет</label>
-                            <input type="color" class="form-control"
-                                value="#3498db" style="height: 50px;">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Email поддержки</label>
-                            <input type="email" class="form-control"
-                                value="support@kindergarten.com">
-                        </div>
-
-                        <button class="btn btn-primary">💾 Сохранить
-                            настройки</button>
-                    </div>
-                </div>
-            </main>
-        </div>
-
-        <!-- Modals -->
-
-        <!-- Create Garden Modal -->
-        <div class="modal" id="createGardenModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Создать новый сад</h3>
-                    <button class="close-btn"
-                        onclick="closeModal('createGardenModal')">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Название сада *</label>
-                        <input type="text" class="form-control"
-                            placeholder="Детский сад "Солнышко"">
-                    </div>
-                    <div class="form-group">
-                        <label>Юридический адрес *</label>
-                        <input type="text" class="form-control"
-                            placeholder="ул. Пушкина, д. 15">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Город *</label>
-                            <input type="text" class="form-control"
-                                placeholder="Москва">
-                        </div>
-                        <div class="form-group">
-                            <label>Статус *</label>
-                            <select class="form-control">
-                                <option>Активен</option>
-                                <option>Неактивен</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>ИНН</label>
-                        <input type="text" class="form-control"
-                            placeholder="1234567890">
-                    </div>
-                    <div class="form-group">
-                        <label>Контактный телефон</label>
-                        <input type="tel" class="form-control"
-                            placeholder="+7 (999) 123-45-67">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary"
-                        onclick="closeModal('createGardenModal')">Отмена</button>
-                    <button class="btn btn-primary">Создать сад</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Garden Modal -->
-        <div class="modal" id="editGardenModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Редактировать сад</h3>
-                    <button class="close-btn"
-                        onclick="closeModal('editGardenModal')">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Название сада *</label>
-                        <input type="text" class="form-control"
-                            value='Детский сад "Солнышко"'>
-                    </div>
-                    <div class="form-group">
-                        <label>Юридический адрес *</label>
-                        <input type="text" class="form-control"
-                            value="ул. Пушкина, д. 15">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Город *</label>
-                            <input type="text" class="form-control"
-                                value="Москва">
-                        </div>
-                        <div class="form-group">
-                            <label>Статус *</label>
-                            <select class="form-control">
-                                <option selected>Активен</option>
-                                <option>Неактивен</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary"
-                        onclick="closeModal('editGardenModal')">Отмена</button>
-                    <button class="btn btn-primary">Сохранить изменения</button>
+                <div class="bottom-nav">
+                    <button class="nav-button"
+                        onclick="showScreen('dashboard')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                        <span>Главная</span>
+                    </button>
+                    <button class="nav-button active"
+                        onclick="showScreen('documents')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                        </svg>
+                        <span>Документы</span>
+                    </button>
+                    <button class="nav-button" onclick="showScreen('profile')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>Профиль</span>
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Create Branch Modal -->
-        <div class="modal" id="createBranchModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Добавить филиал</h3>
-                    <button class="close-btn"
-                        onclick="closeModal('createBranchModal')">×</button>
+            <!-- Profile Screen -->
+            <div id="profile" class="screen">
+                <div class="profile-header">
+                    <h1>Профиль</h1>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Адрес филиала *</label>
-                        <input type="text" class="form-control"
-                            placeholder="ул. Гагарина, д. 10">
-                    </div>
-                    <div class="form-group">
-                        <label>Статус *</label>
-                        <select class="form-control">
-                            <option selected>Активен</option>
-                            <option>Неактивен</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Примечание</label>
-                        <input type="text" class="form-control"
-                            placeholder="Филиал №3">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary"
-                        onclick="closeModal('createBranchModal')">Отмена</button>
-                    <button class="btn btn-primary">Добавить филиал</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Create Director Modal -->
-        <div class="modal" id="createDirectorModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Создать директора</h3>
-                    <button class="close-btn"
-                        onclick="closeModal('createDirectorModal')">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>ФИО *</label>
-                        <input type="text" class="form-control"
-                            placeholder="Иванова Елена Петровна">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email *</label>
-                            <input type="email" class="form-control"
-                                placeholder="director@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Телефон</label>
-                            <input type="tel" class="form-control"
-                                placeholder="+7 (999) 123-45-67">
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <div class="profile-user">
+                            <div class="profile-avatar">
+                                <svg fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </div>
+                            <div class="profile-user-details">
+                                <h2>Иван Иванов</h2>
+                                <p>+996 555 123 456</p>
+                                <p class="pin">ПИН: 12345678901234</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Привязать к саду *</label>
-                        <select class="form-control">
-                            <option value>Выберите сад</option>
-                            <option>Детский сад "Солнышко"</option>
-                            <option>Детский сад "Радуга"</option>
-                            <option>Детский сад "Звёздочка"</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Временный пароль *</label>
-                        <input type="text" class="form-control"
-                            value="TempPass2025!" readonly>
-                        <small style="color: #7f8c8d; font-size: 12px;">Пароль
-                            будет отправлен на email</small>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary"
-                        onclick="closeModal('createDirectorModal')">Отмена</button>
-                    <button class="btn btn-primary">Создать директора</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Add Provider Modal -->
-        <div class="modal" id="addProviderModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Добавить платёжного провайдера</h3>
-                    <button class="close-btn"
-                        onclick="closeModal('addProviderModal')">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Выберите провайдера *</label>
-                        <select class="form-control"
-                            onchange="showProviderFields(this.value)">
-                            <option value>-- Выберите --</option>
-                            <option value="stripe">Stripe</option>
-                            <option value="yookassa">ЮKassa</option>
-                            <option value="cloudpayments">CloudPayments</option>
-                        </select>
+                    <div class="certificate-section">
+                        <h3 class="certificate-title">
+                            <svg fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                            </svg>
+                            Сертификат ЭЦП
+                        </h3>
+                        <div class="certificate-card">
+                            <div class="certificate-row">
+                                <span>Статус</span>
+                                <span class="certificate-status">Активен</span>
+                            </div>
+                            <div class="certificate-row">
+                                <span>Владелец</span>
+                                <span>Иванов И.И.</span>
+                            </div>
+                            <div class="certificate-row">
+                                <span>До</span>
+                                <span>15.06.2026</span>
+                            </div>
+                        </div>
+                        <button class="btn-certificate">Загрузить новый</button>
                     </div>
-                    <div id="providerFields"></div>
+
+                    <div class="profile-menu">
+                        <button class="menu-item">
+                            <div class="menu-item-content">
+                                <svg fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                                <span>Личные данные</span>
+                            </div>
+                            <svg class="chevron-icon" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+
+                        <button class="menu-item">
+                            <div class="menu-item-content">
+                                <svg fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                                </svg>
+                                <span>Безопасность</span>
+                            </div>
+                            <svg class="chevron-icon" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+
+                        <button class="btn-logout"
+                            onclick="showScreen('login')">Выйти</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary"
-                        onclick="closeModal('addProviderModal')">Отмена</button>
-                    <button class="btn btn-primary">Подключить
-                        провайдера</button>
+
+                <div class="bottom-nav">
+                    <button class="nav-button"
+                        onclick="showScreen('dashboard')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                        <span>Главная</span>
+                    </button>
+                    <button class="nav-button"
+                        onclick="showScreen('documents')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                        </svg>
+                        <span>Документы</span>
+                    </button>
+                    <button class="nav-button active"
+                        onclick="showScreen('profile')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>Профиль</span>
+                    </button>
                 </div>
             </div>
         </div>
 
         <script>
-        // Page Navigation
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+        function showScreen(screenId) {
+            // Скрываем все экраны
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            // Показываем нужный экран
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+            
+            // Обновляем активное состояние в навигации
+            updateNavigation(screenId);
+        }
+        
+        function updateNavigation(screenId) {
+            // Находим все кнопки навигации на текущем экране
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.classList.remove('active');
             });
             
-            // Remove active from all nav items
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Set active nav item
-            event.target.closest('.nav-item').classList.add('active');
-        }
-
-        // Modal Functions
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Close modal on outside click
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
+            // Активируем соответствующую кнопку
+            if (screenId === 'dashboard') {
+                document.querySelectorAll('.nav-button')[0].classList.add('active');
+            } else if (screenId === 'documents') {
+                document.querySelectorAll('.nav-button')[1].classList.add('active');
+            } else if (screenId === 'profile') {
+                document.querySelectorAll('.nav-button')[2].classList.add('active');
             }
-        }
-
-        // View Branches
-        function viewBranches() {
-            showPage('branches');
-            document.querySelector('[onclick="showPage(\'branches\')"]').classList.add('active');
-        }
-
-        // Test Connection
-        function testConnection(provider) {
-            alert('Проверка подключения к ' + provider + '...\n\n✅ Соединение успешно установлено!');
-        }
-
-        // Provider Fields
-        function showProviderFields(provider) {
-            const fieldsDiv = document.getElementById('providerFields');
-            let html = '';
-
-            if (provider === 'stripe') {
-                html = `
-                    <div class="form-group">
-                        <label>Secret Key *</label>
-                        <input type="text" class="form-control" placeholder="sk_live_...">
-                    </div>
-                    <div class="form-group">
-                        <label>Publishable Key *</label>
-                        <input type="text" class="form-control" placeholder="pk_live_...">
-                    </div>
-                `;
-            } else if (provider === 'yookassa') {
-                html = `
-                    <div class="form-group">
-                        <label>ID магазина *</label>
-                        <input type="text" class="form-control" placeholder="123456">
-                    </div>
-                    <div class="form-group">
-                        <label>Секретный ключ *</label>
-                        <input type="text" class="form-control" placeholder="live_...">
-                    </div>
-                `;
-            } else if (provider === 'cloudpayments') {
-                html = `
-                    <div class="form-group">
-                        <label>Public ID *</label>
-                        <input type="text" class="form-control" placeholder="pk_...">
-                    </div>
-                    <div class="form-group">
-                        <label>API Secret *</label>
-                        <input type="password" class="form-control">
-                    </div>
-                `;
-            }
-
-            fieldsDiv.innerHTML = html;
         }
     </script>
     </body>
