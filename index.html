@@ -44,7 +44,7 @@
         a { color: inherit; text-decoration: none; }
 
         /* ── UTILS ──────────────────────────────────── */
-        .container { max-width: 700px; margin: 0 auto; padding: 0 32px; }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
         .container-wide { max-width: 1440px; margin: 0 auto; padding: 0 32px; }
 
         .label {
@@ -703,7 +703,7 @@
         /* ══════════════════════════════════════════════
            RESPONSIVE
         ══════════════════════════════════════════════ */
-        @media(max-width:2000px) {
+        @media(max-width:1100px) {
             .about-bento { grid-template-columns: 1fr 1fr; }
             .ab-img { grid-column: 2/3; grid-row: 1/3; }
             .ab-quote { grid-column: 1/2; }
@@ -745,7 +745,7 @@
             .cta-content { grid-template-columns: 1fr; padding: 48px 40px; }
             .sponsors-grid { grid-template-columns: repeat(4,1fr); }
         }
-        @media(max-width:700px) {
+        @media(max-width:640px) {
             .container, .container-wide { padding: 0 20px; }
             .hdr-inner { padding: 0 20px; }
             .hero h1 { font-size: 38px; }
@@ -766,69 +766,9 @@
             .champ-top-right { text-align: left; }
             .champ-top-right p { margin-left: 0; }
         }
-
-        /* Desktop mobile preview: remove class from <body> to return full-width desktop view. */
-        body.mobile-preview {
-            width: 700px;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-        .mobile-preview .hdr,
-        .mobile-preview .mob-nav {
-            left: 50%;
-            right: auto;
-            width: 700px;
-            max-width: 100%;
-            transform: translateX(-50%);
-        }
-        .mobile-preview .hdr-nav { display: none; }
-        .mobile-preview .burger { display: flex; }
-        .mobile-preview .hdr-phone { display: none; }
-        .mobile-preview .hero-stats-inner { grid-template-columns: repeat(2,1fr); padding: 0 20px; }
-        .mobile-preview .seasons-grid { grid-template-columns: 1fr 1fr; }
-        .mobile-preview .benefit-grid { grid-template-columns: 1fr; }
-        .mobile-preview .podium { grid-template-columns: 1fr; align-items: stretch; }
-        .mobile-preview .pc.bronze { margin-top: 0 !important; }
-        .mobile-preview .results-header { flex-direction: column; align-items: flex-start; }
-        .mobile-preview .results-header-right { text-align: left; }
-        .mobile-preview .hero-stat:nth-child(2) { border-right: none; }
-        .mobile-preview .hero-stat:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.07); }
-        .mobile-preview .about-bento { grid-template-columns: 1fr; }
-        .mobile-preview .ab-img { grid-column: 1; grid-row: auto; min-height: 280px; }
-        .mobile-preview .ab-main { grid-column: 1; }
-        .mobile-preview .ab-quote { grid-column: 1; }
-        .mobile-preview .ab-mini1 { grid-column: 1; }
-        .mobile-preview .champ-bento { grid-template-columns: 1fr; }
-        .mobile-preview .cb-reg { grid-column: 1; grid-row: auto; }
-        .mobile-preview .cb-timeline { grid-column: 1; }
-        .mobile-preview .tl-row { grid-template-columns: 1fr 1fr; }
-        .mobile-preview .tour-grid { grid-template-columns: 1fr; }
-        .mobile-preview .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
-        .mobile-preview .pricing-header { flex-direction: column; }
-        .mobile-preview .cta-content { grid-template-columns: 1fr; padding: 40px 24px; }
-        .mobile-preview .sponsors-grid { grid-template-columns: repeat(2,1fr); }
-        .mobile-preview .container,
-        .mobile-preview .container-wide { padding: 0 20px; }
-        .mobile-preview .hdr-inner { padding: 0 20px; }
-        .mobile-preview .hero h1 { font-size: 38px; }
-        .mobile-preview .hero-stat { padding: 20px 16px; }
-        .mobile-preview .hero-stat-num { font-size: 28px; }
-        .mobile-preview .about-section,
-        .mobile-preview .champ-section,
-        .mobile-preview .tour-section,
-        .mobile-preview .results-section,
-        .mobile-preview .pricing-section,
-        .mobile-preview .cta-section { padding: 64px 0; }
-        .mobile-preview .sc-year { font-size: 40px; }
-        .mobile-preview .pc-return { font-size: 36px; }
-        .mobile-preview .tl-cell:nth-child(5) { display: none; }
-        .mobile-preview .footer-top { grid-template-columns: 1fr; gap: 32px; }
-        .mobile-preview .champ-top { flex-direction: column; align-items: flex-start; }
-        .mobile-preview .champ-top-right { text-align: left; }
-        .mobile-preview .champ-top-right p { margin-left: 0; }
     </style>
 </head>
-<body class="mobile-preview">
+<body>
 
 <!-- MOBILE NAV -->
 <div class="mob-nav" id="mobNav">
