@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Спонсоры и партнёры | ФБТР</title>
+    <title>О Федерации биржевого трейдинга России | ФБТР</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -18,7 +18,7 @@
             --gold: #B45309; --gold-lt: #F59E0B;
             --gold-dim: rgba(245,158,11,0.1);
             --violet: #7C3AED; --violet-lt: #A78BFA;
-            --violet-dim: rgba(124,58,237,0.12);
+            --violet-dim: rgba(124,58,237,0.14); --violet-line: rgba(167,139,250,0.28);
             --text: #F8FAFC; --text2: #94A3B8; --text3: #475569;
             --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.04);
             --r: 12px; --r-lg: 20px;
@@ -31,6 +31,10 @@
 
         .label { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-lt); margin-bottom: 18px; }
         .label::before { content: ''; width: 20px; height: 1px; background: currentColor; }
+        .label-violet { color: var(--violet-lt); }
+        .label-violet::before { background: var(--violet-lt); }
+        .label-gold { color: var(--gold-lt); }
+        .label-gold::before { background: var(--gold-lt); }
 
         .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; border: none; font-family: 'Inter', sans-serif; white-space: nowrap; }
         .btn-primary { background: var(--blue); color: #fff; }
@@ -38,12 +42,17 @@
         .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
         .btn-outline:hover { border-color: var(--blue-line); color: var(--blue-lt); }
         .btn-sm { padding: 9px 18px; font-size: 13px; }
+        .btn-lg { padding: 17px 38px; font-size: 15px; }
+        .btn-arrow::after { content: ' \2192'; }
+        .btn-violet { background: var(--violet); color: #fff; }
+        .btn-violet:hover { background: #6D28D9; }
 
         .fi { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
         .fi.on { opacity: 1; transform: none; }
-        .fi-1 { transition-delay: .1s; } .fi-2 { transition-delay: .2s; } .fi-3 { transition-delay: .3s; } .fi-4 { transition-delay: .4s; }
+        .fi-1 { transition-delay: .1s; } .fi-2 { transition-delay: .2s; }
+        .fi-3 { transition-delay: .3s; } .fi-4 { transition-delay: .4s; }
 
-        /* TOP BAR */
+        /* ── TOPBAR ─────────────────────────────────────── */
         .topbar { background: var(--bg2); border-bottom: 1px solid var(--border2); height: 38px; display: flex; align-items: center; }
         .topbar-inner { max-width: 1440px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; width: 100%; font-size: 12px; color: var(--text3); }
         .topbar-left { display: flex; align-items: center; gap: 24px; }
@@ -54,7 +63,7 @@
         .tb-social:hover { color: var(--blue-lt); border-color: var(--blue-line); }
         .tb-social svg { width: 13px; height: 13px; }
 
-        /* HEADER */
+        /* ── HEADER ─────────────────────────────────────── */
         .hdr { position: sticky; top: 0; z-index: 900; background: rgba(7,9,15,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
         .hdr-inner { max-width: 1440px; margin: 0 auto; padding: 0 32px; height: 64px; display: flex; align-items: center; }
         .hdr-logo { display: flex; align-items: center; gap: 12px; margin-right: 48px; flex-shrink: 0; }
@@ -68,183 +77,187 @@
         .hdr-right { display: flex; align-items: center; gap: 12px; margin-left: 24px; flex-shrink: 0; }
         .burger { display: none; flex-direction: column; gap: 4px; cursor: pointer; padding: 8px; }
         .burger span { width: 20px; height: 2px; background: var(--text2); display: block; border-radius: 1px; }
+        .mob-nav { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(7,9,15,0.98); backdrop-filter: blur(20px); flex-direction: column; padding: 48px 32px; gap: 8px; }
+        .mob-nav.open { display: flex; }
+        .mob-nav a { font-size: 20px; font-weight: 600; color: var(--text2); padding: 14px 0; border-bottom: 1px solid var(--border); transition: color .18s; }
+        .mob-nav a:hover, .mob-nav a.active { color: var(--blue-lt); }
+        .mob-close { position: absolute; top: 20px; right: 24px; font-size: 22px; cursor: pointer; color: var(--text3); background: none; border: none; color: var(--text2); }
 
-        /* HERO */
-        .page-hero { position: relative; padding: 72px 0 56px; overflow: hidden; }
+        /* ── PAGE HERO ──────────────────────────────────── */
+        .page-hero { position: relative; padding: 80px 0 64px; overflow: hidden; }
         .page-hero-bg {
             position: absolute; inset: 0;
-            background-image: url('https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover; background-position: center top;
+            background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center 40%;
         }
-        .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, rgba(7,9,15,0.97) 0%, rgba(7,9,15,0.92) 55%, rgba(7,9,15,0.72) 100%); }
+        .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(7,9,15,0.98) 0%, rgba(7,9,15,0.93) 50%, rgba(7,9,15,0.75) 100%); }
         .page-hero-content { position: relative; z-index: 2; }
-        .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text3); margin-bottom: 24px; }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text3); margin-bottom: 28px; }
         .breadcrumb a { color: var(--text3); transition: color .18s; }
         .breadcrumb a:hover { color: var(--blue-lt); }
         .breadcrumb-sep { opacity: 0.5; }
         .breadcrumb-current { color: var(--text2); }
-        .page-hero h1 { font-size: clamp(30px,4.5vw,60px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.07; max-width: 700px; }
+        .page-hero h1 { font-size: clamp(32px,4.8vw,64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.06; max-width: 700px; margin-bottom: 24px; }
         .page-hero h1 em { font-style: normal; color: var(--blue-lt); }
-        .hero-chips { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+        .page-hero-desc { font-size: 16px; color: var(--text2); line-height: 1.8; max-width: 560px; }
+        .hero-chips { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
         .hero-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 600; color: var(--text2); letter-spacing: .05em; text-transform: uppercase; }
+        .hero-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-lt); }
+        .hero-chip-dot.g { background: var(--gold-lt); }
+        .hero-chip-dot.v { background: var(--violet-lt); }
 
-        /* ═══ SPONSOR BLOCKS ════════════════════════════════════════════════ */
-        .sponsor-section { padding: 88px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-        .sponsor-section.alt { background: var(--bg2); }
-        .sponsor-grid { display: grid; grid-template-columns: 1fr 460px; gap: 72px; align-items: center; }
-        .sponsor-grid.rev { grid-template-columns: 460px 1fr; }
-        .sponsor-grid.rev .sg-content { order: 2; }
-        .sponsor-grid.rev .sg-visual { order: 1; }
+        /* ── GOAL SECTION ───────────────────────────────── */
+        .goal-section { padding: 100px 0; }
+        .goal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        .goal-left {}
+        .goal-h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 28px; }
+        .goal-text { font-size: 15px; color: var(--text2); line-height: 1.9; }
+        .goal-text p + p { margin-top: 16px; }
 
-        .sg-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
-        .sg-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-        .sg-chip.founded { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text3); }
-        .sg-chip.top { background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.25); color: var(--gold-lt); }
-        .sg-chip.info { background: var(--blue-dim); border: 1px solid var(--blue-line); color: var(--blue-lt); }
+        .goal-quote { margin-top: 48px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 36px; position: relative; overflow: hidden; }
+        .goal-quote::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue-lt), var(--violet-lt)); }
+        .gq-mark { font-size: 72px; line-height: 0.7; color: var(--blue-lt); font-weight: 900; display: block; margin-bottom: 20px; opacity: 0.3; }
+        .gq-text { font-size: 18px; font-weight: 500; color: var(--text); line-height: 1.75; font-style: italic; margin-bottom: 32px; }
+        .gq-author { display: flex; align-items: center; gap: 16px; }
+        .gq-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--violet)); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: #fff; flex-shrink: 0; }
+        .gq-name { font-size: 15px; font-weight: 700; }
+        .gq-role { font-size: 12px; color: var(--text3); margin-top: 3px; }
 
-        .sg-h2 { font-size: clamp(28px,3.5vw,52px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.06; margin-bottom: 24px; }
-        .sg-h2 em { font-style: normal; }
-        .live-h2 em { color: var(--gold-lt); }
-        .smart-h2 em { color: var(--blue-lt); }
-
-        .sg-text { font-size: 15px; color: var(--text2); line-height: 1.85; }
-        .sg-text p + p { margin-top: 16px; }
-        .sg-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-
-        /* Visual column */
-        .sg-visual { position: relative; }
-        .sg-img { border-radius: var(--r-lg); overflow: hidden; position: relative; }
-        .sg-img img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
-        .sg-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,9,15,0.7) 0%, transparent 55%); }
-        .sg-img-badge {
-            position: absolute; bottom: 24px; left: 24px; right: 24px;
+        .goal-right { position: relative; }
+        .goal-img-wrap { border-radius: var(--r-lg); overflow: hidden; position: relative; }
+        .goal-img-wrap img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+        .goal-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,9,15,0.75) 0%, transparent 45%); }
+        .goal-img-badge {
+            position: absolute; bottom: 28px; left: 24px; right: 24px; z-index: 2;
             background: rgba(7,9,15,0.88); backdrop-filter: blur(12px);
-            border: 1px solid var(--border); border-radius: var(--r); padding: 16px 20px;
+            border: 1px solid var(--border); border-radius: var(--r);
+            padding: 20px 24px; display: flex; gap: 20px; align-items: center;
         }
-        .sg-img-badge-top { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
-        .sg-img-badge-num { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; color: var(--gold-lt); }
-        .sg-img-badge-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+        .gib-num { font-size: 36px; font-weight: 900; color: var(--gold-lt); letter-spacing: -0.03em; line-height: 1; }
+        .gib-label { font-size: 12px; color: var(--text3); margin-top: 2px; }
+        .gib-div { width: 1px; background: var(--border); align-self: stretch; flex-shrink: 0; }
 
-        /* SMART-LAB orange banner */
-        .smartlab-banner {
-            border-radius: var(--r-lg); overflow: hidden; position: relative;
-            background: linear-gradient(135deg, #EA580C 0%, #F59E0B 60%, #FBBF24 100%);
-            aspect-ratio: 4/5; display: flex; flex-direction: column;
-            justify-content: center; padding: 48px 40px;
-        }
-        .sl-b-label { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(0,0,0,0.4); margin-bottom: 24px; }
-        .sl-b-name { font-size: 54px; font-weight: 900; letter-spacing: -0.05em; line-height: .95; color: #000; margin-bottom: 20px; }
-        .sl-b-sub { font-size: 14px; color: rgba(0,0,0,0.5); line-height: 1.6; font-weight: 500; }
-        .sl-b-deco { position: absolute; right: -20px; bottom: -20px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.12); }
-        .sl-b-deco2 { position: absolute; right: 40px; bottom: 40px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.1); }
-
-        /* ═══ PARTNERS SECTION ═══════════════════════════════════════════════ */
-        .partners-section { padding: 88px 0; position: relative; overflow: hidden; }
-        .partners-bg {
+        /* ── TASKS SECTION ──────────────────────────────── */
+        .tasks-section { padding: 100px 0; position: relative; overflow: hidden; }
+        .tasks-bg {
             position: absolute; inset: 0;
-            background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1920&q=80');
+            background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1920&q=70');
             background-size: cover; background-position: center;
         }
-        .partners-bg::after { content: ''; position: absolute; inset: 0; background: rgba(7,9,15,0.93); }
-        .partners-content { position: relative; z-index: 2; }
+        .tasks-bg::after { content: ''; position: absolute; inset: 0; background: rgba(7,9,15,0.93); }
+        .tasks-content { position: relative; z-index: 2; }
+        .tasks-header { text-align: center; margin-bottom: 64px; }
+        .tasks-h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+        .tasks-sub { font-size: 15px; color: var(--text2); margin-top: 16px; max-width: 520px; margin-left: auto; margin-right: auto; }
+        .tasks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border2); border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--border2); }
+        .task-card { background: var(--card); padding: 48px 44px; position: relative; overflow: hidden; }
+        .task-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--t-accent, var(--blue-lt)); }
+        .task-card:hover { background: var(--card2); }
+        .task-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: var(--t-bg, var(--blue-dim)); border: 1px solid var(--t-border, var(--blue-line)); margin-bottom: 24px; }
+        .task-icon svg { width: 24px; height: 24px; color: var(--t-accent, var(--blue-lt)); }
+        .task-n { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--t-accent, var(--blue-lt)); margin-bottom: 12px; }
+        .task-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+        .task-text { font-size: 14px; color: var(--text2); line-height: 1.85; }
 
-        .partners-header { margin-bottom: 56px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-        .partners-h2 { font-size: clamp(26px,3vw,44px); font-weight: 900; letter-spacing: -0.025em; line-height: 1.1; }
-        .partners-count { font-size: 13px; color: var(--text3); }
+        /* ── EQUAL SECTION ──────────────────────────────── */
+        .equal-section { padding: 100px 0; }
+        .equal-grid { display: grid; grid-template-columns: 1fr 460px; gap: 2px; background: var(--border2); border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden; align-items: stretch; }
+        .equal-left { background: var(--card); padding: 60px 56px; }
+        .equal-h2 { font-size: clamp(26px,3vw,42px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 28px; }
+        .equal-text { font-size: 15px; color: var(--text2); line-height: 1.9; }
+        .equal-text p + p { margin-top: 16px; }
+        .equal-cta { margin-top: 40px; }
 
-        .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .equal-right { background: linear-gradient(160deg, #0E1835 0%, #0A0F28 50%, #0D0818 100%); padding: 56px 48px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .equal-right::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%); }
+        .er-title { font-size: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: 40px; }
+        .er-stats { display: flex; flex-direction: column; gap: 0; flex: 1; }
+        .er-row { display: grid; grid-template-columns: 140px 1fr; gap: 20px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border2); }
+        .er-row:last-child { border-bottom: none; }
+        .er-num { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+        .er-num.blue { color: var(--blue-lt); }
+        .er-num.gold { color: var(--gold-lt); }
+        .er-num.violet { color: var(--violet-lt); }
+        .er-desc { font-size: 13px; color: var(--text3); line-height: 1.55; }
 
-        .p-card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--r-lg); padding: 32px;
-            display: flex; flex-direction: column;
-            position: relative; overflow: hidden;
-            transition: background .2s, border-color .2s, transform .2s;
-        }
-        .p-card:hover { background: var(--card2); border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
-        .p-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--p-accent, rgba(255,255,255,0.1)); }
+        /* ── FAQ SECTION ────────────────────────────────── */
+        .faq-section { padding: 100px 0; position: relative; }
 
-        /* Logo row */
-        .p-logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-        .p-logo-mark {
-            width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 900; letter-spacing: -.02em;
-        }
-        .p-logo-name { font-size: 16px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; }
-        .p-logo-name small { display: block; font-size: 11px; color: var(--text3); font-weight: 500; letter-spacing: .04em; margin-top: 2px; }
+        .faq-block { padding: 80px 0; }
+        .faq-block-fbtr { background: linear-gradient(160deg, #0E0920 0%, #0C0A1E 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .faq-block-trading { background: linear-gradient(160deg, #07090F 0%, #0A0F24 100%); border-bottom: 1px solid var(--border); }
 
-        /* Partner type badge */
-        .p-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
-        .p-badge.sponsor { background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.25); color: var(--gold-lt); }
-        .p-badge.partner { background: var(--blue-dim); border: 1px solid var(--blue-line); color: var(--blue-lt); }
-        .p-badge.info { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text3); }
+        .faq-header { margin-bottom: 56px; }
+        .faq-h2 { font-size: clamp(24px,3vw,42px); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
+        .faq-sub { font-size: 15px; color: var(--text2); max-width: 600px; line-height: 1.7; }
 
-        .p-desc { font-size: 13px; color: var(--text2); line-height: 1.75; flex: 1; }
+        .faq-list { display: flex; flex-direction: column; gap: 2px; }
+        .faq-item { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: border-color .2s; }
+        .faq-item.open { border-color: rgba(255,255,255,0.12); }
+        .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 28px; cursor: pointer; user-select: none; }
+        .faq-q-text { font-size: 15px; font-weight: 600; line-height: 1.5; }
+        .faq-arr { width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .25s; }
+        .faq-arr svg { width: 14px; height: 14px; color: var(--text3); transition: transform .3s ease; }
+        .faq-item.open .faq-arr { background: var(--blue-dim); border-color: var(--blue-line); }
+        .faq-item.open .faq-arr svg { transform: rotate(180deg); color: var(--blue-lt); }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+        .faq-a-inner { padding: 0 28px 24px; font-size: 14px; color: var(--text2); line-height: 1.85; }
+        .faq-a-inner p + p { margin-top: 12px; }
+        .faq-a-inner ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+        .faq-a-inner li { font-size: 14px; color: var(--text2); }
 
-        /* Conditions box */
-        .p-cond {
-            margin-top: 18px;
-            background: var(--blue-dim); border: 1px solid var(--blue-line);
-            border-radius: var(--r); padding: 14px 16px;
-        }
-        .p-cond-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-lt); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .p-cond-label::before { content: ''; width: 16px; height: 1px; background: var(--blue-lt); }
-        .p-cond-text { font-size: 12px; color: var(--text); font-weight: 500; line-height: 1.6; }
-
-        .p-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
-
-        /* FOOTER */
-        footer { border-top: 1px solid var(--border); background: var(--bg2); padding: 64px 0 32px; }
-        .footer-top { display: grid; grid-template-columns: 300px 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 56px; }
-        .footer-logo { display: flex; align-items: center; gap: 12px; }
-        .footer-logo-mark { width: 32px; height: 32px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #fff; clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); }
+        /* ── FOOTER ─────────────────────────────────────── */
+        footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 72px 0 0; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 56px; }
+        .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .footer-logo-mark { width: 32px; height: 32px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #fff; clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); }
         .footer-logo-text { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
         .footer-logo-text span { color: var(--blue-lt); }
-        .footer-about p { font-size: 12px; color: var(--text3); line-height: 1.7; margin: 14px 0 20px; }
-        .socials { display: flex; gap: 8px; }
-        .social { width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all .18s; }
-        .social:hover { background: var(--blue-dim); border-color: var(--blue-line); color: var(--blue-lt); }
-        .social svg { width: 14px; height: 14px; }
-        .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 18px; }
-        .footer-links { display: flex; flex-direction: column; gap: 10px; }
+        .footer-about p { font-size: 13px; color: var(--text3); line-height: 1.7; margin-bottom: 24px; }
+        .socials { display: flex; gap: 10px; }
+        .social { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all .18s; }
+        .social:hover { color: var(--blue-lt); border-color: var(--blue-line); }
+        .social svg { width: 16px; height: 16px; }
+        .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 20px; }
+        .footer-links { display: flex; flex-direction: column; gap: 12px; }
         .footer-links a { font-size: 13px; color: var(--text2); transition: color .18s; }
-        .footer-links a:hover { color: var(--text); }
-        .footer-support { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-        .footer-tg-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(59,130,246,0.1); border: 1px solid var(--blue-line); border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--blue-lt); transition: all .2s; }
-        .footer-tg-btn:hover { background: rgba(59,130,246,0.18); }
-        .footer-tg-btn svg { width: 16px; height: 16px; }
+        .footer-links a:hover { color: var(--blue-lt); }
+        .footer-support { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; border-top: 1px solid var(--border2); }
         .footer-copy { font-size: 12px; color: var(--text3); }
-        .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text3); flex-wrap: wrap; gap: 12px; }
+        .footer-tg-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-dim); border: 1px solid var(--blue-line); color: var(--blue-lt); border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; transition: all .2s; }
+        .footer-tg-btn:hover { background: rgba(59,130,246,0.2); }
+        .footer-tg-btn svg { width: 15px; height: 15px; }
+        .footer-bottom { border-top: 1px solid var(--border2); padding: 16px 0; }
+        .footer-bottom span { font-size: 11px; color: var(--text3); }
 
-        /* MOBILE NAV */
-        .mob-nav { position: fixed; inset: 0; z-index: 800; background: rgba(7,9,15,0.98); backdrop-filter: blur(16px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; opacity: 0; pointer-events: none; transition: opacity .25s; }
-        .mob-nav.open { opacity: 1; pointer-events: all; }
-        .mob-nav a { font-size: 20px; font-weight: 700; color: var(--text2); padding: 12px 40px; border-radius: 8px; }
-        .mob-nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-        .mob-close { position: absolute; top: 20px; right: 28px; font-size: 24px; color: var(--text3); cursor: pointer; padding: 8px; }
-
-        /* RESPONSIVE */
-        @media(max-width:1100px) {
-            .sponsor-grid, .sponsor-grid.rev { grid-template-columns: 1fr; }
-            .sponsor-grid.rev .sg-content, .sponsor-grid.rev .sg-visual { order: unset; }
-            .sg-visual { display: none; }
-            .footer-top { grid-template-columns: 1fr 1fr 1fr; }
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media (max-width: 1100px) {
+            .goal-grid { grid-template-columns: 1fr; gap: 56px; }
+            .goal-right { order: -1; }
+            .goal-img-wrap img { aspect-ratio: 16/9; }
+            .equal-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
         }
-        @media(max-width:900px) {
+        @media (max-width: 900px) {
+            .tasks-grid { grid-template-columns: 1fr; }
             .hdr-nav { display: none; }
             .burger { display: flex; }
-            .partner-grid { grid-template-columns: 1fr; }
-            .footer-top { grid-template-columns: 1fr 1fr; }
+            .topbar-left .topbar-item:not(:first-child) { display: none; }
         }
-        @media(max-width:640px) {
+        @media (max-width: 640px) {
             .container { padding: 0 20px; }
-            .topbar-inner, .hdr-inner { padding: 0 20px; }
-            .page-hero { padding: 56px 0 40px; }
-            .sponsor-section, .partners-section { padding: 64px 0; }
-            .footer-top { grid-template-columns: 1fr; gap: 28px; }
-            .topbar-left .topbar-item:last-child { display: none; }
-            .sg-visual { display: block; }
+            .page-hero { padding: 60px 0 48px; }
+            .goal-section, .tasks-section, .equal-section { padding: 72px 0; }
+            .faq-block { padding: 60px 0; }
+            .faq-q { padding: 18px 20px; }
+            .faq-a-inner { padding: 0 20px 20px; }
+            .equal-left { padding: 40px 28px; }
+            .equal-right { padding: 40px 28px; }
+            .task-card { padding: 36px 28px; }
+            .footer-top { grid-template-columns: 1fr; gap: 32px; }
+            .footer-support { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .er-row { grid-template-columns: 120px 1fr; }
+            .er-num { font-size: 22px; }
         }
     </style>
 </head>
@@ -252,33 +265,38 @@
 
 <!-- MOBILE NAV -->
 <div class="mob-nav" id="mobNav">
-    <span class="mob-close" onclick="closeMob()">&#x2715;</span>
-    <a href="index.html" onclick="closeMob()">Главная</a>
+    <button class="mob-close" onclick="closeMob()" aria-label="Закрыть меню">&#10005;</button>
     <a href="championship.html" onclick="closeMob()">Годовой чемпионат</a>
     <a href="tournaments.html" onclick="closeMob()">Турниры</a>
-    <a href="results.html" onclick="closeMob()">Результаты</a>
+    <a href="results.html" onclick="closeMob()">Результаты победителей</a>
     <a href="sponsors.html" onclick="closeMob()">Спонсоры</a>
-    <a href="about.html" onclick="closeMob()">О федерации</a>
-    <a href="index.html#pricing" class="btn btn-primary btn-sm" style="margin-top:16px" onclick="closeMob()">Личный кабинет</a>
+    <a href="about.html" class="active" onclick="closeMob()">О федерации</a>
+    <a href="#" class="btn btn-primary btn-sm" style="margin-top:16px" onclick="closeMob()">Личный кабинет</a>
 </div>
 
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div class="topbar">
     <div class="topbar-inner">
         <div class="topbar-left">
       <span class="topbar-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Краснодар, ул. Дальняя 269, 4 этаж
       </span>
             <span class="topbar-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         info@fbtr.pro
       </span>
         </div>
         <div class="topbar-socials">
-            <a href="#" class="tb-social" aria-label="ВКонтакте"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.6 13.5h-1.8c-.68 0-.89-.55-2.1-1.77-1.05-1.01-1.51-.93-1.77-.93-.36 0-.46.1-.46.6v1.62c0 .43-.14.68-1.26.68-1.86 0-3.93-1.13-5.38-3.23-2.2-3.1-2.8-5.42-2.8-5.9 0-.26.1-.5.6-.5h1.8c.45 0 .62.2.79.68.88 2.53 2.35 4.75 2.96 4.75.23 0 .33-.1.33-.68v-2.6c-.07-1.22-.71-1.32-.71-1.76 0-.22.18-.44.46-.44h2.83c.38 0 .51.2.51.64v3.5c0 .38.17.51.27.51.23 0 .42-.13.84-.55 1.3-1.45 2.22-3.68 2.22-3.68.13-.26.33-.5.79-.5h1.8c.54 0 .66.28.54.64-.23 1.04-2.43 4.16-2.43 4.16-.19.31-.26.45 0 .8.19.26.81.79 1.22 1.27.76.86 1.34 1.58 1.5 2.08.17.49-.09.74-.58.74z"/></svg></a>
-            <a href="#" class="tb-social" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.2c-.24-.89-.93-1.58-1.81-1.82C18.25 5 12 5 12 5s-6.25 0-7.77.38c-.88.24-1.57.93-1.81 1.82C2 8.72 2 12 2 12s0 3.28.42 4.8c.24.89.93 1.58 1.81 1.82C5.75 19 12 19 12 19s6.25 0 7.77-.38c.88-.24 1.57-.93 1.81-1.82C22 15.28 22 12 22 12s0-3.28-.42-4.8zM10 15V9l5.2 3-5.2 3z"/></svg></a>
-            <a href="#" class="tb-social" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg></a>
+            <a href="#" class="tb-social" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.2c-.24-.89-.93-1.58-1.81-1.82C18.25 5 12 5 12 5s-6.25 0-7.77.38c-.88.24-1.57.93-1.81 1.82C2 8.72 2 12 2 12s0 3.28.42 4.8c.24.89.93 1.58 1.81 1.82C5.75 19 12 19 12 19s6.25 0 7.77-.38c.88-.24 1.57-.93 1.81-1.82C22 15.28 22 12 22 12s0-3.28-.42-4.8zM10 15V9l5.2 3-5.2 3z"/></svg>
+            </a>
+            <a href="#" class="tb-social" aria-label="ВКонтакте">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.6 13.5h-1.8c-.68 0-.89-.55-2.1-1.77-1.05-1.01-1.51-.93-1.77-.93-.36 0-.46.1-.46.6v1.62c0 .43-.14.68-1.26.68-1.86 0-3.93-1.13-5.38-3.23-2.2-3.1-2.8-5.42-2.8-5.9 0-.26.1-.5.6-.5h1.8c.45 0 .62.2.79.68.88 2.53 2.35 4.75 2.96 4.75.23 0 .33-.1.33-.68v-2.6c-.07-1.22-.71-1.32-.71-1.76 0-.22.18-.44.46-.44h2.83c.38 0 .51.2.51.64v3.5c0 .38.17.51.27.51.23 0 .42-.13.84-.55 1.3-1.45 2.22-3.68 2.22-3.68.13-.26.33-.5.79-.5h1.8c.54 0 .66.28.54.64-.23 1.04-2.43 4.16-2.43 4.16-.19.31-.26.45 0 .8.19.26.81.79 1.22 1.27.76.86 1.34 1.58 1.5 2.08.17.49-.09.74-.58.74z"/></svg>
+            </a>
+            <a href="#" class="tb-social" aria-label="Telegram">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg>
+            </a>
         </div>
     </div>
 </div>
@@ -294,270 +312,199 @@
             <a href="championship.html">Годовой чемпионат</a>
             <a href="tournaments.html">Турниры</a>
             <a href="results.html">Результаты победителей</a>
-            <a href="#">События</a>
-            <a href="sponsors.html" class="active">Спонсоры</a>
-            <a href="about.html">О федерации</a>
+            <a href="sponsors.html">Спонсоры</a>
+            <a href="about.html" class="active">О федерации</a>
         </nav>
         <div class="hdr-right">
-            <a href="index.html#pricing" class="btn btn-primary btn-sm">Личный кабинет</a>
-            <div class="burger" onclick="openMob()"><span></span><span></span><span></span></div>
+            <a href="#" class="btn btn-outline btn-sm">Личный кабинет</a>
+            <div class="burger" onclick="openMob()" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </div>
         </div>
     </div>
 </header>
 
-<!-- HERO -->
+<!-- ═══ PAGE HERO ══════════════════════════════════ -->
 <section class="page-hero">
     <div class="page-hero-bg"></div>
     <div class="container page-hero-content">
-        <nav class="breadcrumb fi">
+        <div class="breadcrumb fi">
             <a href="index.html">Главная</a>
-            <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-current">Спонсоры</span>
-        </nav>
-        <h1 class="fi fi-1">Спонсоры<br>и <em>партнёры</em></h1>
-        <div class="hero-chips fi fi-2">
-            <span class="hero-chip">2 Генеральных спонсора</span>
-            <span class="hero-chip">10 Партнёров</span>
-            <span class="hero-chip">С 2021 года</span>
+            <span class="breadcrumb-sep">&#8250;</span>
+            <span class="breadcrumb-current">О Федерации биржевого трейдинга</span>
+        </div>
+        <h1 class="fi fi-1">
+            О Федерации<br>
+            <em>биржевого трейдинга</em>
+        </h1>
+        <p class="page-hero-desc fi fi-2">
+            Общественная организация, объединяющая трейдеров России. Развиваем биржевую торговлю как вид спорта, создаём инфраструктуру и поддерживаем профессиональный рост каждого участника.
+        </p>
+        <div class="hero-chips fi fi-3">
+            <span class="hero-chip"><span class="hero-chip-dot"></span>Основана в 2021</span>
+            <span class="hero-chip"><span class="hero-chip-dot g"></span>45+ регионов России</span>
+            <span class="hero-chip"><span class="hero-chip-dot v"></span>Трейдинг как спорт</span>
         </div>
     </div>
 </section>
 
-<!-- ═══ LIVE INVESTING GROUP ═══════════════════════════════════════════ -->
-<section class="sponsor-section" id="live-ig">
+<!-- ═══ ЦЕЛЬ ФЕДЕРАЦИИ ══════════════════════════════ -->
+<section class="goal-section" id="goal">
     <div class="container">
-        <div class="sponsor-grid">
-            <div class="sg-content">
-                <span class="label fi" style="color:var(--gold-lt)">Генеральный спонсор</span>
-                <div class="sg-chips fi fi-1">
-                    <span class="sg-chip founded">Основана в 2018 году</span>
-                    <span class="sg-chip top">Крупнейшая проп-компания России</span>
+        <div class="goal-grid">
+
+            <div class="goal-left">
+                <span class="label fi">Трейдинг и спорт</span>
+                <h2 class="goal-h2 fi fi-1">Цель федерации<br>биржевого трейдинга</h2>
+                <div class="goal-text fi fi-2">
+                    <p>Федерация биржевого трейдинга России — это общественная организация, объединяющая всех участников трейдинговой деятельности. Для достижения своих целей федерация проводит соревнования и создаёт инфраструктуру для трейдеров, подготавливает и развивает квалифицированных специалистов.</p>
+                    <p>Мы строим экосистему, в которой каждый трейдер — независимо от опыта и капитала — получает равные возможности для профессионального роста, признания достижений и участия в официальных соревнованиях.</p>
                 </div>
-                <h2 class="sg-h2 live-h2 fi fi-2">Live Investing<br><em>Group</em></h2>
-                <div class="sg-text fi fi-3">
-                    <p>Live Investing Group была основана в 2018 году как проп-трейдинговая компания, объединяющая новичков и опытных трейдеров со всей России. Компания занимается обеспечением трейдеров всеми необходимыми ресурсами для обучения и торговли на биржевых рынках.</p>
-                    <p>LIVE IG предоставляет капитал для торговли опытным трейдерам и средства в управление победителям Live Cup Trading Championship. Также компания специализируется на организации обучения и наставничества в сфере биржевой торговли и трудоустраивает опытных трейдеров.</p>
-                </div>
-                <div class="sg-actions fi fi-4">
-                    <a href="#" target="_blank" class="btn btn-primary">Подробнее о LIVE IG &rarr;</a>
-                </div>
-            </div>
-            <div class="sg-visual fi fi-3">
-                <div class="sg-img">
-                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80" alt="Live Investing Group — торговый зал"/>
-                    <div class="sg-img-overlay"></div>
-                    <div class="sg-img-badge">
-                        <div class="sg-img-badge-top">Генеральный спонсор ФБТР</div>
-                        <div class="sg-img-badge-num">2018</div>
-                        <div class="sg-img-badge-label">Год основания компании</div>
+
+                <div class="goal-quote fi fi-3">
+                    <span class="gq-mark">&laquo;</span>
+                    <p class="gq-text">Цель федерации — развитие экосистемы биржевого трейдинга, как вида спорта на территории России.</p>
+                    <div class="gq-author">
+                        <div class="gq-avatar">С</div>
+                        <div>
+                            <div class="gq-name">Сергей Алексеев</div>
+                            <div class="gq-role">Президент Федерации биржевого трейдинга России</div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="goal-right fi fi-2">
+                <div class="goal-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=900&q=85"
+                         alt="Трейдер за рабочим местом — мониторы с графиками" loading="lazy"/>
+                    <div class="goal-img-badge">
+                        <div>
+                            <div class="gib-num">2021</div>
+                            <div class="gib-label">год основания</div>
+                        </div>
+                        <div class="gib-div"></div>
+                        <div>
+                            <div class="gib-num" style="color:var(--blue-lt)">45+</div>
+                            <div class="gib-label">регионов</div>
+                        </div>
+                        <div class="gib-div"></div>
+                        <div>
+                            <div class="gib-num" style="color:var(--violet-lt)">5</div>
+                            <div class="gib-label">чемпионатов</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
 
-<!-- ═══ SMART-LAB ═════════════════════════════════════════════════════ -->
-<section class="sponsor-section alt" id="smart-lab">
+<!-- ═══ ЗАДАЧИ ФЕДЕРАЦИИ ════════════════════════════ -->
+<section class="tasks-section" id="tasks">
+    <div class="tasks-bg"></div>
+    <div class="container tasks-content">
+        <div class="tasks-header fi">
+            <span class="label label-violet">Направления работы</span>
+            <h2 class="tasks-h2">Задачи федерации<br>биржевого трейдинга</h2>
+            <p class="tasks-sub">Четыре ключевых направления, по которым строится вся деятельность ФБТР России</p>
+        </div>
+
+        <div class="tasks-grid">
+
+            <div class="task-card fi" style="--t-accent:var(--blue-lt);--t-bg:var(--blue-dim);--t-border:var(--blue-line)">
+                <div class="task-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <div class="task-n">01 &#8212; Популяризация</div>
+                <h3 class="task-title">Популяризация трейдинга</h3>
+                <p class="task-text">Содействие в организации и проведении соревнований, семинаров, конференций и других мероприятий, а также в создании программ обучения, направленных на популяризацию и развитие трейдинга.</p>
+            </div>
+
+            <div class="task-card fi fi-1" style="--t-accent:var(--gold-lt);--t-bg:var(--gold-dim);--t-border:rgba(245,158,11,0.25)">
+                <div class="task-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 15l-2 5l9-11h-6l2-8l-9 11h6z"/>
+                    </svg>
+                </div>
+                <div class="task-n" style="color:var(--gold-lt)">02 &#8212; Методология</div>
+                <h3 class="task-title">Спортивная методология</h3>
+                <p class="task-text">На основе обучения и знаний, развивать трейдеров, формировать спортивные команды, поощрять финансовые достижения и ставить различные разряды.</p>
+            </div>
+
+            <div class="task-card fi fi-2" style="--t-accent:var(--violet-lt);--t-bg:var(--violet-dim);--t-border:var(--violet-line)">
+                <div class="task-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/>
+                    </svg>
+                </div>
+                <div class="task-n" style="color:var(--violet-lt)">03 &#8212; Объединение</div>
+                <h3 class="task-title">Объединение трейдеров</h3>
+                <p class="task-text">Последовательно объединить и обмен опытом среди трейдеров России и других стран. Создание профессионального сообщества для развития и взаимной поддержки.</p>
+            </div>
+
+            <div class="task-card fi fi-3" style="--t-accent:#34D399;--t-bg:rgba(52,211,153,0.08);--t-border:rgba(52,211,153,0.22)">
+                <div class="task-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <div class="task-n" style="color:#34D399">04 &#8212; Образование</div>
+                <h3 class="task-title">Повышение уровня образования</h3>
+                <p class="task-text">Разработать и реализовать программы и курсы профессиональной подготовки для действующих и начинающих трейдеров. Академические стандарты обучения.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══ РАВНЫЕ ВОЗМОЖНОСТИ ══════════════════════════ -->
+<section class="equal-section" id="equal">
     <div class="container">
-        <div class="sponsor-grid rev">
-            <div class="sg-visual fi fi-1">
-                <div class="smartlab-banner">
-                    <div class="sl-b-label">Генеральный спонсор LCTC</div>
-                    <div class="sl-b-name">SMART&#x2011;LAB</div>
-                    <div class="sl-b-sub">Ресурс №1 для трейдеров<br>и инвесторов России и СНГ</div>
-                    <div class="sl-b-deco"></div>
-                    <div class="sl-b-deco2"></div>
-                </div>
-            </div>
-            <div class="sg-content">
-                <span class="label fi" style="color:var(--blue-lt)">Генеральный спонсор LCTC</span>
-                <div class="sg-chips fi fi-1">
-                    <span class="sg-chip info">Партнёр с 2022 года</span>
-                    <span class="sg-chip top">Спецприз 1 000 000 ₽</span>
-                </div>
-                <h2 class="sg-h2 smart-h2 fi fi-2"><em>SMART</em>-LAB</h2>
-                <div class="sg-text fi fi-3">
-                    <p>СмартЛаб — это ресурс №1 для трейдеров и инвесторов по всей России и СНГ. Блоги трейдеров, новости, форум, аналитика и котировки — всё для тех, кто торгует на бирже. Это место, где трейдеры общаются, обсуждают актуальные данные, делятся информацией и опытом.</p>
-                    <p>В 2022 году СмартЛаб стал генеральным информационным партнёром Федерации Биржевого Трейдинга. В 2023 году СмартЛаб подготовил специальную номинацию и приз для участников годового турнира ФБТР — <strong style="color:var(--gold-lt)">1 000 000 рублей</strong>. Участвуйте в турнире, торгуйте и станьте призёром специальной номинации!</p>
-                </div>
-                <div class="sg-actions fi fi-4">
-                    <a href="#" target="_blank" class="btn btn-primary">Подробнее о SMART-LAB &rarr;</a>
-                    <a href="championship.html" class="btn btn-outline">Принять участие в Чемпионате</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <div class="equal-grid fi">
 
-<!-- ═══ PARTNERS GRID ═════════════════════════════════════════════════ -->
-<section class="partners-section" id="partners">
-    <div class="partners-bg"></div>
-    <div class="container partners-content">
-        <div class="partners-header fi">
-            <div>
-                <span class="label">Партнёры ФБТР России</span>
-                <h2 class="partners-h2">Надёжные партнёры<br>федерации</h2>
-            </div>
-            <div class="partners-count">10 партнёров и информационных партнёров</div>
-        </div>
-
-        <div class="partner-grid">
-
-            <!-- 1. TIGER.TRADE -->
-            <div class="p-card fi" style="--p-accent:#F97316">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#F97316;color:#fff">TT</div>
-                    <div class="p-logo-name">TIGER.TRADE<small>Торговая платформа</small></div>
+            <div class="equal-left">
+                <span class="label">Федерация биржевого трейдинга</span>
+                <h2 class="equal-h2">Равные возможности<br>для новичков<br>и профессионалов</h2>
+                <div class="equal-text">
+                    <p>Мы — это единое сообщество для специалистов сферы. Мы хотим, чтобы каждый из Вас, будущий участник федерации развился и не свернул с пути, и с помощью наших программных стратегий развивался вместе с единомышленниками и профессионалами.</p>
+                    <p>Мы считаем, что участники федерации развиваются в одном правиле, а не по достижениям команды — следовательно, каждый участник ФБТ России является официальным членом нашей федерации.</p>
                 </div>
-                <span class="p-badge partner">Партнёр</span>
-                <p class="p-desc">Торгово-аналитическая платформа Tiger Trade предоставляет возможность торговать на различных рынках: фьючерсы, форекс, криптовалюты. Профессиональный инструментарий для анализа и исполнения сделок.</p>
-                <div class="p-cond">
-                    <div class="p-cond-label">Условия для участников ФБТР</div>
-                    <div class="p-cond-text">Участникам ФБТР Standard и Pro предоставляется скидка в размере <strong>20%</strong></div>
-                </div>
-                <div class="p-actions">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
+                <div class="equal-cta">
+                    <a href="#" class="btn btn-primary btn-lg btn-arrow">Стать участником федерации</a>
                 </div>
             </div>
 
-            <!-- 2. BINANCE -->
-            <div class="p-card fi fi-1" style="--p-accent:#F0B90B">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#F0B90B;color:#000;font-size:18px">B</div>
-                    <div class="p-logo-name">BINANCE<small>Криптовалютная биржа</small></div>
-                </div>
-                <span class="p-badge partner">Партнёр</span>
-                <p class="p-desc">Ведущая мировая блокчейн-экосистема и крупнейшая биржа цифровых активов в мире. Покупайте, торгуйте и храните более 350 криптовалют на одной платформе.</p>
-                <div class="p-cond">
-                    <div class="p-cond-label">Условия для участников ФБТР</div>
-                    <div class="p-cond-text">Уникальная <strong>реферальная программа</strong> от Live IG &amp; Binance</div>
-                </div>
-                <div class="p-actions">
-                    <a href="#" target="_blank" class="btn btn-primary btn-sm">Подробнее</a>
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 3. CrazyPilots -->
-            <div class="p-card fi fi-2" style="--p-accent:#6366F1">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#1E1E2E;border:1px solid rgba(99,102,241,0.4);color:#818CF8;font-size:11px">CP</div>
-                    <div class="p-logo-name">CrazyPilots<small>MOTOschool</small></div>
-                </div>
-                <span class="p-badge partner">Партнёр</span>
-                <p class="p-desc">Школа безопасного мотовождения в Краснодаре. Курсы вождения, обучение на права категории А, мотосервис и многое другое для начинающих и опытных мотоциклистов.</p>
-                <div class="p-cond">
-                    <div class="p-cond-label">Условия для участников ФБТР</div>
-                    <div class="p-cond-text">Участникам ФБТР <strong>Standard и Pro</strong> предоставляется скидка на обучение</div>
-                </div>
-                <div class="p-actions">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 4. АЛОР БРОКЕР -->
-            <div class="p-card fi fi-3" style="--p-accent:#003F87">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#003F87;color:#fff;font-size:20px;font-weight:900">А</div>
-                    <div class="p-logo-name">АЛОР БРОКЕР<small>Российский брокер с 1993 г.</small></div>
-                </div>
-                <span class="p-badge info">Информационный партнёр</span>
-                <p class="p-desc">Надёжный брокер на российском финансовом рынке с 1993 года. Брокерский счёт, инвестиции, трейдинг и обучение для частных и корпоративных клиентов.</p>
-                <div class="p-actions" style="margin-top: auto; padding-top: 20px;">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 5. ORDER FLOW TRADING (ATAS) -->
-            <div class="p-card fi" style="--p-accent:#06B6D4">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.3);color:#06B6D4;font-size:11px">OFT</div>
-                    <div class="p-logo-name">ORDER FLOW TRADING<small>Платформа ATAS</small></div>
-                </div>
-                <span class="p-badge partner">Партнёр</span>
-                <p class="p-desc">Торгово-аналитическая платформа, ориентированная на анализ потока ордеров и активности HFT-алгоритмов. Профессиональный инструмент для понимания реального рынка.</p>
-                <div class="p-cond">
-                    <div class="p-cond-label">Условия для участников ФБТР</div>
-                    <div class="p-cond-text">Индивидуальные условия на ATAS для участников ФБТР <strong>Standard и Pro</strong></div>
-                </div>
-                <div class="p-actions">
-                    <a href="#" target="_blank" class="btn btn-primary btn-sm">Подробнее</a>
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 6. ROSSI MOTORS -->
-            <div class="p-card fi fi-1" style="--p-accent:#EF4444">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#EF4444;color:#fff;font-size:12px">RM</div>
-                    <div class="p-logo-name">ROSSI MOTORS<small>Мотошкола, Краснодар</small></div>
-                </div>
-                <span class="p-badge partner">Партнёр</span>
-                <p class="p-desc">Мотошкола безопасного вождения для детей и взрослых в Краснодаре. Курсы вождения, обучение на права категории А, мотосервис и многое другое.</p>
-                <div class="p-cond">
-                    <div class="p-cond-label">Условия для участников ФБТР</div>
-                    <div class="p-cond-text">Участникам ФБТР <strong>Standard и Pro</strong> предоставляется скидка</div>
-                </div>
-                <div class="p-actions">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 7. КУБАНЬ 24 -->
-            <div class="p-card fi fi-2" style="--p-accent:#1D4ED8">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#1D4ED8;color:#fff;font-size:11px">К24</div>
-                    <div class="p-logo-name">КУБАНЬ 24<small>Краснодарский край</small></div>
-                </div>
-                <span class="p-badge info">Информационный партнёр</span>
-                <p class="p-desc">«Кубань 24» — крупнейшее СМИ в Краснодарском крае: все самые актуальные новости региона, эксклюзивные видео и фото события. Онлайн-вещание 24/7.</p>
-                <div class="p-actions" style="margin-top: auto; padding-top: 20px;">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 8. SMART-LAB.RU -->
-            <div class="p-card fi fi-3" style="--p-accent:#F59E0B">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#1A1A1A;border:1px solid rgba(245,158,11,0.3);color:#F59E0B;font-size:12px">SL</div>
-                    <div class="p-logo-name">SMART-LAB.RU<small>Мы делаем деньги на бирже</small></div>
-                </div>
-                <span class="p-badge info">Информационный партнёр</span>
-                <p class="p-desc">Блоги трейдеров и инвесторов. Крупнейшее в России сообщество трейдеров: блоги, форумы, актуальная информация о российском рынке и многое другое.</p>
-                <div class="p-actions" style="margin-top: auto; padding-top: 20px;">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 9. CSCALP -->
-            <div class="p-card fi" style="--p-accent:#7C3AED">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:var(--violet-dim);border:1px solid rgba(124,58,237,0.3);color:var(--violet-lt);font-size:15px;font-weight:900">C</div>
-                    <div class="p-logo-name">CSCALP<small>Бесплатный торговый терминал</small></div>
-                </div>
-                <span class="p-badge info">Информационный партнёр</span>
-                <p class="p-desc">Бесплатный терминал для трейдинга. Профессиональная платформа с командой поддержки и обучения: торгуйте, анализируйте и контролируйте свою торговлю без дополнительных расходов.</p>
-                <div class="p-actions" style="margin-top: auto; padding-top: 20px;">
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">Сайт партнёра &rarr;</a>
-                </div>
-            </div>
-
-            <!-- 10. LIVE INVESTING GROUP (partner card) -->
-            <div class="p-card fi fi-1" style="--p-accent:#DC2626">
-                <div class="p-logo-row">
-                    <div class="p-logo-mark" style="background:#DC2626;color:#fff;font-size:10px;letter-spacing:-.03em">LIVE</div>
-                    <div class="p-logo-name">LIVE INVESTING GROUP<small>Проп-компания и школа трейдинга</small></div>
-                </div>
-                <span class="p-badge sponsor">Генеральный спонсор</span>
-                <p class="p-desc">Крупнейшая в России проп-трейдинговая компания и Школа трейдинга. Капитал для торговли, команда поддержки, обучение и прямые трансляции торгов.</p>
-                <div class="p-cond">
-                    <div class="p-cond-label">Условия для участников ФБТР</div>
-                    <div class="p-cond-text">Участникам ФБТР <strong>Standard и Pro</strong> предоставляется скидка на обучение и сервисы</div>
-                </div>
-                <div class="p-actions">
-                    <a href="#" target="_blank" class="btn btn-primary btn-sm">PropLive</a>
-                    <a href="#" target="_blank" class="btn btn-outline btn-sm">SchoolLive</a>
+            <div class="equal-right">
+                <div class="er-title">Итоги работы за 2021 год в цифрах</div>
+                <div class="er-stats">
+                    <div class="er-row">
+                        <div class="er-num blue">15</div>
+                        <div class="er-desc">Количество участников Live Cup Trading Championship 2021</div>
+                    </div>
+                    <div class="er-row">
+                        <div class="er-num">45</div>
+                        <div class="er-desc">Участников зарегистрировано на Live Cup Trading Championship 2021</div>
+                    </div>
+                    <div class="er-row">
+                        <div class="er-num violet">2&thinsp;149</div>
+                        <div class="er-desc">Суммарный объём торговых операций участников</div>
+                    </div>
+                    <div class="er-row">
+                        <div class="er-num gold">93&nbsp;854%</div>
+                        <div class="er-desc">Лучший результат среди участников Live Cup Trading Championship 2021</div>
+                    </div>
+                    <div class="er-row">
+                        <div class="er-num">2&thinsp;122&thinsp;500</div>
+                        <div class="er-desc">рублей — призовой фонд Live Cup Trading Championship 2021</div>
+                    </div>
+                    <div class="er-row">
+                        <div class="er-num">2&thinsp;146&thinsp;000</div>
+                        <div class="er-desc">рублей — выдано в доверительное управление</div>
+                    </div>
                 </div>
             </div>
 
@@ -565,7 +512,232 @@
     </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FAQ — ВОПРОСЫ О ФБТ ════════════════════════ -->
+<div class="faq-block faq-block-fbtr" id="faq">
+    <div class="container">
+        <div class="faq-header fi">
+            <span class="label label-violet">Часто задаваемые вопросы</span>
+            <h2 class="faq-h2">Вопросы о ФБТ России</h2>
+            <p class="faq-sub">Ознакомьтесь с нашими часто задаваемыми вопросами, чтобы лучше понять, кто мы и чем занимаемся.</p>
+        </div>
+
+        <div class="faq-list" id="faqFBTR">
+
+            <div class="faq-item fi">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Какова структура ФБТ России, кто в ней работает?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Являясь коллективным органом ФБТ России — Президент, состав правления и Генеральная Конференция.</p>
+                        <p>Коллегиальный исполнительный орган ФБТ России — Президент, состав правления и Генеральная Конференция.</p>
+                        <p>В целом ФБТ России даёт право спортсменам, достигшим совершеннолетия, участвовать в РФ деятельности с этим организационно-правовым направлением работы ФБТ России. По общим вопросам работы организации и мероприятиях федерации вы можете направлять заявки и информацию по адресу <a href="mailto:info@fbtr.pro" style="color:var(--blue-lt)">info@fbtr.pro</a>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-1">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">ФБТ России — это государственная организация?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Нет. Федерация биржевого трейдинга России — это не государственная организация, это общественная организация. Мы не являемся государственной организацией, мы являемся российским общественным объединением и не выполняем функции государственного органа. Членство в ФБТ России является нормой, а условия получения членства отражены в действующем уставе организации.</p>
+                        <p>Деятельность ФБТ России осуществляется на двух уровнях:</p>
+                        <ul>
+                            <li>права участников в команде и личности</li>
+                            <li>права в командном и личностном духе</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-2">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Как можно присоединиться к ФБТ России?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Находясь в социальных сетях ФБТ России, вы можете узнать о себе и вашем предпочтении специальностей в работе на ФБТ России. Обращайтесь к информации в личном кабинете ФБТ России в соответствующем разделе реестра трейдеров.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-3">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">У меня есть интересный проект, могу ли я попросить у вас финансирование?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>ФБТ России финансирует свою деятельность через индивидуальные взносы участников. Со стороны организации в работе этого подразделения задействованы как граждане России, так и трейдеры России. Мы хотели бы заниматься, контактировать с нашими трейдерами по всей России. Мы готовы сотрудничать и развиваться вместе. Для получения поддержки обратитесь на адрес: <a href="mailto:info@fbtr.pro" style="color:var(--blue-lt)">info@fbtr.pro</a>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Чем соревнования ФБТ России отличаются от ЛИГ?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Наша деятельность не имеет никакого стандарта с любыми в сфере биржевого трейдинга.</p>
+                        <p>Всё, что мы делаем — это создаём и используем ресурс для равных и прозрачных соревнований.</p>
+                        <p>Главное наша цель в себя и сообщество трейдеров и поддержку членов, занимающихся торговлей и трейдингом. ФБТ России мы готовы помочь вам в профессиональном трейдинге и самоорганизации каждого.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-1">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Как устроиться на работу в ФБТ России?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Следите за новыми вакансиями на сайте ФБТ России или напишите нам на <a href="mailto:info@fbtr.pro" style="color:var(--blue-lt)">info@fbtr.pro</a>. Для специалистов по нескольким категориям специальностей мы рассматриваем как новичков трейдеров, так и профессионалов.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-2">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Наша компания хочет стать спонсором соревнований ФБТ России. Как это сделать?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Для этого достаточно отправить запрос по адресу <a href="mailto:info@fbtr.pro" style="color:var(--blue-lt)">info@fbtr.pro</a>, указав по какому вопросу вы к нам обращаетесь. Мы обязательно ответим на ваш запрос.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-3">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Нашей компании нужна консультация ФБТ России. Специального обучения у нас нет. Что получим?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>ФБТ России оказывает помощь коллективам с профессиональными услугами, доля которых занимается с коллективными задачами. Для получения поддержки по этой и другим услугам следует обратиться к нам на <a href="mailto:info@fbtr.pro" style="color:var(--blue-lt)">info@fbtr.pro</a>.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══ FAQ — ВОПРОСЫ О ТРЕЙДИНГЕ ══════════════════ -->
+<div class="faq-block faq-block-trading">
+    <div class="container">
+        <div class="faq-header fi">
+            <span class="label">Биржевая торговля</span>
+            <h2 class="faq-h2">Вопросы о трейдинге</h2>
+            <p class="faq-sub">Базовые вопросы о биржевой торговле и возможностях для начинающих трейдеров.</p>
+        </div>
+
+        <div class="faq-list" id="faqTrading">
+
+            <div class="faq-item fi">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Что такое биржевая торговля?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Биржевая торговля (stock exchange trade) — это торговля финансовыми инструментами: акциями, облигациями, фьючерсами, опционами, и другими инструментами, проводимая посредством биржевых операций и в специально отведённое время в установленных местах.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-1">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Почему биржевой трейдинг — это спорт?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Согласно определению, спорт — это организованная по определённым правилам деятельность людей, состоящая в сопоставлении их физических или интеллектуальных способностей, а также подготовка к этой деятельности и межличностные отношения и нормы ей сопутствующие.</p>
+                        <p>Биржевой трейдинг полностью отвечает всем этим критериям. Трейдер несёт свои умственные способности, чтобы добиться большей прибыли в своей деятельности.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-2">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Как попасть в биржевой трейдинг?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Для начала биржевой торговли требуется зарегистрировать брокерский аккаунт у одного из брокеров биржевого рынка. Вам необходимо понять ситуацию с исходным уровнем капитала и торговать биржевые инструменты. Прежде всего вам нужно будет изучить и освоить первые правила торговли.</p>
+                        <p>Для начала биржевого обучения у вас есть сервис получить актуальные программы торговли в сети и привести к первым шагам и программам. Подробнее: Академия ФБТ России и Академия «Живые деньги».</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-3">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">С какого возраста можно начать заниматься биржевым трейдингом?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Для того чтобы торговля на бирже была сбалансирована следует достичь возраста 18 лет и иметь гражданство Российской Федерации.</p>
+                        <p>Базовым языком ФБТ России является русский язык. Особые условия распространяются также на Украину и Казахстан. Подробнее узнать об обучении вы можете на сайтах Академии Биржевого трейдинга ФБТ России и Академии «Живые деньги». По дополнительным вопросам обращайтесь к сведениям ФБТ России, там же в разделе контактов вы можете написать в сообщение в тех. поддержку или позвонить по телефону, указанному на сайте.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Какие есть образовательные программы?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>ФБТ России оказывает помощь начинающим с элементарных азов, включая изучение базовых торговых стратегий и программ торгового уровня. Академия ФБТ России, Академия «Живые деньги» — образовательная программа для тех, кто хочет стать трейдером, работать на финансовых и других биржевых рынках.</p>
+                        <p>Образовательные программы разработаны специалистами ФБТ России.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-1">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">В чём уникальность торгового образовательного учёта ФБТ России?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Уникальность нашей системы обучения состоит в сочетании теоретических знаний с практическими соревнованиями в реальных рыночных условиях. Каждый участник получает персональный трекинг результатов и официальное признание достижений в рамках федерации. Для получения подробной информации обратитесь на <a href="mailto:info@fbtr.pro" style="color:var(--blue-lt)">info@fbtr.pro</a>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fi fi-2">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    <span class="faq-q-text">Правда, что трейдинг на бирже — это сложно?</span>
+                    <div class="faq-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">
+                        <p>Биржевые торги — это часто ограниченные по времени сделки с данными. Иногда они закрываются через несколько часов или нет. Результат «слабого» решения весит от 50 тысяч сделок, «средних» — от 50 процентов, «сильных» — от 100 процентов — всё зависит от трейдера и вашего торгового мнения.</p>
+                        <p>В каждый отдельно взятый период рынка меняется очень быстро. Потенциальная прибыль зависит во многом от ваших знаний и способностей, поэтому необходимо постоянно развиваться и обучаться.</p>
+                        <p>Всё это лучше начать как можно раньше по всем ключевым причинам.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══ FOOTER ══════════════════════════════════════ -->
 <footer>
     <div class="container">
         <div class="footer-top">
@@ -607,16 +779,17 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h4>Партнёры</h4>
+                <h4>О федерации</h4>
                 <div class="footer-links">
-                    <a href="#live-ig">Live Investing Group</a>
-                    <a href="#smart-lab">SMART-LAB</a>
-                    <a href="#partners">Все партнёры</a>
+                    <a href="#goal">Цель федерации</a>
+                    <a href="#tasks">Задачи федерации</a>
+                    <a href="#equal">Равные возможности</a>
+                    <a href="#faq">Вопросы и ответы</a>
                 </div>
             </div>
         </div>
         <div class="footer-support">
-            <div class="footer-copy">&#169; 2021 Все права защищены</div>
+            <div class="footer-copy">&copy; 2021 Все права защищены</div>
             <a href="#" class="footer-tg-btn">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg>
                 Телеграм техподдержки ФБТР
@@ -631,9 +804,23 @@
 <script>
   function openMob() { document.getElementById('mobNav').classList.add('open'); }
   function closeMob() { document.getElementById('mobNav').classList.remove('open'); }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    if (isOpen) {
+      item.classList.remove('open');
+      answer.style.maxHeight = '0';
+    } else {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 </script>
 </body>
