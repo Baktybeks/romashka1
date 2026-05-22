@@ -4,123 +4,72 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Турниры по трейдингу | ФБТР</title>
+    <title>Результаты победителей | ФБТР</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --bg:        #07090F;
-            --bg2:       #0C0F1A;
-            --bg3:       #111623;
-            --card:      #0E1220;
-            --card2:     #131828;
-            --blue:      #1D4ED8;
-            --blue-lt:   #3B82F6;
-            --blue-dim:  rgba(29,78,216,0.12);
-            --blue-line: rgba(59,130,246,0.25);
-            --gold:      #B45309;
-            --gold-lt:   #F59E0B;
-            --gold-dim:  rgba(245,158,11,0.1);
-            --violet:    #7C3AED;
-            --violet-lt: #A78BFA;
-            --violet-dim:rgba(124,58,237,0.12);
-            --text:      #F8FAFC;
-            --text2:     #94A3B8;
-            --text3:     #475569;
-            --border:    rgba(255,255,255,0.07);
-            --border2:   rgba(255,255,255,0.04);
-            --r:         12px;
-            --r-lg:      20px;
+            --bg: #07090F; --bg2: #0C0F1A; --bg3: #111623;
+            --card: #0E1220; --card2: #131828;
+            --blue: #1D4ED8; --blue-lt: #3B82F6;
+            --blue-dim: rgba(29,78,216,0.12); --blue-line: rgba(59,130,246,0.25);
+            --gold: #B45309; --gold-lt: #F59E0B;
+            --gold-dim: rgba(245,158,11,0.1);
+            --violet: #7C3AED; --violet-lt: #A78BFA;
+            --violet-dim: rgba(124,58,237,0.12);
+            --cyan: #06B6D4; --cyan-dim: rgba(6,182,212,0.1);
+            --pink: #EC4899; --pink-dim: rgba(236,72,153,0.1);
+            --text: #F8FAFC; --text2: #94A3B8; --text3: #475569;
+            --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.04);
+            --r: 12px; --r-lg: 20px;
         }
         html { scroll-behavior: smooth; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
         img { display: block; max-width: 100%; }
         a { color: inherit; text-decoration: none; }
-
         .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
 
-        .label {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
-            text-transform: uppercase; color: var(--blue-lt); margin-bottom: 18px;
-        }
+        .label { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-lt); margin-bottom: 18px; }
         .label::before { content: ''; width: 20px; height: 1px; background: var(--blue-lt); }
-        .label.violet { color: var(--violet-lt); }
-        .label.violet::before { background: var(--violet-lt); }
-        .label.gold { color: var(--gold-lt); }
-        .label.gold::before { background: var(--gold-lt); }
 
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 26px; border-radius: 8px; font-size: 14px;
-            font-weight: 600; cursor: pointer; transition: all .2s;
-            border: none; font-family: 'Inter', sans-serif; letter-spacing: .01em;
-        }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; border: none; font-family: 'Inter', sans-serif; }
         .btn-primary { background: var(--blue); color: #fff; }
         .btn-primary:hover { background: var(--blue-lt); }
-        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-        .btn-outline:hover { border-color: var(--blue-line); color: var(--blue-lt); }
         .btn-sm { padding: 10px 20px; font-size: 13px; }
-        .btn-lg { padding: 17px 36px; font-size: 15px; }
 
         .fi { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
         .fi.on { opacity: 1; transform: none; }
-        .fi-1 { transition-delay: .1s; }
-        .fi-2 { transition-delay: .2s; }
-        .fi-3 { transition-delay: .3s; }
-        .fi-4 { transition-delay: .4s; }
-        .fi-5 { transition-delay: .5s; }
-        .fi-6 { transition-delay: .6s; }
+        .fi-1 { transition-delay: .1s; } .fi-2 { transition-delay: .2s; } .fi-3 { transition-delay: .3s; }
+
+        /* Year-scoped accent colors */
+        .cup-2025 { --accent: var(--blue-lt); --accent-bg: var(--blue-dim); --accent-border: var(--blue-line); }
+        .cup-2024 { --accent: var(--gold-lt); --accent-bg: var(--gold-dim); --accent-border: rgba(245,158,11,0.25); }
+        .cup-2023 { --accent: var(--violet-lt); --accent-bg: var(--violet-dim); --accent-border: rgba(124,58,237,0.2); }
+        .cup-2022 { --accent: var(--cyan); --accent-bg: var(--cyan-dim); --accent-border: rgba(6,182,212,0.25); }
+        .cup-2021 { --accent: var(--pink); --accent-bg: var(--pink-dim); --accent-border: rgba(236,72,153,0.25); }
 
         /* TOP BAR */
-        .topbar {
-            background: var(--bg2); border-bottom: 1px solid var(--border2);
-            height: 38px; display: flex; align-items: center;
-        }
-        .topbar-inner {
-            max-width: 1440px; margin: 0 auto; padding: 0 32px;
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; font-size: 12px; color: var(--text3);
-        }
+        .topbar { background: var(--bg2); border-bottom: 1px solid var(--border2); height: 38px; display: flex; align-items: center; }
+        .topbar-inner { max-width: 1440px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; width: 100%; font-size: 12px; color: var(--text3); }
         .topbar-left { display: flex; align-items: center; gap: 24px; }
         .topbar-item { display: flex; align-items: center; gap: 6px; }
         .topbar-item svg { width: 13px; height: 13px; flex-shrink: 0; }
         .topbar-socials { display: flex; gap: 10px; }
-        .tb-social {
-            width: 26px; height: 26px; border-radius: 6px;
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text3); transition: all .18s;
-        }
+        .tb-social { width: 26px; height: 26px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all .18s; }
         .tb-social:hover { color: var(--blue-lt); border-color: var(--blue-line); }
         .tb-social svg { width: 13px; height: 13px; }
 
         /* HEADER */
-        .hdr {
-            position: sticky; top: 0; z-index: 900;
-            background: rgba(7,9,15,0.95); backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-        }
-        .hdr-inner {
-            max-width: 1440px; margin: 0 auto; padding: 0 32px;
-            height: 64px; display: flex; align-items: center;
-        }
+        .hdr { position: sticky; top: 0; z-index: 900; background: rgba(7,9,15,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+        .hdr-inner { max-width: 1440px; margin: 0 auto; padding: 0 32px; height: 64px; display: flex; align-items: center; }
         .hdr-logo { display: flex; align-items: center; gap: 12px; margin-right: 48px; flex-shrink: 0; }
-        .hdr-logo-mark {
-            width: 32px; height: 32px; background: var(--blue);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 900; color: #fff;
-            clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
-        }
+        .hdr-logo-mark { width: 32px; height: 32px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #fff; clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); }
         .hdr-logo-text { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
         .hdr-logo-text span { color: var(--blue-lt); }
         .hdr-nav { flex: 1; display: flex; gap: 2px; }
-        .hdr-nav a {
-            padding: 8px 13px; border-radius: 6px; font-size: 13px;
-            font-weight: 500; color: var(--text2); transition: all .18s; white-space: nowrap;
-        }
+        .hdr-nav a { padding: 8px 13px; border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text2); transition: all .18s; white-space: nowrap; }
         .hdr-nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
         .hdr-nav a.active { color: var(--blue-lt); }
         .hdr-right { display: flex; align-items: center; gap: 12px; margin-left: 24px; flex-shrink: 0; }
@@ -129,340 +78,187 @@
 
         /* HERO */
         .page-hero { position: relative; padding: 72px 0 56px; overflow: hidden; }
-        .page-hero-bg {
-            position: absolute; inset: 0;
-            background-image: url('https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover; background-position: center top;
-        }
-        .page-hero-bg::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(120deg, rgba(7,9,15,0.97) 0%, rgba(7,9,15,0.92) 55%, rgba(7,9,15,0.72) 100%);
-        }
+        .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, rgba(7,9,15,0.97) 0%, rgba(7,9,15,0.92) 50%, rgba(7,9,15,0.72) 100%); }
         .page-hero-content { position: relative; z-index: 2; }
-        .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text3); margin-bottom: 24px; }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text3); margin-bottom: 24px; flex-wrap: wrap; }
         .breadcrumb a { color: var(--text3); transition: color .18s; }
         .breadcrumb a:hover { color: var(--blue-lt); }
         .breadcrumb-sep { opacity: 0.5; }
         .breadcrumb-current { color: var(--text2); }
-        .page-hero h1 {
-            font-size: clamp(30px, 4.5vw, 60px); font-weight: 900;
-            letter-spacing: -0.03em; line-height: 1.07; max-width: 720px;
-        }
+        .page-hero h1 { font-size: clamp(24px, 3.5vw, 52px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.08; max-width: 820px; }
         .page-hero h1 em { font-style: normal; color: var(--blue-lt); }
-        .hero-badges { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
-        .hero-tag {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            border-radius: 6px; padding: 6px 14px;
-            font-size: 11px; font-weight: 600; color: var(--text2);
-            letter-spacing: .06em; text-transform: uppercase;
-        }
-        .hero-tag.blue { background: var(--blue-dim); border-color: var(--blue-line); color: var(--blue-lt); }
-        .hero-tag.violet { background: var(--violet-dim); border-color: rgba(124,58,237,0.25); color: var(--violet-lt); }
+        .hero-stat-row { display: flex; gap: 40px; margin-top: 32px; flex-wrap: wrap; }
+        .hero-stat { }
+        .hero-stat-num { font-size: 32px; font-weight: 900; letter-spacing: -0.04em; color: var(--blue-lt); }
+        .hero-stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; }
 
-        /* INTRO SECTION */
-        .intro-section { padding: 88px 0; }
-        .intro-grid { display: grid; grid-template-columns: 1fr 460px; gap: 72px; align-items: center; }
-        .intro-label { margin-bottom: 8px; }
-        .intro-h2 {
-            font-size: clamp(26px, 3vw, 40px); font-weight: 800;
-            letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 24px;
-        }
-        .intro-text { font-size: 15px; color: var(--text2); line-height: 1.85; }
-        .intro-text p + p { margin-top: 16px; }
-        .intro-img {
-            border-radius: var(--r-lg); overflow: hidden; position: relative;
-        }
-        .intro-img img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
-        .intro-img-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(7,9,15,0.65) 0%, transparent 55%);
-        }
-        .intro-img-badge {
-            position: absolute; bottom: 24px; left: 24px; right: 24px;
-            background: rgba(7,9,15,0.85); backdrop-filter: blur(12px);
-            border: 1px solid var(--border); border-radius: var(--r); padding: 16px 20px;
-        }
-        .intro-img-badge-num { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; color: var(--violet-lt); }
-        .intro-img-badge-label { font-size: 12px; color: var(--text3); margin-top: 2px; }
+        /* YEAR NAV */
+        .year-nav-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 20px 0; }
+        .year-nav { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .yn-label { font-size: 11px; color: var(--text3); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-right: 4px; }
+        .yn-btn { padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; background: var(--card); border: 1px solid var(--border); color: var(--text2); transition: all .18s; }
+        .yn-btn:hover { color: var(--text); background: var(--card2); }
+        .yn-2025:hover { background: var(--blue-dim); border-color: var(--blue-line); color: var(--blue-lt); }
+        .yn-2024:hover { background: var(--gold-dim); border-color: rgba(245,158,11,0.25); color: var(--gold-lt); }
+        .yn-2023:hover { background: var(--violet-dim); border-color: rgba(124,58,237,0.2); color: var(--violet-lt); }
+        .yn-2022:hover { background: var(--cyan-dim); border-color: rgba(6,182,212,0.25); color: var(--cyan); }
+        .yn-2021:hover { background: var(--pink-dim); border-color: rgba(236,72,153,0.25); color: var(--pink); }
 
-        /* TOURNAMENT TYPES */
-        .types-section { padding: 0 0 88px; border-bottom: 1px solid var(--border); }
-        .types-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 2px; background: var(--border2);
-            border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden;
-        }
-        .type-card { background: var(--card); padding: 44px 40px; position: relative; overflow: hidden; transition: background .2s; }
-        .type-card:hover { background: var(--card2); }
-        .type-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        }
-        .type-card:first-child::before { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); }
-        .type-card:last-child::before { background: linear-gradient(90deg, var(--violet), var(--violet-lt)); }
-        .type-icon {
-            width: 56px; height: 56px; border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 24px; font-size: 24px;
-        }
-        .type-card:first-child .type-icon { background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.2); }
-        .type-card:last-child .type-icon { background: var(--violet-dim); border: 1px solid rgba(124,58,237,0.2); }
-        .type-title { font-size: 20px; font-weight: 800; letter-spacing: -0.015em; margin-bottom: 14px; }
-        .type-text { font-size: 14px; color: var(--text2); line-height: 1.8; }
-        .type-deco {
-            position: absolute; right: 24px; bottom: 20px;
-            font-size: 80px; font-weight: 900; line-height: 1;
-            opacity: 0.05; pointer-events: none; user-select: none;
-        }
-        .type-card:first-child .type-deco { color: var(--gold-lt); }
-        .type-card:last-child .type-deco { color: var(--violet-lt); }
+        /* CHAMPIONSHIP BLOCKS */
+        .champ-block { padding: 80px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+        .cup-2024, .cup-2022 { background: var(--bg2); }
+        .champ-deco { position: absolute; right: -16px; top: 50%; transform: translateY(-50%); font-size: 240px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; pointer-events: none; user-select: none; opacity: 0.025; color: #fff; }
 
-        /* TOURNAMENT DETAIL SECTION (Live Trader / Sprint) */
-        .tour-section { padding: 88px 0; border-bottom: 1px solid var(--border); }
-        .tour-inner { display: grid; grid-template-columns: 1fr 440px; gap: 64px; align-items: start; }
-        .tour-inner.reverse { grid-template-columns: 440px 1fr; }
-        .tour-inner.reverse .tour-left { order: 2; }
-        .tour-inner.reverse .tour-right { order: 1; }
-        .tour-left { }
-        .tour-fund {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.2);
-            border-radius: 8px; padding: 10px 18px; margin: 0 0 28px;
-            font-size: 13px; font-weight: 700; color: var(--gold-lt);
-        }
-        .tour-fund svg { width: 16px; height: 16px; flex-shrink: 0; }
-        .tour-h2 {
-            font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
-            letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 28px;
-        }
-        .tour-h2 em { font-style: normal; color: var(--blue-lt); }
-        .tour-conditions { margin-bottom: 32px; }
-        .tour-conditions-title {
-            font-size: 11px; font-weight: 700; letter-spacing: .14em;
-            text-transform: uppercase; color: var(--text3); margin-bottom: 14px;
-        }
-        .tour-cond-list { display: flex; flex-direction: column; gap: 10px; }
-        .tour-cond-item {
-            display: flex; align-items: flex-start; gap: 10px;
-            font-size: 14px; color: var(--text2); line-height: 1.6;
-        }
-        .tour-cond-dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: var(--blue-lt); flex-shrink: 0; margin-top: 8px;
-        }
+        .champ-top { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; margin-bottom: 36px; }
+        .champ-h2 { font-size: clamp(22px, 3vw, 40px); font-weight: 900; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 18px; }
+        .champ-h2 em { font-style: normal; color: var(--accent); }
+        .champ-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .champ-tag { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--text2); background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+        .champ-tag svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--accent); }
+        .champ-year-badge { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); background: var(--accent-bg); border: 1px solid var(--accent-border); border-radius: 8px; padding: 8px 16px; white-space: nowrap; }
 
-        /* 4-cell info grid */
-        .tour-info-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 2px; background: var(--border2);
-            border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden;
-            margin-bottom: 28px;
+        /* Info row */
+        .champ-info { margin-bottom: 44px; }
+        .champ-info-grid { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
+        .champ-info-grid.full { grid-template-columns: 1fr; }
+        .champ-desc { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 20px; max-width: 600px; }
+
+        /* Highlight card (2025 special) */
+        .highlight-card { background: var(--violet-dim); border: 1px solid rgba(124,58,237,0.2); border-radius: var(--r-lg); padding: 28px; position: relative; overflow: hidden; }
+        .highlight-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--violet), var(--violet-lt)); }
+        .hl-label { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--violet-lt); margin-bottom: 10px; }
+        .hl-title { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 16px; line-height: 1.5; }
+        .hl-name { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px; }
+        .hl-result { font-size: 36px; font-weight: 900; letter-spacing: -0.04em; color: var(--violet-lt); }
+        .hl-result-label { font-size: 11px; color: var(--text3); margin-bottom: 20px; }
+        .hl-desc { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 18px; }
+
+        /* Table sections */
+        .table-block { margin-bottom: 40px; }
+        .table-title { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 16px; letter-spacing: .06em; text-transform: uppercase; }
+        .table-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--accent); flex-shrink: 0; }
+
+        /* LEADERBOARD */
+        .leaderboard { border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden; }
+
+        /* Column grid definitions per type */
+        .lb-t1 .lb-head, .lb-t1 .lb-row { grid-template-columns: 52px 1fr 200px; }
+        .lb-t2 .lb-head, .lb-t2 .lb-row { grid-template-columns: 52px 1fr 130px 190px; }
+        .lb-t3 .lb-head, .lb-t3 .lb-row { grid-template-columns: 52px 1fr 130px 190px 155px; }
+
+        .lb-head {
+            display: grid; background: var(--bg3);
+            border-bottom: 1px solid var(--border);
         }
-        .tour-info-cell {
-            background: var(--card); padding: 20px 22px;
-            display: flex; align-items: flex-start; gap: 12px;
+        .lb-hcell {
+            padding: 11px 18px; font-size: 10px; font-weight: 700;
+            letter-spacing: .14em; text-transform: uppercase; color: var(--text3);
+        }
+        .lb-hcell:first-child { text-align: center; padding: 11px 0; border-right: 1px solid var(--border2); }
+        .lb-hcell.r { text-align: right; }
+
+        .lb-row {
+            display: grid; background: var(--card);
+            border-bottom: 1px solid var(--border2);
+            align-items: stretch; position: relative;
             transition: background .18s;
         }
-        .tour-info-cell:hover { background: var(--card2); }
-        .tour-info-icon {
-            width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
-            background: var(--violet-dim); border: 1px solid rgba(124,58,237,0.2);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 16px;
-        }
-        .tour-info-text { font-size: 12px; color: var(--text2); line-height: 1.55; }
-        .tour-info-text strong { display: block; color: var(--text); font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-row:hover { background: var(--card2); }
+        .lb-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); }
+        /* Category group divider every 3 rows */
+        .lb-row.grp { border-top: 2px solid rgba(255,255,255,0.05); }
+        /* Subtle medal background tints */
+        .lb-row.r1 { background: rgba(245,158,11,0.035); }
+        .lb-row.r2 { }
+        .lb-row.r3 { background: rgba(180,83,9,0.025); }
 
-        /* Right image column */
-        .tour-right { }
-        .tour-img {
-            border-radius: var(--r-lg); overflow: hidden; position: relative;
-        }
-        .tour-img img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-        .tour-img-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(7,9,15,0.6) 0%, transparent 50%);
-        }
-        .tour-img-stat {
-            position: absolute; bottom: 20px; left: 20px; right: 20px;
-            background: rgba(7,9,15,0.85); backdrop-filter: blur(12px);
-            border: 1px solid var(--border); border-radius: var(--r); padding: 14px 18px;
-            display: flex; gap: 20px;
-        }
-        .tour-img-stat-item { }
-        .tour-img-stat-num { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; color: var(--blue-lt); }
-        .tour-img-stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; margin-top: 1px; }
-
-        /* WINNERS SECTION */
-        .winners-section { padding: 88px 0; border-bottom: 1px solid var(--border); }
-        .winners-header { margin-bottom: 48px; }
-        .winners-h2 {
-            font-size: clamp(24px, 3vw, 38px); font-weight: 800;
-            letter-spacing: -0.025em; line-height: 1.15;
-        }
-        .winners-grid-6 {
-            display: grid; grid-template-columns: repeat(3,1fr);
-            gap: 2px; background: var(--border2);
-            border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden;
-        }
-        .winners-grid-3 {
-            display: grid; grid-template-columns: repeat(3,1fr);
-            gap: 2px; background: var(--border2);
-            border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden;
-        }
-        .wcat {
-            background: var(--card); padding: 32px 28px;
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; gap: 0;
-            transition: background .2s;
-        }
-        .wcat:hover { background: var(--card2); }
-        .wcat::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        }
-        .wcat-a::before { background: var(--blue-lt); }
-        .wcat-b::before { background: #06B6D4; }
-        .wcat-c::before { background: var(--gold-lt); }
-        .wcat-d::before { background: #F97316; }
-        .wcat-e::before { background: #EC4899; }
-        .wcat-f::before { background: var(--violet-lt); }
-        .wcat-deco {
-            position: absolute; right: 14px; bottom: 10px;
-            font-size: 64px; font-weight: 900; line-height: 1;
-            opacity: 0.07; pointer-events: none; user-select: none;
-        }
-        .wcat-a .wcat-deco { color: var(--blue-lt); }
-        .wcat-b .wcat-deco { color: #06B6D4; }
-        .wcat-c .wcat-deco { color: var(--gold-lt); }
-        .wcat-d .wcat-deco { color: #F97316; }
-        .wcat-e .wcat-deco { color: #EC4899; }
-        .wcat-f .wcat-deco { color: var(--violet-lt); }
-        .wcat-badge {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 36px; height: 36px; border-radius: 10px;
-            font-size: 16px; font-weight: 900; margin-bottom: 16px;
-        }
-        .wcat-a .wcat-badge { background: rgba(59,130,246,0.12); color: var(--blue-lt); border: 1px solid rgba(59,130,246,0.25); }
-        .wcat-b .wcat-badge { background: rgba(6,182,212,0.12); color: #06B6D4; border: 1px solid rgba(6,182,212,0.25); }
-        .wcat-c .wcat-badge { background: var(--gold-dim); color: var(--gold-lt); border: 1px solid rgba(245,158,11,0.25); }
-        .wcat-d .wcat-badge { background: rgba(249,115,22,0.1); color: #F97316; border: 1px solid rgba(249,115,22,0.25); }
-        .wcat-e .wcat-badge { background: rgba(236,72,153,0.1); color: #EC4899; border: 1px solid rgba(236,72,153,0.25); }
-        .wcat-f .wcat-badge { background: var(--violet-dim); color: var(--violet-lt); border: 1px solid rgba(124,58,237,0.25); }
-        .wcat-name { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
-        .wcat-range { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
-        .wcat-list { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
-        .wcat-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 0; border-bottom: 1px solid var(--border2);
-        }
-        .wcat-item:last-child { border-bottom: none; }
-        .wcat-place {
-            width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+        .lb-rank {
             display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: 800;
+            padding: 0; border-right: 1px solid var(--border2); min-height: 62px;
         }
-        .place-1 { background: rgba(245,158,11,0.15); color: var(--gold-lt); border: 1px solid rgba(245,158,11,0.3); }
-        .place-2 { background: rgba(148,163,184,0.1); color: #CBD5E1; border: 1px solid rgba(148,163,184,0.2); }
-        .place-3 { background: rgba(180,83,9,0.1); color: #CD7C2E; border: 1px solid rgba(180,83,9,0.25); }
-        .place-4, .place-5, .place-6 { background: rgba(255,255,255,0.04); color: var(--text3); border: 1px solid var(--border2); }
-        .wcat-trader { font-size: 13px; color: var(--text); font-weight: 500; flex: 1; }
-        .wcat-trader.anon { color: var(--text3); font-style: italic; }
-        .wcat-prize { font-size: 12px; color: var(--text2); white-space: nowrap; }
-        .wcat-prize.gold { color: var(--gold-lt); }
-        .wcat-prize.merch { color: var(--violet-lt); font-size: 11px; }
-
-        /* STEPS SECTION */
-        .steps-section { padding: 88px 0; background: var(--bg2); }
-        .steps-header { margin-bottom: 56px; }
-        .steps-deco-row {
-            display: flex; align-items: center; gap: 0;
-            margin-bottom: 40px;
-        }
-        .steps-deco-num {
-            font-size: 120px; font-weight: 900; letter-spacing: -0.05em;
-            line-height: 1; color: rgba(59,130,246,0.06); pointer-events: none; user-select: none;
-        }
-        .steps-header h2 {
-            font-size: clamp(26px, 3.5vw, 44px); font-weight: 800;
-            letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 12px;
-        }
-        .steps-header p { font-size: 15px; color: var(--text2); max-width: 540px; }
-        .steps-list { display: flex; flex-direction: column; gap: 2px; }
-        .step {
-            display: grid; grid-template-columns: 72px 1fr auto;
-            background: var(--card); border: 1px solid var(--border2);
-            border-radius: var(--r-lg); overflow: hidden; transition: background .2s;
-        }
-        .step + .step { margin-top: 2px; }
-        .step:hover { background: var(--card2); }
-        .step-num-col {
-            display: flex; align-items: flex-start; justify-content: center;
-            border-right: 1px solid var(--border2); padding-top: 40px; padding-bottom: 36px;
-        }
-        .step-num {
-            width: 36px; height: 36px; border-radius: 10px;
-            background: var(--blue); color: #fff;
+        .lb-num {
+            width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
-            font-size: 15px; font-weight: 800;
+            font-size: 13px; font-weight: 800;
         }
-        .step-body { padding: 32px 36px; }
-        .step-title { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
-        .step-title strong { color: var(--blue-lt); }
-        .step-text { font-size: 14px; color: var(--text2); line-height: 1.75; }
-        .step-cta { padding: 32px 32px 32px 0; display: flex; align-items: center; }
+        .r1 .lb-num { background: rgba(245,158,11,0.15); color: var(--gold-lt); border: 1px solid rgba(245,158,11,0.3); }
+        .r2 .lb-num { background: rgba(148,163,184,0.08); color: #CBD5E1; border: 1px solid rgba(148,163,184,0.2); }
+        .r3 .lb-num { background: rgba(180,83,9,0.1); color: #CD7C2E; border: 1px solid rgba(180,83,9,0.25); }
+        .lb-row:not(.r1):not(.r2):not(.r3) .lb-num { background: rgba(255,255,255,0.04); color: var(--text3); border: 1px solid var(--border2); font-size: 11px; }
+
+        .lb-name { padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; }
+        .lb-nick { font-size: 14px; font-weight: 800; line-height: 1.35; color: var(--text); }
+        .lb-sub { font-size: 11px; color: var(--text3); margin-top: 3px; font-weight: 400; }
+
+        .lb-yield { display: flex; align-items: center; padding: 16px 14px; }
+        .yield-pill {
+            display: inline-flex; align-items: center; padding: 4px 10px;
+            border-radius: 6px; font-size: 12px; font-weight: 700;
+            background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ADE80;
+            white-space: nowrap;
+        }
+        .yield-pill.m { background: rgba(255,255,255,0.04); border-color: var(--border2); color: var(--text3); font-weight: 500; }
+
+        .lb-earned { display: flex; align-items: center; justify-content: flex-end; padding: 16px 18px; font-size: 13px; font-weight: 600; color: var(--text); text-align: right; }
+        .lb-prize { display: flex; align-items: center; justify-content: flex-end; padding: 16px 20px; font-size: 13px; font-weight: 700; color: var(--gold-lt); text-align: right; }
+
+        /* Responsive leaderboard */
+        @media(max-width:700px) {
+            .lb-head { display: none; }
+            .lb-t1 .lb-row, .lb-t2 .lb-row, .lb-t3 .lb-row {
+                grid-template-columns: 52px 1fr !important;
+                grid-auto-rows: auto;
+            }
+            .lb-rank { grid-column: 1; grid-row: 1 / span 5; min-height: 76px; border-bottom: none; }
+            .lb-name { padding-bottom: 2px; }
+            .lb-yield { padding: 2px 20px 4px; }
+            .lb-earned { justify-content: flex-start; padding: 2px 20px 4px; }
+            .lb-prize { justify-content: flex-start; padding: 2px 20px 12px; }
+        }
+
+        /* SMART-LAB special prize (2023) */
+        .smartlab-section { margin-bottom: 36px; }
+        .smartlab-header { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+        .smartlab-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .smartlab-badge { background: var(--violet-dim); border: 1px solid rgba(124,58,237,0.2); border-radius: 6px; padding: 4px 10px; color: var(--violet-lt); font-size: 10px; font-weight: 700; }
+        .sl-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--border2); border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden; }
+        .sl-card { background: var(--bg3); padding: 22px 20px; position: relative; }
+        .sl-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--violet), var(--violet-lt)); }
+        .sl-name { font-size: 15px; font-weight: 800; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border2); }
+        .sl-stats { display: flex; flex-direction: column; gap: 5px; }
+        .sl-row { display: flex; justify-content: space-between; font-size: 12px; }
+        .sl-lbl { color: var(--text3); }
+        .sl-val { font-weight: 600; }
+        .sl-val.green { color: #4ADE80; }
+        .sl-val.gold { color: var(--gold-lt); }
 
         /* FOOTER */
         footer { border-top: 1px solid var(--border); background: var(--bg2); padding: 64px 0 32px; }
         .footer-top { display: grid; grid-template-columns: 300px 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 56px; }
         .footer-logo { display: flex; align-items: center; gap: 12px; }
-        .footer-logo-mark {
-            width: 32px; height: 32px; background: var(--blue);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 900; color: #fff;
-            clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
-        }
+        .footer-logo-mark { width: 32px; height: 32px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #fff; clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); }
         .footer-logo-text { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
         .footer-logo-text span { color: var(--blue-lt); }
         .footer-about p { font-size: 12px; color: var(--text3); line-height: 1.7; margin: 14px 0 20px; }
         .socials { display: flex; gap: 8px; }
-        .social {
-            width: 34px; height: 34px; border-radius: 8px;
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text3); transition: all .18s;
-        }
+        .social { width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all .18s; }
         .social:hover { background: var(--blue-dim); border-color: var(--blue-line); color: var(--blue-lt); }
         .social svg { width: 14px; height: 14px; }
         .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 18px; }
         .footer-links { display: flex; flex-direction: column; gap: 10px; }
         .footer-links a { font-size: 13px; color: var(--text2); transition: color .18s; }
         .footer-links a:hover { color: var(--text); }
-        .footer-support {
-            margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-        }
-        .footer-tg-btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(59,130,246,0.1); border: 1px solid var(--blue-line);
-            border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 600;
-            color: var(--blue-lt); transition: all .2s;
-        }
+        .footer-support { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .footer-tg-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(59,130,246,0.1); border: 1px solid var(--blue-line); border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--blue-lt); transition: all .2s; }
         .footer-tg-btn:hover { background: rgba(59,130,246,0.18); }
         .footer-tg-btn svg { width: 16px; height: 16px; }
         .footer-copy { font-size: 12px; color: var(--text3); }
-        .footer-bottom {
-            border-top: 1px solid var(--border); padding-top: 24px;
-            display: flex; align-items: center; justify-content: space-between;
-            font-size: 12px; color: var(--text3); flex-wrap: wrap; gap: 12px;
-        }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text3); flex-wrap: wrap; gap: 12px; }
 
         /* MOBILE NAV */
-        .mob-nav {
-            position: fixed; inset: 0; z-index: 800;
-            background: rgba(7,9,15,0.98); backdrop-filter: blur(16px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-            opacity: 0; pointer-events: none; transition: opacity .25s;
-        }
+        .mob-nav { position: fixed; inset: 0; z-index: 800; background: rgba(7,9,15,0.98); backdrop-filter: blur(16px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; opacity: 0; pointer-events: none; transition: opacity .25s; }
         .mob-nav.open { opacity: 1; pointer-events: all; }
         .mob-nav a { font-size: 20px; font-weight: 700; color: var(--text2); padding: 12px 40px; border-radius: 8px; }
         .mob-nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
@@ -470,39 +266,27 @@
 
         /* RESPONSIVE */
         @media(max-width:1100px) {
-            .intro-grid { grid-template-columns: 1fr; }
-            .intro-img { display: none; }
-            .tour-inner { grid-template-columns: 1fr; }
-            .tour-inner.reverse { grid-template-columns: 1fr; }
-            .tour-inner.reverse .tour-left { order: 1; }
-            .tour-inner.reverse .tour-right { order: 2; }
-            .tour-right { display: none; }
+            .champ-info-grid { grid-template-columns: 1fr; }
+            .champ-top { grid-template-columns: 1fr; }
             .footer-top { grid-template-columns: 1fr 1fr 1fr; }
         }
         @media(max-width:900px) {
             .hdr-nav { display: none; }
             .burger { display: flex; }
-            .topbar-left { gap: 14px; }
-            .types-grid { grid-template-columns: 1fr; }
-            .winners-grid-6 { grid-template-columns: 1fr 1fr; }
-            .winners-grid-3 { grid-template-columns: 1fr; }
-            .steps-list .step { grid-template-columns: 60px 1fr; }
-            .step-cta { display: none; }
+            .wt-grid { grid-template-columns: 1fr 1fr; }
+            .sl-grid { grid-template-columns: 1fr 1fr 1fr; }
             .footer-top { grid-template-columns: 1fr 1fr; }
         }
         @media(max-width:640px) {
             .container { padding: 0 20px; }
-            .topbar-inner { padding: 0 20px; }
-            .hdr-inner { padding: 0 20px; }
+            .topbar-inner, .hdr-inner { padding: 0 20px; }
             .page-hero { padding: 56px 0 40px; }
-            .page-hero h1 { font-size: 30px; }
-            .intro-section, .types-section, .tour-section, .winners-section, .steps-section { padding: 64px 0; }
-            .winners-grid-6 { grid-template-columns: 1fr; }
-            .step { grid-template-columns: 52px 1fr; }
-            .step-body { padding: 24px 20px; }
+            .champ-block { padding: 56px 0; }
+            .wt-grid, .sl-grid { grid-template-columns: 1fr; }
+            .champ-deco { font-size: 130px; }
             .footer-top { grid-template-columns: 1fr; gap: 28px; }
             .topbar-left .topbar-item:last-child { display: none; }
-            .tour-info-grid { grid-template-columns: 1fr; }
+            .hero-stat-row { gap: 24px; }
         }
     </style>
 </head>
@@ -514,7 +298,7 @@
     <a href="index.html" onclick="closeMob()">Главная</a>
     <a href="championship.html" onclick="closeMob()">Годовой чемпионат</a>
     <a href="tournaments.html" onclick="closeMob()">Турниры</a>
-    <a href="index.html#results" onclick="closeMob()">Результаты</a>
+    <a href="results.html" onclick="closeMob()">Результаты</a>
     <a href="about.html" onclick="closeMob()">О федерации</a>
     <a href="index.html#pricing" class="btn btn-primary btn-sm" style="margin-top:16px" onclick="closeMob()">Личный кабинет</a>
 </div>
@@ -533,15 +317,9 @@
       </span>
         </div>
         <div class="topbar-socials">
-            <a href="#" class="tb-social" aria-label="ВКонтакте">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.6 13.5h-1.8c-.68 0-.89-.55-2.1-1.77-1.05-1.01-1.51-.93-1.77-.93-.36 0-.46.1-.46.6v1.62c0 .43-.14.68-1.26.68-1.86 0-3.93-1.13-5.38-3.23-2.2-3.1-2.8-5.42-2.8-5.9 0-.26.1-.5.6-.5h1.8c.45 0 .62.2.79.68.88 2.53 2.35 4.75 2.96 4.75.23 0 .33-.1.33-.68v-2.6c-.07-1.22-.71-1.32-.71-1.76 0-.22.18-.44.46-.44h2.83c.38 0 .51.2.51.64v3.5c0 .38.17.51.27.51.23 0 .42-.13.84-.55 1.3-1.45 2.22-3.68 2.22-3.68.13-.26.33-.5.79-.5h1.8c.54 0 .66.28.54.64-.23 1.04-2.43 4.16-2.43 4.16-.19.31-.26.45 0 .8.19.26.81.79 1.22 1.27.76.86 1.34 1.58 1.5 2.08.17.49-.09.74-.58.74z"/></svg>
-            </a>
-            <a href="#" class="tb-social" aria-label="YouTube">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.2c-.24-.89-.93-1.58-1.81-1.82C18.25 5 12 5 12 5s-6.25 0-7.77.38c-.88.24-1.57.93-1.81 1.82C2 8.72 2 12 2 12s0 3.28.42 4.8c.24.89.93 1.58 1.81 1.82C5.75 19 12 19 12 19s6.25 0 7.77-.38c.88-.24 1.57-.93 1.81-1.82C22 15.28 22 12 22 12s0-3.28-.42-4.8zM10 15V9l5.2 3-5.2 3z"/></svg>
-            </a>
-            <a href="#" class="tb-social" aria-label="Telegram">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg>
-            </a>
+            <a href="#" class="tb-social" aria-label="ВКонтакте"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.6 13.5h-1.8c-.68 0-.89-.55-2.1-1.77-1.05-1.01-1.51-.93-1.77-.93-.36 0-.46.1-.46.6v1.62c0 .43-.14.68-1.26.68-1.86 0-3.93-1.13-5.38-3.23-2.2-3.1-2.8-5.42-2.8-5.9 0-.26.1-.5.6-.5h1.8c.45 0 .62.2.79.68.88 2.53 2.35 4.75 2.96 4.75.23 0 .33-.1.33-.68v-2.6c-.07-1.22-.71-1.32-.71-1.76 0-.22.18-.44.46-.44h2.83c.38 0 .51.2.51.64v3.5c0 .38.17.51.27.51.23 0 .42-.13.84-.55 1.3-1.45 2.22-3.68 2.22-3.68.13-.26.33-.5.79-.5h1.8c.54 0 .66.28.54.64-.23 1.04-2.43 4.16-2.43 4.16-.19.31-.26.45 0 .8.19.26.81.79 1.22 1.27.76.86 1.34 1.58 1.5 2.08.17.49-.09.74-.58.74z"/></svg></a>
+            <a href="#" class="tb-social" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.2c-.24-.89-.93-1.58-1.81-1.82C18.25 5 12 5 12 5s-6.25 0-7.77.38c-.88.24-1.57.93-1.81 1.82C2 8.72 2 12 2 12s0 3.28.42 4.8c.24.89.93 1.58 1.81 1.82C5.75 19 12 19 12 19s6.25 0 7.77-.38c.88-.24 1.57-.93 1.81-1.82C22 15.28 22 12 22 12s0-3.28-.42-4.8zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+            <a href="#" class="tb-social" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg></a>
         </div>
     </div>
 </div>
@@ -555,8 +333,8 @@
         </a>
         <nav class="hdr-nav">
             <a href="championship.html">Годовой чемпионат</a>
-            <a href="tournaments.html" class="active">Турниры</a>
-            <a href="results.html">Результаты победителей</a>
+            <a href="tournaments.html">Турниры</a>
+            <a href="results.html" class="active">Результаты победителей</a>
             <a href="#">События</a>
             <a href="sponsors.html">Спонсоры</a>
             <a href="about.html">О федерации</a>
@@ -575,619 +353,866 @@
         <nav class="breadcrumb fi">
             <a href="index.html">Главная</a>
             <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-current">Турниры по трейдингу</span>
+            <span class="breadcrumb-current">Результаты победителей прошедших чемпионатов и турниров по трейдингу</span>
         </nav>
-        <h1 class="fi fi-1">
-            Турниры<br>по <em>трейдингу</em>
-        </h1>
-        <div class="hero-badges fi fi-2">
-            <span class="hero-tag blue">Ежемесячные</span>
-            <span class="hero-tag violet">Призовые турниры</span>
-            <span class="hero-tag">Доверительное управление</span>
+        <h1 class="fi fi-1">Результаты победителей<br>прошедших <em>чемпионатов</em> и турниров</h1>
+        <div class="hero-stat-row fi fi-2">
+            <div class="hero-stat">
+                <div class="hero-stat-num">5</div>
+                <div class="hero-stat-label">Сезонов чемпионата</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">8+</div>
+                <div class="hero-stat-label">Млн ₽ призовых</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">2021</div>
+                <div class="hero-stat-label">Год основания ФБТР</div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- INTRO SECTION -->
-<section class="intro-section">
+<!-- YEAR NAV -->
+<div class="year-nav-bar">
     <div class="container">
-        <div class="intro-grid">
+        <div class="year-nav">
+            <span class="yn-label">Сезон:</span>
+            <a href="#cup-2025" class="yn-btn yn-2025">2025</a>
+            <a href="#cup-2024" class="yn-btn yn-2024">2024</a>
+            <a href="#cup-2023" class="yn-btn yn-2023">2023</a>
+            <a href="#cup-2022" class="yn-btn yn-2022">2022</a>
+            <a href="#cup-2021" class="yn-btn yn-2021">2021</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     CUP 2025
+════════════════════════════════════════════════ -->
+<section class="champ-block cup-2025" id="cup-2025">
+    <div class="champ-deco">2025</div>
+    <div class="container">
+
+        <div class="champ-top fi">
             <div>
-                <span class="label fi">К высшим достижениям в трейдинге</span>
-                <h2 class="intro-h2 fi fi-1">Спортивная<br>биржевая торговля</h2>
-                <div class="intro-text fi fi-2">
-                    <p>Трейдинг и спорт имеют больше общего, чем кажется на первый взгляд. Чтобы добиться выдающихся результатов в обоих сферах нужно учиться, регулярно тренироваться и постепенно наращивать нагрузку.</p>
-                    <p>Наши турниры по трейдингу — это способ применения методологии к биржевой торговле. Это важный шаг на пути к признанию биржевой торговли как вида спорта на территории России.</p>
+                <span class="label">Чемпионат по трейдингу</span>
+                <h2 class="champ-h2">Live Cup Trading<br>Championship <em>2025</em></h2>
+                <div class="champ-tags">
+          <span class="champ-tag">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197"/></svg>
+            4 категории победителей по размеру депозита
+          </span>
                 </div>
             </div>
-            <div class="intro-img fi fi-3">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="Трейдер за мониторами"/>
-                <div class="intro-img-overlay"></div>
-                <div class="intro-img-badge">
-                    <div class="intro-img-badge-num">2 450 000 ₽</div>
-                    <div class="intro-img-badge-label">Общий фонд доверительного управления</div>
+            <span class="champ-year-badge">Сезон 2025</span>
+        </div>
+
+        <div class="champ-info fi fi-1">
+            <div class="champ-info-grid">
+                <div>
+                    <p class="champ-desc">Этот чемпионат уже завершился, но вы можете принять участие в следующем. Пройдите простую регистрацию и примите участие в самом масштабном чемпионате по трейдингу.</p>
+                    <a href="championship.html" class="btn btn-primary">Условия участия и регистрация &rarr;</a>
+                </div>
+                <div class="highlight-card">
+                    <div class="hl-label">Специальный приз</div>
+                    <div class="hl-title">Лучший результат на минимальном токене</div>
+                    <div class="hl-name">Дмитрий_Александрович</div>
+                    <div class="hl-result">118&thinsp;392 ₽</div>
+                    <div class="hl-result-label">Заработано за сезон</div>
                 </div>
             </div>
         </div>
+
+        <div class="table-block fi fi-2">
+            <div class="table-title">Победители чемпионата 2025 года по результату</div>
+            <div class="leaderboard lb-t1">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell r">Заработал</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">ProOlga</div></div>
+                    <div class="lb-earned">37 492 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Rumpelshtilshen</div></div>
+                    <div class="lb-earned">37 083 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">AlexZ</div></div>
+                    <div class="lb-earned">30 387 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Anna</div></div>
+                    <div class="lb-earned">470 907 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">T_raider</div></div>
+                    <div class="lb-earned">129 642 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Ostara Reborn</div></div>
+                    <div class="lb-earned">125 526 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">TakSpin</div></div>
+                    <div class="lb-earned">340 613 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Vanguard</div></div>
+                    <div class="lb-earned">308 572 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">AAA</div></div>
+                    <div class="lb-earned">127 218 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">MiNA</div></div>
+                    <div class="lb-earned">1 211 634 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">kidprofit</div></div>
+                    <div class="lb-earned">602 347 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Silencer</div></div>
+                    <div class="lb-earned">307 810 ₽</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
-<!-- TOURNAMENT TYPES -->
-<section class="types-section">
+<!-- ═══════════════════════════════════════════════
+     CUP 2024
+════════════════════════════════════════════════ -->
+<section class="champ-block cup-2024" id="cup-2024">
+    <div class="champ-deco">2024</div>
     <div class="container">
-        <span class="label fi">Форматы соревнований</span>
-        <h2 style="font-size:clamp(24px,3vw,38px);font-weight:800;letter-spacing:-0.025em;margin-bottom:40px" class="fi fi-1">Виды турниров по трейдингу</h2>
-        <div class="types-grid fi fi-2">
-            <div class="type-card">
-                <div class="type-icon">&#127942;</div>
-                <div class="type-title">Турниры доверительного управления</div>
-                <div class="type-text">Турниры проводятся ежемесячно. Победитель в каждой категории получает в управление для торговли денежные средства от компании <strong style="color:var(--text)">LIVE Investing Group</strong>.</div>
-                <div class="type-deco">&#127942;</div>
+
+        <div class="champ-top fi">
+            <div>
+                <span class="label" style="color:var(--gold-lt)">Чемпионат по трейдингу</span>
+                <h2 class="champ-h2">Live Cup Trading<br>Championship <em>2024</em></h2>
+                <div class="champ-tags">
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.97z"/></svg>Две номинации победителей</span>
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197"/></svg>4 категории по размеру депозита</span>
+                </div>
             </div>
-            <div class="type-card">
-                <div class="type-icon">&#127873;</div>
-                <div class="type-title">Призовые турниры</div>
-                <div class="type-text">Отдельные турниры с индивидуальными условиями участия и призовым фондом. Победители получают как денежные, так и другие ценные призы.</div>
-                <div class="type-deco">&#127873;</div>
+            <span class="champ-year-badge">Сезон 2024</span>
+        </div>
+
+        <div class="champ-info fi fi-1">
+            <p class="champ-desc">Этот чемпионат уже завершился, но вы можете принять участие в следующем. Пройдите простую регистрацию и примите участие в самом масштабном чемпионате по трейдингу.</p>
+            <a href="championship.html" class="btn btn-primary" style="margin-bottom:40px">Условия участия и регистрация &rarr;</a>
+        </div>
+
+        <div class="table-block fi fi-2">
+            <div class="table-title">Победители чемпионата 2024 года по доходности</div>
+            <div class="leaderboard lb-t2">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell">Доходность</div>
+                    <div class="lb-hcell r">Заработал</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Rumpelshtilshen</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">91 147 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Symphony</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">66%</span></div>
+                    <div class="lb-earned">6 798 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kydex</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">42%</span></div>
+                    <div class="lb-earned">19 428 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Sever59</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">531%</span></div>
+                    <div class="lb-earned">62 484 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Mr.Impuls</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">394%</span></div>
+                    <div class="lb-earned">37 808 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">FeNRaR1</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">31 306 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Konstant23</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">98%</span></div>
+                    <div class="lb-earned">67 955 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Alex7616</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">51%</span></div>
+                    <div class="lb-earned">69 797 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">VPO</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">38%</span></div>
+                    <div class="lb-earned">71 397 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Anna</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">4 373%</span></div>
+                    <div class="lb-earned">497 419 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kamlek</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">2 330%</span></div>
+                    <div class="lb-earned">1 005 602 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Абраиович</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">1 298%</span></div>
+                    <div class="lb-earned">738 124 ₽</div>
+                </div>
             </div>
         </div>
+
+        <div class="table-block fi fi-3">
+            <div class="table-title">Победители чемпионата 2024 года по результату</div>
+            <div class="leaderboard lb-t2">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell">Доходность</div>
+                    <div class="lb-hcell r">Заработал</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Rumpelshtilshen</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">181%</span></div>
+                    <div class="lb-earned">51 147 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kydex</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">42%</span></div>
+                    <div class="lb-earned">19 429 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Symphony</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">96%</span></div>
+                    <div class="lb-earned">6 796 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Sever59</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">34 484 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">T_raider</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">—</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Mr.Impuls</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">37 925 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">VPO</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">39%</span></div>
+                    <div class="lb-earned">71 397 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Alex7616</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">69 707 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Konst23</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">98%</span></div>
+                    <div class="lb-earned">67 955 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kamlek</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">3 339%</span></div>
+                    <div class="lb-earned">1 805 062 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">FreeMan</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">211%</span></div>
+                    <div class="lb-earned">874 559 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Абраиович</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">1 398%</span></div>
+                    <div class="lb-earned">730 124 ₽</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
-<!-- LIVE TRADER 25-III -->
-<section class="tour-section" id="live-trader">
+<!-- ═══════════════════════════════════════════════
+     CUP 2023
+════════════════════════════════════════════════ -->
+<section class="champ-block cup-2023" id="cup-2023">
+    <div class="champ-deco">2023</div>
     <div class="container">
-        <div class="tour-inner">
-            <div class="tour-left">
-                <span class="label gold fi">Победители турнира</span>
-                <div class="tour-fund fi fi-1">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33"/></svg>
-                    Фонд турниров доверительного управления — 2 450 000 рублей!
-                </div>
-                <h2 class="tour-h2 fi fi-2">Live <em>Trader</em> 25-III</h2>
-                <div class="tour-conditions fi fi-3">
-                    <div class="tour-conditions-title">Условия участия</div>
-                    <div class="tour-cond-list">
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Быть трейдером проп-компании Live Investing Group</div>
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Зарегистрироваться на турнир с 08.09.2025 по 28.09.2025</div>
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Торговать не менее 30 торговых сессий</div>
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Главный критерий победы — наибольшее увеличение баланса в абсолютном выражении</div>
-                    </div>
-                </div>
-                <div class="tour-info-grid fi fi-4">
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#128197;</div>
-                        <div class="tour-info-text">
-                            <strong>Даты проведения</strong>
-                            с 18.09.2025 по 18.12.2025
-                        </div>
-                    </div>
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#128276;</div>
-                        <div class="tour-info-text">
-                            <strong>Регистрация</strong>
-                            завершилась 28.09.2025
-                        </div>
-                    </div>
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#128202;</div>
-                        <div class="tour-info-text">
-                            <strong>Категории</strong>
-                            6 категорий по размеру депозита
-                        </div>
-                    </div>
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#127885;</div>
-                        <div class="tour-info-text">
-                            <strong>Победители</strong>
-                            5 победителей в каждой категории
-                        </div>
-                    </div>
+
+        <div class="champ-top fi">
+            <div>
+                <span class="label" style="color:var(--violet-lt)">Чемпионат по трейдингу</span>
+                <h2 class="champ-h2">Live Cup Trading<br>Championship <em>2023</em></h2>
+                <div class="champ-tags">
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33"/></svg>Общий призовой фонд — 2 млн ₽</span>
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197"/></svg>Категории по размеру депозита</span>
                 </div>
             </div>
-            <div class="tour-right fi fi-3">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80" alt="Торговые мониторы"/>
-                    <div class="tour-img-overlay"></div>
-                    <div class="tour-img-stat">
-                        <div class="tour-img-stat-item">
-                            <div class="tour-img-stat-num">6</div>
-                            <div class="tour-img-stat-label">Категорий</div>
-                        </div>
-                        <div class="tour-img-stat-item">
-                            <div class="tour-img-stat-num">30</div>
-                            <div class="tour-img-stat-label">Мин. сессий</div>
-                        </div>
-                        <div class="tour-img-stat-item">
-                            <div class="tour-img-stat-num">90</div>
-                            <div class="tour-img-stat-label">Дней</div>
-                        </div>
-                    </div>
+            <span class="champ-year-badge">Сезон 2023</span>
+        </div>
+
+        <div class="champ-info fi fi-1">
+            <p class="champ-desc">Этот чемпионат уже завершился, но вы можете принять участие в следующем. Пройдите простую регистрацию и примите участие в самом масштабном чемпионате по трейдингу.</p>
+            <a href="championship.html" class="btn btn-primary" style="margin-bottom:40px">Условия участия и регистрация &rarr;</a>
+        </div>
+
+        <div class="smartlab-section fi fi-2">
+            <div class="smartlab-header">Специальный приз <span class="smartlab-badge">SMART-LAB</span></div>
+            <div class="sl-grid">
+                <div class="sl-card"><div class="sl-name">SerVantus</div><div class="sl-stats"><div class="sl-row"><span class="sl-lbl">Доходность</span><span class="sl-val green">151%</span></div><div class="sl-row"><span class="sl-lbl">Заработал</span><span class="sl-val">1&thinsp;044&thinsp;471 ₽</span></div><div class="sl-row"><span class="sl-lbl">Приз</span><span class="sl-val gold">55&thinsp;000 ₽</span></div></div></div>
+                <div class="sl-card"><div class="sl-name">kukl</div><div class="sl-stats"><div class="sl-row"><span class="sl-lbl">Доходность</span><span class="sl-val green">447%</span></div><div class="sl-row"><span class="sl-lbl">Заработал</span><span class="sl-val">809&thinsp;868 ₽</span></div><div class="sl-row"><span class="sl-lbl">Приз</span><span class="sl-val gold">300&thinsp;000 ₽</span></div></div></div>
+                <div class="sl-card"><div class="sl-name">Anna</div><div class="sl-stats"><div class="sl-row"><span class="sl-lbl">Доходность</span><span class="sl-val green">6&thinsp;288%</span></div><div class="sl-row"><span class="sl-lbl">Заработал</span><span class="sl-val">629&thinsp;449 ₽</span></div><div class="sl-row"><span class="sl-lbl">Приз</span><span class="sl-val gold">300&thinsp;000 ₽</span></div></div></div>
+            </div>
+        </div>
+
+        <div class="table-block fi fi-3">
+            <div class="table-title">Победители чемпионата 2023 года по результату</div>
+            <div class="leaderboard lb-t3">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell">Доходность</div>
+                    <div class="lb-hcell r">Заработал</div>
+                    <div class="lb-hcell r">Приз</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">kukl</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">447%</span></div>
+                    <div class="lb-earned">809 868 ₽</div>
+                    <div class="lb-prize">300 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">kidprofit</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">584 965 ₽</div>
+                    <div class="lb-prize">200 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Alexey 144</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">464 841 ₽</div>
+                    <div class="lb-prize">200 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Anna</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">6 288%</span></div>
+                    <div class="lb-earned">629 449 ₽</div>
+                    <div class="lb-prize">300 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">StanislavBelyaev</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">285%</span></div>
+                    <div class="lb-earned">168 100 ₽</div>
+                    <div class="lb-prize">140 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">H.Kuznietsov / VPO</div>
+                        <div class="lb-sub">Совместный результат</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">95% / 177%</span></div>
+                    <div class="lb-earned">93 315 / 162 180 ₽</div>
+                    <div class="lb-prize">140 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kamlek</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">650%</span></div>
+                    <div class="lb-earned">81 946 ₽</div>
+                    <div class="lb-prize">140 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Rumpelshtilshen</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">163%</span></div>
+                    <div class="lb-earned">89 804 ₽</div>
+                    <div class="lb-prize">140 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kydex / Nik-Nik</div>
+                        <div class="lb-sub">Совместный результат</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">132% / 160%</span></div>
+                    <div class="lb-earned">88 242 / 47 150 ₽</div>
+                    <div class="lb-prize">40 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">MiNA</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">18%</span></div>
+                    <div class="lb-earned">16 339 ₽</div>
+                    <div class="lb-prize">40 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">ArtRon</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">57%</span></div>
+                    <div class="lb-earned">10 177 ₽</div>
+                    <div class="lb-prize">40 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Karapuz</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">—</div>
+                    <div class="lb-prize">1 960 ₽</div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
-<!-- WINNERS — LIVE TRADER 25-III -->
-<section class="winners-section">
+<!-- ═══════════════════════════════════════════════
+     CUP 2022
+════════════════════════════════════════════════ -->
+<section class="champ-block cup-2022" id="cup-2022">
+    <div class="champ-deco">2022</div>
     <div class="container">
-        <div class="winners-header fi">
-            <span class="label gold">Результаты</span>
-            <h2 class="winners-h2">Победители турнира <em style="font-style:normal;color:var(--blue-lt)">Live Trader 25-III</em></h2>
+
+        <div class="champ-top fi">
+            <div>
+                <span class="label" style="color:var(--cyan)">Чемпионат по трейдингу</span>
+                <h2 class="champ-h2">Live Cup Trading<br>Championship <em>2022</em></h2>
+                <div class="champ-tags">
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33"/></svg>Призовой фонд — 2,1 млн ₽</span>
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.97z"/></svg>Две номинации</span>
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197"/></svg>5 категорий по депозиту</span>
+                </div>
+            </div>
+            <span class="champ-year-badge">Сезон 2022</span>
         </div>
-        <div class="winners-grid-6 fi fi-1">
 
-            <!-- CAT A -->
-            <div class="wcat wcat-a">
-                <div class="wcat-badge">A</div>
-                <div class="wcat-name">Категория A</div>
-                <div class="wcat-range">Баланс 1&thinsp;000 — 4&thinsp;999 ₽</div>
-                <div class="wcat-deco">A</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">StarLightTrading</span>
-                        <span class="wcat-prize gold">до 50 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Nicklash</span>
-                        <span class="wcat-prize">до 40 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">Aryan</span>
-                        <span class="wcat-prize">до 30 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Buffalo</span>
-                        <span class="wcat-prize">до 20 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT B -->
-            <div class="wcat wcat-b">
-                <div class="wcat-badge">B</div>
-                <div class="wcat-name">Категория B</div>
-                <div class="wcat-range">Баланс 5&thinsp;000 — 9&thinsp;999 ₽</div>
-                <div class="wcat-deco">B</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize gold">до 70 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Marshall</span>
-                        <span class="wcat-prize">до 50 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT C -->
-            <div class="wcat wcat-c">
-                <div class="wcat-badge">C</div>
-                <div class="wcat-name">Категория C</div>
-                <div class="wcat-range">Баланс 10&thinsp;000 — 19&thinsp;999 ₽</div>
-                <div class="wcat-deco">C</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize gold">до 100 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Kotval</span>
-                        <span class="wcat-prize">до 70 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">AlexJane</span>
-                        <span class="wcat-prize">до 50 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Felt8ali1</span>
-                        <span class="wcat-prize">до 40 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT D -->
-            <div class="wcat wcat-d">
-                <div class="wcat-badge">D</div>
-                <div class="wcat-name">Категория D</div>
-                <div class="wcat-range">Баланс 20&thinsp;000 — 49&thinsp;999 ₽</div>
-                <div class="wcat-deco">D</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">Mr.Sparta13</span>
-                        <span class="wcat-prize gold">до 150 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Father</span>
-                        <span class="wcat-prize">до 100 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">Alex2</span>
-                        <span class="wcat-prize">до 70 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Goodurban</span>
-                        <span class="wcat-prize">до 50 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader">Alexkon</span>
-                        <span class="wcat-prize">до 40 000 ₽</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT E -->
-            <div class="wcat wcat-e">
-                <div class="wcat-badge">E</div>
-                <div class="wcat-name">Категория E</div>
-                <div class="wcat-range">Баланс 50&thinsp;000 — 99&thinsp;999 ₽</div>
-                <div class="wcat-deco">E</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">Arthyr_S</span>
-                        <span class="wcat-prize gold">до 200 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">strong.Mask</span>
-                        <span class="wcat-prize">до 150 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">ZHrys</span>
-                        <span class="wcat-prize">до 100 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Fear</span>
-                        <span class="wcat-prize">до 70 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader">Maxtrun</span>
-                        <span class="wcat-prize">до 50 000 ₽</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT F -->
-            <div class="wcat wcat-f">
-                <div class="wcat-badge">F</div>
-                <div class="wcat-name">Категория F</div>
-                <div class="wcat-range">Баланс от 100&thinsp;000 ₽</div>
-                <div class="wcat-deco">F</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">Taktipn</span>
-                        <span class="wcat-prize gold">до 300 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Alexei 144</span>
-                        <span class="wcat-prize">до 200 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">art.Aktivev</span>
-                        <span class="wcat-prize">до 150 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">ProStar</span>
-                        <span class="wcat-prize">до 100 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader">maxdron</span>
-                        <span class="wcat-prize">до 70 000 ₽</span>
-                    </li>
-                </ul>
-            </div>
-
+        <div class="champ-info fi fi-1">
+            <p class="champ-desc">Этот чемпионат уже завершился, но вы можете принять участие в следующем. Пройдите простую регистрацию и примите участие в самом масштабном чемпионате по трейдингу.</p>
+            <a href="championship.html" class="btn btn-primary" style="margin-bottom:40px">Условия участия и регистрация &rarr;</a>
         </div>
+
+        <div class="table-block fi fi-2">
+            <div class="table-title">Победители чемпионата 2022 года по доходности</div>
+            <div class="leaderboard lb-t3">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell">Доходность</div>
+                    <div class="lb-hcell r">Заработал</div>
+                    <div class="lb-hcell r">Приз</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">pan011</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">8 713 ₽</div>
+                    <div class="lb-prize">25 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">CinD</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">11 921 ₽</div>
+                    <div class="lb-prize">10 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">DeroPahom</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">312%</span></div>
+                    <div class="lb-earned">1 248 ₽</div>
+                    <div class="lb-prize">10 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">1.221%</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">298 485 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Pavelk</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">125%</span></div>
+                    <div class="lb-earned">28 728 ₽</div>
+                    <div class="lb-prize">30 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Горымыр</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">101%</span></div>
+                    <div class="lb-earned">20 428 ₽</div>
+                    <div class="lb-prize">75 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Damir029</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">104 228 ₽</div>
+                    <div class="lb-prize">85 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Clemente</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">259%</span></div>
+                    <div class="lb-earned">104 228 ₽</div>
+                    <div class="lb-prize">66 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">OF</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">274%</span></div>
+                    <div class="lb-earned">86 869 ₽</div>
+                    <div class="lb-prize">110 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">VPO</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">801%</span></div>
+                    <div class="lb-earned">250 980 ₽</div>
+                    <div class="lb-prize">160 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Alex7616</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">749%</span></div>
+                    <div class="lb-earned">192 912 ₽</div>
+                    <div class="lb-prize">120 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Accumulator</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">464%</span></div>
+                    <div class="lb-earned">68 141 ₽</div>
+                    <div class="lb-prize">75 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Anizuk</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">3 396%</span></div>
+                    <div class="lb-earned">703 692 ₽</div>
+                    <div class="lb-prize">160 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">BlackWhite</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">719%</span></div>
+                    <div class="lb-earned">763 180 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">FreeMan</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">650%</span></div>
+                    <div class="lb-earned">1 068 437 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-block fi fi-3">
+            <div class="table-title">Победители чемпионата 2022 года по результату</div>
+            <div class="leaderboard lb-t3">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell">Доходность</div>
+                    <div class="lb-hcell r">Заработал</div>
+                    <div class="lb-hcell r">Приз</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Maks1505</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">261%</span></div>
+                    <div class="lb-earned">19 605 ₽</div>
+                    <div class="lb-prize">25 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Spevlo</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">100%</span></div>
+                    <div class="lb-earned">—</div>
+                    <div class="lb-prize">15 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Vyacheslav_Bars</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">86%</span></div>
+                    <div class="lb-earned">17 605 ₽</div>
+                    <div class="lb-prize">10 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Anna</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">266 485 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Горымыр</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">20 426 ₽</div>
+                    <div class="lb-prize">30 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">ЕвгениК</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">17 609 ₽</div>
+                    <div class="lb-prize">15 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Clemente</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">259%</span></div>
+                    <div class="lb-earned">81 219 ₽</div>
+                    <div class="lb-prize">85 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Damir029</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">1 221%</span></div>
+                    <div class="lb-earned">—</div>
+                    <div class="lb-prize">80 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Nik-Nik</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">120%</span></div>
+                    <div class="lb-earned">88 694 ₽</div>
+                    <div class="lb-prize">40 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Виталий</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">87%</span></div>
+                    <div class="lb-earned">211 504 ₽</div>
+                    <div class="lb-prize">130 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">VPO</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">80%</span></div>
+                    <div class="lb-earned">203 990 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Alex7616</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">749%</span></div>
+                    <div class="lb-earned">193 517 ₽</div>
+                    <div class="lb-prize">75 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Master</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">1 147 701 ₽</div>
+                    <div class="lb-prize">150 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">FreeMan</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">1 066 437 ₽</div>
+                    <div class="lb-prize">130 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Денис 00347</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">389%</span></div>
+                    <div class="lb-earned">820 336 ₽</div>
+                    <div class="lb-prize">105 000 ₽</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
-<!-- LIVE SPRINT 25-IV -->
-<section class="tour-section" id="live-sprint" style="background:var(--bg2)">
+<!-- ═══════════════════════════════════════════════
+     CUP 2021
+════════════════════════════════════════════════ -->
+<section class="champ-block cup-2021" id="cup-2021">
+    <div class="champ-deco">2021</div>
     <div class="container">
-        <div class="tour-inner reverse">
-            <div class="tour-left">
-                <span class="label violet fi">Победители турнира</span>
-                <div class="tour-fund fi fi-1" style="background:var(--violet-dim);border-color:rgba(124,58,237,0.2);color:var(--violet-lt)">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
-                    Фонд призового турнира — 50&thinsp;000 рублей и памятные мерчи!
-                </div>
-                <h2 class="tour-h2 fi fi-2">Live <em>Sprint</em> 25-IV</h2>
-                <div class="tour-conditions fi fi-3">
-                    <div class="tour-conditions-title">Условия участия</div>
-                    <div class="tour-cond-list">
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Быть трейдером проп-компании Live Investing Group</div>
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Зарегистрироваться с 27.10.2025 по 18.11.2025</div>
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Торговать не менее 10 торговых сессий</div>
-                        <div class="tour-cond-item"><div class="tour-cond-dot"></div>Главный критерий победы — наибольшее увеличение баланса в абсолютном выражении</div>
-                    </div>
-                </div>
-                <div class="tour-info-grid fi fi-4">
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#128197;</div>
-                        <div class="tour-info-text">
-                            <strong>Даты проведения</strong>
-                            с 06.11.2025 до 06.12.2025
-                        </div>
-                    </div>
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#128276;</div>
-                        <div class="tour-info-text">
-                            <strong>Регистрация</strong>
-                            завершилась 18.11.2025
-                        </div>
-                    </div>
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#128202;</div>
-                        <div class="tour-info-text">
-                            <strong>Категории</strong>
-                            3 категории по размеру депозита
-                        </div>
-                    </div>
-                    <div class="tour-info-cell">
-                        <div class="tour-info-icon">&#127885;</div>
-                        <div class="tour-info-text">
-                            <strong>Победители</strong>
-                            5 победителей в каждой категории
-                        </div>
-                    </div>
+
+        <div class="champ-top fi">
+            <div>
+                <span class="label" style="color:var(--pink)">Чемпионат по трейдингу</span>
+                <h2 class="champ-h2">Live Cup Trading<br>Championship <em>2021</em></h2>
+                <div class="champ-tags">
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33"/></svg>Общий призовой фонд — 2 млн ₽</span>
+                    <span class="champ-tag"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197"/></svg>Категории по размеру депозита</span>
                 </div>
             </div>
-            <div class="tour-right fi fi-3">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80" alt="Торговый терминал"/>
-                    <div class="tour-img-overlay"></div>
-                    <div class="tour-img-stat">
-                        <div class="tour-img-stat-item">
-                            <div class="tour-img-stat-num" style="color:var(--violet-lt)">3</div>
-                            <div class="tour-img-stat-label">Категории</div>
-                        </div>
-                        <div class="tour-img-stat-item">
-                            <div class="tour-img-stat-num" style="color:var(--violet-lt)">10</div>
-                            <div class="tour-img-stat-label">Мин. сессий</div>
-                        </div>
-                        <div class="tour-img-stat-item">
-                            <div class="tour-img-stat-num" style="color:var(--violet-lt)">30</div>
-                            <div class="tour-img-stat-label">Дней</div>
-                        </div>
-                    </div>
+            <span class="champ-year-badge">Сезон 2021</span>
+        </div>
+
+        <div class="champ-info fi fi-1">
+            <p class="champ-desc">Это был первый чемпионат Федерации биржевого трейдинга России. Пройдите простую регистрацию и примите участие в самом масштабном чемпионате по трейдингу.</p>
+            <a href="championship.html" class="btn btn-primary" style="margin-bottom:40px">Условия участия и регистрация &rarr;</a>
+        </div>
+
+        <div class="table-block fi fi-2">
+            <div class="table-title">Победители чемпионата 2021 года</div>
+            <div class="leaderboard lb-t3">
+                <div class="lb-head">
+                    <div class="lb-hcell">#</div>
+                    <div class="lb-hcell">Участник</div>
+                    <div class="lb-hcell">Доходность</div>
+                    <div class="lb-hcell r">Заработал</div>
+                    <div class="lb-hcell r">Приз</div>
+                </div>
+                <div class="lb-row r1">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">WhiteBlue</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">93 854 / 757 529 ₽</div>
+                    <div class="lb-prize">200 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">kargalov</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">2 929%</span></div>
+                    <div class="lb-earned">239 776 ₽</div>
+                    <div class="lb-prize">150 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">DemiRostov</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">2 083%</span></div>
+                    <div class="lb-earned">1 065 731 ₽</div>
+                    <div class="lb-prize">260 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">kidprofit</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">1 633%</span></div>
+                    <div class="lb-earned">375 700 ₽</div>
+                    <div class="lb-prize">200 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">Kublovd</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">1 085%</span></div>
+                    <div class="lb-earned">375 700 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">ryuzyуv</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">572%</span></div>
+                    <div class="lb-earned">483 760 ₽</div>
+                    <div class="lb-prize">125 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">N.Kuznietsov</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">8 902 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">mmv</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">238%</span></div>
+                    <div class="lb-earned">18 921 ₽</div>
+                    <div class="lb-prize">100 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Avkar3342</div></div>
+                    <div class="lb-yield"><span class="yield-pill m">—</span></div>
+                    <div class="lb-earned">1 226 ₽</div>
+                    <div class="lb-prize">28 000 ₽</div>
+                </div>
+                <div class="lb-row r1 grp">
+                    <div class="lb-rank"><div class="lb-num">1</div></div>
+                    <div class="lb-name"><div class="lb-nick">Sharer</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">110%</span></div>
+                    <div class="lb-earned">10 752 ₽</div>
+                    <div class="lb-prize">30 000 ₽</div>
+                </div>
+                <div class="lb-row r2">
+                    <div class="lb-rank"><div class="lb-num">2</div></div>
+                    <div class="lb-name"><div class="lb-nick">SteamTrader</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">102%</span></div>
+                    <div class="lb-earned">3 985 ₽</div>
+                    <div class="lb-prize">20 000 ₽</div>
+                </div>
+                <div class="lb-row r3">
+                    <div class="lb-rank"><div class="lb-num">3</div></div>
+                    <div class="lb-name"><div class="lb-nick">Nik-Nik</div></div>
+                    <div class="lb-yield"><span class="yield-pill ">86%</span></div>
+                    <div class="lb-earned">4 661 ₽</div>
+                    <div class="lb-prize">15 000 ₽</div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- WINNERS — LIVE SPRINT 25-III -->
-<section class="winners-section" style="background:var(--bg2)">
-    <div class="container">
-        <div class="winners-header fi">
-            <span class="label violet">Результаты</span>
-            <h2 class="winners-h2">Победители турнира <em style="font-style:normal;color:var(--violet-lt)">Live Sprint 25-III</em></h2>
-        </div>
-        <div class="winners-grid-3 fi fi-1">
-
-            <!-- CAT A -->
-            <div class="wcat wcat-a">
-                <div class="wcat-badge">A</div>
-                <div class="wcat-name">Категория A</div>
-                <div class="wcat-range">Баланс 1&thinsp;000 — 19&thinsp;999 ₽</div>
-                <div class="wcat-deco">A</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">TANGO</span>
-                        <span class="wcat-prize gold">5 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader anon">—</span>
-                        <span class="wcat-prize">3 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">AntiBiev</span>
-                        <span class="wcat-prize">2 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Tapoti</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader">Pilot575</span>
-                        <span class="wcat-prize merch">&#127873; мерч</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT B -->
-            <div class="wcat wcat-b">
-                <div class="wcat-badge">B</div>
-                <div class="wcat-name">Категория B</div>
-                <div class="wcat-range">Баланс 20&thinsp;000 — 99&thinsp;999 ₽</div>
-                <div class="wcat-deco">B</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">Дмитрий_Александрович</span>
-                        <span class="wcat-prize gold">7 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Father</span>
-                        <span class="wcat-prize">5 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">Femaluam</span>
-                        <span class="wcat-prize">—</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Nik-Nik</span>
-                        <span class="wcat-prize merch">&#127873; мерч</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader">T_taler</span>
-                        <span class="wcat-prize merch">&#127873; мерч</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- CAT C -->
-            <div class="wcat wcat-f">
-                <div class="wcat-badge">C</div>
-                <div class="wcat-name">Категория C</div>
-                <div class="wcat-range">Баланс от 100&thinsp;000 ₽</div>
-                <div class="wcat-deco">C</div>
-                <ul class="wcat-list">
-                    <li class="wcat-item">
-                        <div class="wcat-place place-1">1</div>
-                        <span class="wcat-trader">TakTipn</span>
-                        <span class="wcat-prize gold">10 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-2">2</div>
-                        <span class="wcat-trader">Alexei 144</span>
-                        <span class="wcat-prize">7 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-3">3</div>
-                        <span class="wcat-trader">Arthyr_S</span>
-                        <span class="wcat-prize">5 000 ₽</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-4">4</div>
-                        <span class="wcat-trader">Maxllum</span>
-                        <span class="wcat-prize merch">&#127873; мерч</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-5">5</div>
-                        <span class="wcat-trader">art_Aktivev</span>
-                        <span class="wcat-prize merch">&#127873; мерч</span>
-                    </li>
-                    <li class="wcat-item">
-                        <div class="wcat-place place-6">6</div>
-                        <span class="wcat-trader">ProStar</span>
-                        <span class="wcat-prize merch">&#127873; мерч</span>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- HOW TO PARTICIPATE -->
-<section class="steps-section" id="how-to">
-    <div class="container">
-        <div style="position:relative;overflow:hidden">
-            <div style="position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-size:220px;font-weight:900;letter-spacing:-0.06em;line-height:1;color:rgba(59,130,246,0.03);pointer-events:none;user-select:none">1 2 3</div>
-            <div class="steps-header fi">
-                <span class="label">Федерация биржевого трейдинга</span>
-                <h2>Как принять участие<br>в турнирах</h2>
-                <p style="margin-top:14px">Следуйте простым шагам и начните соревноваться с лучшими трейдерами России</p>
-            </div>
-        </div>
-        <div class="steps-list">
-
-            <div class="step fi fi-1">
-                <div class="step-num-col"><div class="step-num">1</div></div>
-                <div class="step-body">
-                    <div class="step-title">Шаг 1. Станьте трейдером проп-компании <strong>LIVE Investing Group</strong></div>
-                    <div class="step-text">Для этого достаточно пройти простую регистрацию на создание торгового аккаунта. После создания аккаунта вы получаете доступ к бесплатному торговому терминалу и минимальный персональный депозит для начала торговли. Если вы уже трейдер компании LIVE Investing Group — переходите к шагу 2.</div>
-                </div>
-                <div class="step-cta">
-                    <a href="#" class="btn btn-primary btn-sm">Стать трейдером →</a>
-                </div>
-            </div>
-
-            <div class="step fi fi-2">
-                <div class="step-num-col"><div class="step-num">2</div></div>
-                <div class="step-body">
-                    <div class="step-title">Шаг 2. Станьте участником <strong>Федерации биржевого трейдинга</strong></div>
-                    <div class="step-text">Для этого достаточно пройти простую регистрацию, после завершения которой вы получите доступ в личный кабинет участника Федерации биржевого трейдинга (ФБТР).</div>
-                </div>
-                <div class="step-cta">
-                    <a href="#" class="btn btn-outline btn-sm">Стать участником →</a>
-                </div>
-            </div>
-
-            <div class="step fi fi-3">
-                <div class="step-num-col"><div class="step-num">3</div></div>
-                <div class="step-body">
-                    <div class="step-title">Шаг 3. Выберите <strong>никнейм</strong></div>
-                    <div class="step-text">В личном кабинете в разделе «Профиль» введите никнейм, который необходим для соблюдения конфиденциальности при отображении результатов торговли в турнирной таблице.</div>
-                </div>
-                <div class="step-cta">
-                    <a href="#" class="btn btn-outline btn-sm">Личный кабинет →</a>
-                </div>
-            </div>
-
-            <div class="step fi fi-4">
-                <div class="step-num-col"><div class="step-num">4</div></div>
-                <div class="step-body">
-                    <div class="step-title">Шаг 4. Зарегистрируйтесь на подходящий <strong>турнир</strong></div>
-                    <div class="step-text">В личном кабинете выберите раздел «Турниры». В появившемся списке выберите подходящий для вас турнир и пройдите короткую регистрацию.</div>
-                </div>
-                <div class="step-cta">
-                    <a href="#" class="btn btn-primary btn-sm">Выбрать турнир →</a>
-                </div>
-            </div>
-
-        </div>
     </div>
 </section>
 
@@ -1202,15 +1227,9 @@
                 </div>
                 <p>Федерация биржевого трейдинга России. Объединяем профессиональных трейдеров и развиваем биржевую торговлю как спорт.</p>
                 <div class="socials">
-                    <a href="#" class="social" aria-label="ВКонтакте">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.6 13.5h-1.8c-.68 0-.89-.55-2.1-1.77-1.05-1.01-1.51-.93-1.77-.93-.36 0-.46.1-.46.6v1.62c0 .43-.14.68-1.26.68-1.86 0-3.93-1.13-5.38-3.23-2.2-3.1-2.8-5.42-2.8-5.9 0-.26.1-.5.6-.5h1.8c.45 0 .62.2.79.68.88 2.53 2.35 4.75 2.96 4.75.23 0 .33-.1.33-.68v-2.6c-.07-1.22-.71-1.32-.71-1.76 0-.22.18-.44.46-.44h2.83c.38 0 .51.2.51.64v3.5c0 .38.17.51.27.51.23 0 .42-.13.84-.55 1.3-1.45 2.22-3.68 2.22-3.68.13-.26.33-.5.79-.5h1.8c.54 0 .66.28.54.64-.23 1.04-2.43 4.16-2.43 4.16-.19.31-.26.45 0 .8.19.26.81.79 1.22 1.27.76.86 1.34 1.58 1.5 2.08.17.49-.09.74-.58.74z"/></svg>
-                    </a>
-                    <a href="#" class="social" aria-label="YouTube">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.2c-.24-.89-.93-1.58-1.81-1.82C18.25 5 12 5 12 5s-6.25 0-7.77.38c-.88.24-1.57.93-1.81 1.82C2 8.72 2 12 2 12s0 3.28.42 4.8c.24.89.93 1.58 1.81 1.82C5.75 19 12 19 12 19s6.25 0 7.77-.38c.88-.24 1.57-.93 1.81-1.82C22 15.28 22 12 22 12s0-3.28-.42-4.8zM10 15V9l5.2 3-5.2 3z"/></svg>
-                    </a>
-                    <a href="#" class="social" aria-label="Telegram">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg>
-                    </a>
+                    <a href="#" class="social" aria-label="ВКонтакте"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.6 13.5h-1.8c-.68 0-.89-.55-2.1-1.77-1.05-1.01-1.51-.93-1.77-.93-.36 0-.46.1-.46.6v1.62c0 .43-.14.68-1.26.68-1.86 0-3.93-1.13-5.38-3.23-2.2-3.1-2.8-5.42-2.8-5.9 0-.26.1-.5.6-.5h1.8c.45 0 .62.2.79.68.88 2.53 2.35 4.75 2.96 4.75.23 0 .33-.1.33-.68v-2.6c-.07-1.22-.71-1.32-.71-1.76 0-.22.18-.44.46-.44h2.83c.38 0 .51.2.51.64v3.5c0 .38.17.51.27.51.23 0 .42-.13.84-.55 1.3-1.45 2.22-3.68 2.22-3.68.13-.26.33-.5.79-.5h1.8c.54 0 .66.28.54.64-.23 1.04-2.43 4.16-2.43 4.16-.19.31-.26.45 0 .8.19.26.81.79 1.22 1.27.76.86 1.34 1.58 1.5 2.08.17.49-.09.74-.58.74z"/></svg></a>
+                    <a href="#" class="social" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.2c-.24-.89-.93-1.58-1.81-1.82C18.25 5 12 5 12 5s-6.25 0-7.77.38c-.88.24-1.57.93-1.81 1.82C2 8.72 2 12 2 12s0 3.28.42 4.8c.24.89.93 1.58 1.81 1.82C5.75 19 12 19 12 19s6.25 0 7.77-.38c.88-.24 1.57-.93 1.81-1.82C22 15.28 22 12 22 12s0-3.28-.42-4.8zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+                    <a href="#" class="social" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.44l-2.56-1.88-1.23 1.18c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.21-.18-.04-.28-.32-.1L7.86 14.1l-2.5-.78c-.54-.17-.55-.54.11-.8l9.76-3.76c.45-.16.84.11.41 1.04z"/></svg></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -1218,9 +1237,9 @@
                 <div class="footer-links">
                     <a href="championship.html">Годовой чемпионат</a>
                     <a href="#">Прошлые чемпионаты</a>
-                    <a href="#">Таблица победителей</a>
-                    <a href="tournaments.html">Турниры</a>
                     <a href="results.html">Результаты победителей</a>
+                    <a href="tournaments.html">Турниры</a>
+                    <a href="#">Результаты по турнирам</a>
                     <a href="about.html">О федерации</a>
                 </div>
             </div>
@@ -1240,11 +1259,13 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h4>Турниры</h4>
+                <h4>Сезоны</h4>
                 <div class="footer-links">
-                    <a href="#live-trader">Live Trader 25-III</a>
-                    <a href="#live-sprint">Live Sprint 25-IV</a>
-                    <a href="#how-to">Как участвовать</a>
+                    <a href="#cup-2025">Чемпионат 2025</a>
+                    <a href="#cup-2024">Чемпионат 2024</a>
+                    <a href="#cup-2023">Чемпионат 2023</a>
+                    <a href="#cup-2022">Чемпионат 2022</a>
+                    <a href="#cup-2021">Чемпионат 2021</a>
                 </div>
             </div>
         </div>
@@ -1264,10 +1285,9 @@
 <script>
   function openMob() { document.getElementById('mobNav').classList.add('open'); }
   function closeMob() { document.getElementById('mobNav').classList.remove('open'); }
-
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 </script>
 </body>
